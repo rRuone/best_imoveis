@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Cidade;
+use App\Http\Requests\CidadeRequest;
 
 class CidadesController extends Controller
 {
@@ -26,7 +27,7 @@ class CidadesController extends Controller
 
     }
 
-    public function adicionar(Request $request){
+    public function adicionar(CidadeRequest $request){
 
         // $nome = $request->input('nome');
         //Criar um objeto do modelo (classe) CIdade

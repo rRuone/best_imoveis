@@ -13,7 +13,7 @@ class CidadeRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class CidadeRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'nome' => 'bail|required|min:3|max:100|unique:cidades'
         ];
     }
 }

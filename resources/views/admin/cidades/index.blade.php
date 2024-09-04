@@ -15,7 +15,15 @@
         @forelse ($cidades as $cidade )
             <tr>
                 <td>{{$cidade->nome}}</td>
-                <td class="right-align">Excluir - Remover</td>
+                <td class="right-align">
+                    <span>
+                        <i class="material-icons blue-text text-accent-2">edit</i>
+                    </span>
+                
+                    <span>
+                        <i class="material-icons red-text text-accent-3">delete</i>
+                    </span>
+                </td>
             </tr>
         @empty
             <td colspan="2"> Não existem cidades cadastradas </td>
