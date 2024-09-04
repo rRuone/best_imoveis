@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cidades', function (Blueprint $table) {
-            $table->id(); //criar chave primária
-            $table->string('nome',100)->unique();
-            $table->timestamps();//opicional e gerenciado pelo laravel
-
+        Schema::create('clientes', function (Blueprint $table) {
+            $table->id();
+            $table->string('nome', 80);
+            $table->string('telefone')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cidades');
+        Schema::dropIfExists('clientes');
     }
 };
