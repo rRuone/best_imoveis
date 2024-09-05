@@ -19,7 +19,7 @@
             {{-- cross-site request forgery csrf --}}
             @csrf
             <div class="input-field">
-                <input type="text" class="text" name="nome" id="nome">
+                <input type="text" class="text" name="nome" id="nome" value="{{old('nome')}}">
                 <label for="nome">Nome</label>
                 @error('nome')
                     <span class="red-text text-accent-3"><small>{{$message}}</small></span>

@@ -18,11 +18,11 @@
 <nav>
     <div class="container">
         <div class="nav-wrapper">
-                <a href="" class="brand-logo">Best Imoveis</a>
+                <a href="" class="brand-logo">CADDOG</a>
                 <ul class="right">
-                    <li><a href="">Imóveis</a></li>
+                    <li><a href="">Endereços</a></li>
+                    <li><a href="">Clientes</a></li>
                     <li><a href="">Cidades</a></li>
-                    <li><a href=""></a></li>
                 </ul>
         </div>
     </div>
