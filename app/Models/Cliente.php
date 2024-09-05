@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Cliente extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'nome',
+        'telefone',
+      
+    ];
+    public function enderecos()
+    {
+        return $this->hasMany(Endereco::class);
+    }
+    
 }

@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\CidadesController;
+use App\Http\Controllers\ClientesController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,6 +28,13 @@ Route::prefix('admin')->name('admin.')->group(function(){
     Route::post('/cidades/salvar',[CidadesController::class, 'adicionar'] )->name('cidades.adicionar');
 }
 );
+
+//Clientes 
+Route::get('/index-cliente', [ClientesController::class, 'index'])->name('cliente.index');
+Route::get('/create-cliente',[ClientesController::class,'create'])->name('cliente.create');
+Route::post('/store-cliente',[ClientesController::class,'store'])->name('cliente.store');
+Route::post('/show-cliente/{cliente}',[ClientesController::class,'show'])->name('cliente.show');
+
 
 Route::get('/sobre', function(){
     return '<h1>Sobre</h1>';

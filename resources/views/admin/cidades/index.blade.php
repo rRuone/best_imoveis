@@ -15,6 +15,7 @@
         @forelse ($cidades as $cidade )
             <tr>
                 <td>{{$cidade->nome}}</td>
+                <td>{{$cidade->sigla}}</td>
                 <td class="right-align">Excluir - Remover</td>
             </tr>
         @empty
