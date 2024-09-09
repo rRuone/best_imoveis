@@ -1,1 +1,5 @@
-<h2>Checkout</h2>
+@extends('admin.layouts.checkout')
+
+@section('conteudo-principal')
+
+@endsection
