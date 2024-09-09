@@ -28,13 +28,21 @@ class ClientesController extends Controller
 
     // Cadastrar no banco de dados novo cliente 
     public  function store(ClienteRequest $request){
-        // Validar o formulario 
-        $request->validated();
+       
 
-        $cliente = Cliente::create($request->all());
+        $cliente = Cliente::where('telefone', $request->input('telefone'))
+                            ->orWhere('nome', $request->input('nome'))
+                            ->first();
 
-        return redirect()->route('cliente.index');
+        if($cliente){
+            // se o cliente ja existir, salva o ID na sessão
+            $request->session()->put('cliente_id', $cliente->id);
+        } else {
+            $cliente = Cliente::create($request->all());
+            $request->session()->put('cliente_id', $cliente->id);
+        }
 
+        return redirect()->route('checkout.index');
 
     }
 

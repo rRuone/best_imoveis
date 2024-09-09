@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\CidadesController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ClientesController;
 
 /*
@@ -34,6 +35,9 @@ Route::get('/index-cliente', [ClientesController::class, 'index'])->name('client
 Route::get('/create-cliente',[ClientesController::class,'create'])->name('cliente.create');
 Route::post('/store-cliente',[ClientesController::class,'store'])->name('cliente.store');
 Route::post('/show-cliente/{cliente}',[ClientesController::class,'show'])->name('cliente.show');
+
+//Checkout
+Route::get('/index-checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 
 
 Route::get('/sobre', function(){
