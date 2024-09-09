@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('adicionais', function (Blueprint $table) {
+        Schema::create('pedido', function (Blueprint $table) {
             $table->id();
-            $table->string('nome');
-            $table->decimal("preco",3,2);
+            $table->dateTime('dataPedido')->useCurrent();
+            $table->string('metdPag');
+            $table->enum('status',['pendente','Em andamento','finalizado']);
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('adicionais');
+        Schema::dropIfExists('pedido');
     }
 };

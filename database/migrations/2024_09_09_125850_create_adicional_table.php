@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pedidos', function (Blueprint $table) {
+        Schema::create('adicional', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('dataPedido')->useCurrent();
-            $table->string('metdPag', 15);
-            $table->enum('status', ['pendente', 'processando', 'finalizado']);
-
+            $table->string('nome', 20);
+            $table->decimal('preco', 3, 2);
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pedidos');
+        Schema::dropIfExists('adicional');
     }
 };
