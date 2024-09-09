@@ -29,7 +29,7 @@ php artisan migrate
 
 Criar a migration
 ```
-php artisan make:migration create_nomeDaMigration_table 
+php artisan make:migration create_enderecos_table
 ``` 
 Criar a model 
 ```

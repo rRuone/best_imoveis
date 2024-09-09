@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CidadesController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ClientesController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,9 +17,11 @@ use App\Http\Controllers\ClientesController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// index
-Route::redirect('/','/admin/cidades');
+// Home
+Route::get('/home', [HomeController::class, 'index'])->name('home.index');
+Route::get('/', [HomeController::class, 'index']); 
 
+Route::get('/admin/index-cidade',[CidadesController::class,'cidades'])->name('cidades.index');
 
 //Usa-se esse prefixo pra agrupar as rotas que tem admin em comum
 Route::prefix('admin')->name('admin.')->group(function(){
