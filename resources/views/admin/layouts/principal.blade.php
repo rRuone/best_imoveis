@@ -22,7 +22,7 @@
                 <ul class="right">
                     <li><a href="">Endereços</a></li>
                     <li><a href="">Clientes</a></li>
-                    <li><a href="">Cidades</a></li>
+                    <li><a href="{{route('admin.cidades.index')}}">Cidades</a></li>
                 </ul>
         </div>
     </div>

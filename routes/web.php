@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CidadeController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\CidadesController;
@@ -20,11 +21,7 @@ Route::redirect('/','/admin/cidades');
 //Usa-se esse prefixo pra agrupar as rotas que tem admin em comum
 Route::prefix('admin')->name('admin.')->group(function(){
 
-    Route::get('/cidades',[CidadesController::class, 'cidades'] )->name('cidades.listar');
-
-    Route::get('/cidades/salvar',[CidadesController::class, 'formAdicionar'] )->name('cidades.form');
-    Route::post('/cidades/salvar',[CidadesController::class, 'adicionar'] )->name('cidades.adicionar');
-    Route::delete('cidades/{id}',[CidadesController::class, 'deletar'])->name('cidades.deletar');
+    Route::resource('cidades', CidadeController::class)->except(['show']);
 }
 );
 
