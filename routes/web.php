@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CidadesController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\HomeController;
+use App\Models\ItemCardapio;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,16 @@ Route::get('/index-cliente', [ClientesController::class, 'index'])->name('client
 Route::get('/create-cliente',[ClientesController::class,'create'])->name('cliente.create');
 Route::post('/store-cliente',[ClientesController::class,'store'])->name('cliente.store');
 Route::post('/show-cliente/{cliente}',[ClientesController::class,'show'])->name('cliente.show');
+
+//ItemCardapio
+Route::get('/index-itemCardapio',[ItemCardapio::class,'index'])->name('itemCardapio.index');
+Route::get('/create-itemCardapio',[ItemCardapio::class,'create'])->name('itemCardapio.create');
+Route::post('/store-itemCardapio',[ItemCardapio::class,'store'])->name('itemCardapio.store');
+Route::get('/show-itemCardapio/{itemCardapio}',[ItemCardapio::class,'show'])->name('itemCardapio.show');
+Route::get('/edit-itemCardapio/{itemCardapio}',[ItemCardapio::class,'edit'])->name('itemCardapio.edit');
+Route::put('/show-itemCardapio/{itemCardapio}',[ItemCardapio::class,'update'])->name('itemCardapio.update');
+Route::delete('/destroy-itemCardapio/{itemCardapio}',[ItemCardapio::class,'destroy'])->name('itemCardapio.destroy');
+
 
 //Checkout
 Route::get('/index-checkout', [CheckoutController::class, 'index'])->name('checkout.index');
