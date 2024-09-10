@@ -36,7 +36,11 @@ Route::prefix('admin')->name('admin.')->group(function(){
     Route::get('/index-adicionais',[AdicionaisController::class, 'index'])->name('adicionais.index');
     Route::get('/create-adicionais',[AdicionaisController::class, 'create'])->name('adicionais.create');
     Route::post('/store-adicionais',[AdicionaisController::class, 'store'])->name('adicionais.store');
-    Route::post('/show-adicionais/{adicionais}',[AdicionaisController::class, 'show'])->name('adicionais.show');
+    Route::get('/show-adicionais/{adicionais}',[AdicionaisController::class, 'show'])->name('adicionais.show');
+    Route::get('/edit-adicionais/{adicionais}',[AdicionaisController::class, 'edit'])->name('adicionais.edit');
+    Route::put('/update-adicionais/{adicionais}',[AdicionaisController::class, 'update'])->name('adicionais.update');
+    Route::delete('/destroy-adicionais/{adicionais}',[AdicionaisController::class, 'destroy'])->name('adicionais.destroy');
+
 }
 );
 
