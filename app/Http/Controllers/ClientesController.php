@@ -18,7 +18,7 @@ class ClientesController extends Controller
 
     // Detalhes de cliente
     public function show(Cliente $cliente){
-        return view('clientes.index', ['clientes' => $cliente]);
+        return view('clientes.show', ['clientes' => $cliente]);
     }
 
     // Cadastrar

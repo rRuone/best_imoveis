@@ -2,7 +2,7 @@
 
 @section('conteudo-principal')
 
-<section class="section">
+<section class="section container">
     @if($errors->any())
     <span style="color: #ff0000">
         @foreach ($errors->all() as $error)
@@ -11,6 +11,7 @@
     </span>
     <br>
     @endif
+
     <form action="{{ route('cliente.store') }}" method="POST">
         @csrf
         <!-- Campo para Nome -->

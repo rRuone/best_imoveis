@@ -18,7 +18,7 @@ class Pedido extends Model
     }
 
     public function adicionais() {
-        return $this->belongsTo(Adicional::class,'item_pedido_adicional')
+        return $this->belongsTo(Adicionais::class,'adicionais_item_pedido')
                     ->withPivot('quantidade','preco')
                     ->withTimestamps();
     }

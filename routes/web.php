@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdicionaisController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\CidadesController;
@@ -30,6 +31,12 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
     Route::get('/cidades/salvar',[CidadesController::class, 'formAdicionar'] )->name('cidades.form');
     Route::post('/cidades/salvar',[CidadesController::class, 'adicionar'] )->name('cidades.adicionar');
+
+    //Adicional 
+    Route::get('/index-adicionais',[AdicionaisController::class, 'index'])->name('adicionais.index');
+    Route::get('/create-adicionais',[AdicionaisController::class, 'create'])->name('adicionais.create');
+    Route::post('/store-adicionais',[AdicionaisController::class, 'store'])->name('adicionais.store');
+    Route::post('/show-adicionais/{adicionais}',[AdicionaisController::class, 'show'])->name('adicionais.show');
 }
 );
 

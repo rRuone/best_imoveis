@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('item_pedido_adicional', function (Blueprint $table) {
+        Schema::create('adicionais_item_pedido', function (Blueprint $table) {
             $table->foreignId('adicional_id')
-                ->constrained('adicional')
+                ->constrained('adicionais')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
@@ -28,9 +28,8 @@ return new class extends Migration
             $table->integer(('quantidade'))->nullable();
 
             $table->primary(['adicional_id', 'item_cardapio_id']);
-
-
         });
+
     }
 
     /**
@@ -40,6 +39,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('item_pedido_adicional');
+        Schema::dropIfExists('adicionais_item_pedido');
     }
 };
