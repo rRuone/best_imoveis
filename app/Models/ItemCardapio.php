@@ -9,7 +9,7 @@ class ItemCardapio extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nome', 'preco', 'categoria', 'foto'];
+    protected $fillable = ['nome','categoria_id', 'preco', , 'foto'];
 
     public function pedidos(){
         return $this->belongsTo(Pedido::class, 'pedido_item')
@@ -21,6 +21,10 @@ class ItemCardapio extends Model
         return $this->belongsTo(Adicionais::class, 'adicionais_item_pedido')
                     ->withPivot('quantidade', 'preco')
                     ->withTimestamps();
+    }
+
+    public function categoria(){
+        return $this->belongsTo(Categoria::class);
     }
     
 

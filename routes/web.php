@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdicionaisController;
+use App\Http\Controllers\Admin\CategoriasController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\CidadesController;
@@ -42,6 +43,16 @@ Route::prefix('admin')->name('admin.')->group(function(){
     Route::put('/update-adicionais/{adicionais}',[AdicionaisController::class, 'update'])->name('adicionais.update');
     Route::delete('/destroy-adicionais/{adicionais}',[AdicionaisController::class, 'destroy'])->name('adicionais.destroy');
 
+    //Categorias
+    Route::get('/index-categorias',[CategoriasController::class,'index'])->name('categorias.index');
+    Route::get('/create-categorias',[CategoriasController::class,'create'])->name('categorias.create');
+    Route::post('/store-categorias',[CategoriasController::class,'store'])->name('categorias.store');
+    Route::get('/show-categorias/{categorias}',[CategoriasController::class,'show'])->name('categorias.show');
+    Route::get('/edit-categorias/{categorias}',[CategoriasController::class,'edit'])->name('categorias.edit');
+    Route::put('/update-categorias/{categorias}',[CategoriasController::class,'update'])->name('categorias.update');
+    Route::delete('/destroy-categorias/{categorias}',[CategoriasController::class,'destroy'])->name('categorias.destroy');
+
+
 }
 );
 
@@ -59,6 +70,7 @@ Route::get('/show-itemCardapio/{itemCardapio}',[ItemCardapio::class,'show'])->na
 Route::get('/edit-itemCardapio/{itemCardapio}',[ItemCardapio::class,'edit'])->name('itemCardapio.edit');
 Route::put('/show-itemCardapio/{itemCardapio}',[ItemCardapio::class,'update'])->name('itemCardapio.update');
 Route::delete('/destroy-itemCardapio/{itemCardapio}',[ItemCardapio::class,'destroy'])->name('itemCardapio.destroy');
+
 
 
 //Checkout
