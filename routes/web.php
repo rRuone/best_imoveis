@@ -22,7 +22,7 @@ use App\Http\Controllers\ItemCardapioController;
 */
 // Home
 Route::get('/home', [HomeController::class, 'index'])->name('home.index');
-Route::get('/', [HomeController::class, 'index']); 
+Route::get('/', [HomeController::class, 'index'])->name('home.index'); 
 
 Route::get('/admin/index-cidade',[CidadesController::class,'cidades'])->name('cidades.index');
 
