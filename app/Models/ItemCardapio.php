@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class ItemCardapio extends Model
 {
     use HasFactory;
-
-    protected $fillable = ['nome','categoria_id', 'preco', , 'foto'];
+    protected $table = 'item_cardapio'; //ajuste porque o laravel padroniza no plural 
+    protected $fillable = ['nome','categoria_id', 'preco', 'foto'];
 
     public function pedidos(){
         return $this->belongsTo(Pedido::class, 'pedido_item')

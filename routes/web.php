@@ -8,7 +8,7 @@ use App\Http\Controllers\Admin\CidadesController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\HomeController;
-use App\Models\ItemCardapio;
+use App\Http\Controllers\ItemCardapioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,13 +63,13 @@ Route::post('/store-cliente',[ClientesController::class,'store'])->name('cliente
 Route::post('/show-cliente/{cliente}',[ClientesController::class,'show'])->name('cliente.show');
 
 //ItemCardapio
-Route::get('/index-itemCardapio',[ItemCardapio::class,'index'])->name('itemCardapio.index');
-Route::get('/create-itemCardapio',[ItemCardapio::class,'create'])->name('itemCardapio.create');
-Route::post('/store-itemCardapio',[ItemCardapio::class,'store'])->name('itemCardapio.store');
-Route::get('/show-itemCardapio/{itemCardapio}',[ItemCardapio::class,'show'])->name('itemCardapio.show');
-Route::get('/edit-itemCardapio/{itemCardapio}',[ItemCardapio::class,'edit'])->name('itemCardapio.edit');
-Route::put('/show-itemCardapio/{itemCardapio}',[ItemCardapio::class,'update'])->name('itemCardapio.update');
-Route::delete('/destroy-itemCardapio/{itemCardapio}',[ItemCardapio::class,'destroy'])->name('itemCardapio.destroy');
+Route::get('/index-itemCardapio',[ItemCardapioController::class,'index'])->name('itemCardapio.index');
+Route::get('/create-itemCardapio',[ItemCardapioController::class,'create'])->name('itemCardapio.create');
+Route::post('/store-itemCardapio',[ItemCardapioController::class,'store'])->name('itemCardapio.store');
+Route::get('/show-itemCardapio/{itemCardapio}',[ItemCardapioController::class,'show'])->name('itemCardapio.show');
+Route::get('/edit-itemCardapio/{itemCardapio}',[ItemCardapioController::class,'edit'])->name('itemCardapio.edit');
+Route::put('/show-itemCardapio/{itemCardapio}',[ItemCardapioController::class,'update'])->name('itemCardapio.update');
+Route::delete('/destroy-itemCardapio/{itemCardapio}',[ItemCardapioController::class,'destroy'])->name('itemCardapio.destroy');
 
 
 
