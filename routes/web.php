@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CategoriasController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\CidadesController;
+use App\Http\Controllers\Admin\EnderecosController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\HomeController;
@@ -55,7 +56,11 @@ Route::prefix('admin')->name('admin.')->group(function(){
     Route::put('/update-categorias/{categorias}',[CategoriasController::class,'update'])->name('categorias.update');
     Route::delete('/destroy-categorias/{categorias}',[CategoriasController::class,'destroy'])->name('categorias.destroy');
 
-
+    //Enderecos
+    Route::get('/index-enderecos',[EnderecosController::class, 'index'])->name('enderecos.index');
+    Route::get('/create-enderecos',[EnderecosController::class, 'create'])->name('enderecos.create');
+    Route::post('/store-enderecos',[EnderecosController::class, 'store'])->name('enderecos.store');
+    Route::get('/show-enderecos/{enderecos}',[EnderecosController::class,'show'])->name('enderecos.show');
 }
 );
 

@@ -23,6 +23,9 @@
             margin-top: 20px;
             text-align: right; /* Alinha o botão à direita */
         }
+        .input-field {
+            margin-bottom: 10px; /* Espaçamento entre os adicionais */
+        }
     </style>
 </head>
 <body>
@@ -52,8 +55,9 @@
                 <div class="input-field">
                     <label>
                         <input type="checkbox" name="adicionais[]" value="{{ $adicional->id }}" />
-                        <span>{{ $adicional->nome }} - R$ {{ number_format($adicional->preco, 2, ',', '.') }}</span>
+                        <span>{{ $adicional->nome }}</span>
                     </label>
+                    <br>
                 </div>
             @endforeach
 
