@@ -27,15 +27,54 @@
             @endforeach
         @endif
 
+        <style>
+            .card-panel {
+                margin: 0 !important; /* Remove a margem externa */
+                padding: 15px; /* Ajusta o preenchimento interno */
+                border: 1px solid #e0e0e0; /* Cria uma borda fina ao redor */
+                border-radius: 0; /* Remove o arredondamento */
+            }
+        
+            .divider {
+                margin: 10px 0; /* Ajusta o espaçamento vertical da linha divisória */
+            }
+        
+            .section {
+                padding: 0; /* Remove preenchimento extra da section */
+            }
+        
+            .h5-header {
+                margin-bottom: 5px; /* Diminui a margem abaixo dos headers */
+            }
+        </style>
         {{-- Links para selecionar ou criar um endereço --}}
-        <div class="section">
-             <h5>Escolha um Endereço:</h5>
-           {{-- <a href="{{ route('enderecos.index') }}" class="btn waves-effect waves-light">Escolher Endereço</a>
-            <a href="{{ route('enderecos.create') }}" class="btn waves-effect waves-light">Criar Novo Endereço</a>
-        </div> --}}
+        <div class="row">
+            <!-- Primeira Div -->
+            <div class="row card-panel mb-0">
+                <div class="col s6">
+                    <h5 class="h5-header">Selecione Endereço:</h5> 
+                </div>
+                <div class="col s6">
+                    <a href=""><h6 class="h5-header">Novo Endereço</h6></a>
+                </div>
+            </div>
+        
+           
+            
+        
+            <!-- Segunda Div -->
+            <div class="row card-panel mb-0">
+                <h5 class="h5-header">Endereço de entrega:</h5>
+                
+            </div>
+            <div class="row card-panel mb-0">
+                    Retirada
+            </div>
+        </div>
+        
+        
 
-        {{-- Botão para finalizar o pedido --}}
-        <a href="" class="btn waves-effect waves-light">Finalizar Pedido</a>
+      
     </div>
 @endsection
 
