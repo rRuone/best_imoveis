@@ -8,6 +8,7 @@ class CheckoutController extends Controller
 {
     // Exibe o checkout
     public function index(Request $request){
+       
         return view('checkout.index');
     }
 }

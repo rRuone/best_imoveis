@@ -15,9 +15,11 @@ return new class extends Migration
     {
         Schema::create('pedido', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('dataPedido')->useCurrent();
+            $table->foreignId('cliente_id')->constrained()->onDelete('cascade');
+            $table->dateTime('data_Pedido')->useCurrent();
             $table->string('metdPag');
-            $table->enum('status',['pendente','Em andamento','finalizado']);
+            $table->enum('status', ['pendente', 'em_processo', 'concluido', 'cancelado'])->default('pendente');
+            $table->decimal('total', 8, 2);
             $table->timestamps();
         });
     }

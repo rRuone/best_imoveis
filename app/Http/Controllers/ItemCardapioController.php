@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ItemCardapioRequest;
+use App\Models\Adicionais;
 use App\Models\Categoria;
 use App\Models\ItemCardapio;
 use Illuminate\Http\Request;
@@ -16,10 +17,17 @@ class ItemCardapioController extends Controller
         return view('itemCardapio.index',['itemCardapio' => $itemCardapio]);
     }
 
-     // Detalhes de Item Categoria
-     public function show(ItemCardapio $itemCardapio){
-        return view('itemCardapio.show',['itemCardapio' =>$itemCardapio]);
+
+    
+    public function show(ItemCardapio $itemCardapio)
+    {
+        // Carregar adicionais associados ao itemCardapio
+        $itemCardapio->load('adicionais');
+    
+        return view('itemCardapio.show', ['itemCardapio' => $itemCardapio]);
+        dd($itemCardapio->adicionais);
     }
+    
 
     public function create()
     {
@@ -30,43 +38,94 @@ class ItemCardapioController extends Controller
         return view('itemCardapio.create', compact('categorias'));
     }
 
-
     public function store(ItemCardapioRequest $request)
     {
-        // Obter o valor do preço
-        $preco = $request->preco;
-    
-        // Remover caracteres não numéricos, mantendo apenas ponto para decimais
-        $precoNumerico = preg_replace('/[^\d.,]/', '', $preco);
-    
-        // Substituir vírgula por ponto (para conformidade com o formato numérico dos EUA)
-        $precoNumerico = str_replace(',', '.', $precoNumerico);
-    
-        // Verificar se o valor é numérico e formatar para dois decimais
-        if (!is_numeric($precoNumerico)) {
+        // Formatar o preço e tratar a imagem
+        $preco = str_replace(',', '.', preg_replace('/[^\d.,]/', '', $request->preco));
+        if (!is_numeric($preco)) {
             return redirect()->back()->withErrors(['preco' => 'O preço deve ser um valor numérico.']);
         }
-    
-        $precoFormatado = number_format((float)$precoNumerico, 2, '.', '');
-    
-        // Verificar se o campo foto foi preenchido
-        if ($request->hasFile('foto')) {
-            $file = $request->file('foto');
-            $filename = time() . '.' . $file->getClientOriginalExtension(); // Nome único para o arquivo
-            $path = $file->storeAs('public/fotos', $filename); // Armazenar no diretório public/fotos
-        } else {
-            $path = null; // Caso não haja foto
-        }
-    
-        // Criar o item no banco de dados
+
+        // Armazenar imagem se existir
+        $path = $request->hasFile('foto') 
+                ? $request->file('foto')->storeAs('public/fotos', time() . '.' . $request->file('foto')->getClientOriginalExtension())
+                : null;
+
+        // Criar item no banco
         ItemCardapio::create([
             'nome' => $request->nome,
             'categoria_id' => $request->categoria_id,
-            'preco' => $precoFormatado, // Salvar o preço formatado
-            'foto' => $path, // Salvar o caminho da imagem no banco
+            'preco' => number_format($preco, 2, '.', ''),
+            'foto' => $path,
         ]);
-    
+
         return redirect()->route('itemCardapio.index')->with('success', 'Item criado com sucesso.');
     }
+    
+    public function addAdicionaisToSession(Request $request, ItemCardapio $itemCardapio)
+    {
+        // Validar a seleção de adicionais
+        $request->validate([
+            'adicionais' => 'array',
+            'adicionais.*' => 'exists:adicionais,id',
+        ]);
+
+        // Obter os adicionais selecionados
+        $adicionaisSelecionados = $request->input('adicionais', []);
+
+        // Armazenar os adicionais e o item do cardápio na sessão temporariamente
+        $pedidoSessao = [
+            'item_cardapio_id' => $itemCardapio->id,
+            'adicionais' => $adicionaisSelecionados
+        ];
+
+        // Salvar na sessão
+        session()->put('pedido_temporario', $pedidoSessao);
+
+        // Redirecionar para o processo de login ou verificação do cliente
+        return redirect()->route('clientes.create');
+    }
+
+    public function product(ItemCardapio $itemCardapio)
+    {
+        // Obter os adicionais selecionados da sessão
+        $adicionais = Adicionais::all();
+    
+        return view('itemCardapio.product', [
+            'itemCardapio' => $itemCardapio,
+            'adicionais' => $adicionais
+        ]);
+    
+        //return view('itemCardapio.product');
+    }
+
+
+    public function salvarAdicionais(Request $request, ItemCardapio $itemCardapio)
+    {
+        // Validar os dados do formulário
+        $request->validate([
+            'adicionais.*.id' => 'exists:adicionais,id', // Verifica se o ID do adicional existe
+        ]);
+    
+        // Obter adicionais do formulário
+        $adicionais = $request->input('adicionais', []);
+    
+        // Obter o pedido atual da sessão ou criar um novo
+        $pedido = session()->get('pedido', []);
+    
+        // Adicionar ou atualizar o item do pedido na sessão
+        $pedido[$itemCardapio->id] = [
+            'item_cardapio' => $itemCardapio,
+            'adicionais' => $adicionais
+        ];
+    
+        // Atualizar a sessão com os dados do pedido
+        session()->put('pedido', $pedido);
+    
+        // Redirecionar para a página do carrinho
+        return redirect()->route('carrinho.index')->with('success', 'Adicionais adicionados ao pedido com sucesso!');
+    }
+    
+
 
 }

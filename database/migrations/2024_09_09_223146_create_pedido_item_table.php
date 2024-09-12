@@ -24,10 +24,18 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            $table->decimal('preco',3,2);
-            $table->integer(('quantidade'))->nullable();
-            $table->primary(['pedido_id', 'item_cardapio_id']);
-            $table->timestamps();
+            // Defina adicional_id como nullable e não parte da chave primária
+            $table->foreignId('adicional_id')
+                ->nullable() 
+                ->constrained('adicionais') 
+                ->onDelete('set null') 
+                ->onUpdate('cascade');
+            
+            $table->integer('quantidade');
+            $table->decimal('preco', 8, 2);
+            
+            // Ajuste a chave primária para não incluir adicional_id
+            $table->primary(['pedido_id', 'item_cardapio_id', 'quantidade', 'preco']);
         });
     }
 

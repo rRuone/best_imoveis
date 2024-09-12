@@ -9,6 +9,9 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemCardapioController;
+use App\Http\Controllers\CarrinhoController;
+use App\Http\Controllers\PedidoController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -71,6 +74,18 @@ Route::get('/edit-itemCardapio/{itemCardapio}',[ItemCardapioController::class,'e
 Route::put('/show-itemCardapio/{itemCardapio}',[ItemCardapioController::class,'update'])->name('itemCardapio.update');
 Route::delete('/destroy-itemCardapio/{itemCardapio}',[ItemCardapioController::class,'destroy'])->name('itemCardapio.destroy');
 
+Route::get('itemCardapio/{itemCardapio}/product', [ItemCardapioController::class, 'product'])->name('itemCardapio.product');
+
+Route::post('itemCardapio/{itemCardapio}/salvar-adicionais', [ItemCardapioController::class, 'salvarAdicionais'])->name('itemCardapio.salvarAdicionais');
+
+//
+Route::get('/carrinho', [CarrinhoController::class, 'index'])->name('carrinho.index');
+Route::post('/carrinho/store/{id}', [CarrinhoController::class, 'store'])->name('carrinho.store');
+
+
+
+// Pedidos
+Route::post('/pedidos', [PedidoController::class, 'store'])->name('pedidos.store');
 
 
 //Checkout

@@ -18,10 +18,10 @@
 <nav>
     <div class="container">
         <div class="nav-wrapper">
-                <a href="" class="brand-logo">Best Imoveis</a>
+                <a href="" class="brand-logo">Master Dog</a>
                 <ul class="right">
-                    <li><a href="">Imóveis</a></li>
-                    <li><a href="">Cidades</a></li>
+                    <li><a href="">Pedidos</a></li>
+                    <li><a href="">Carrinho</a></li>
                     <li><a href=""></a></li>
                 </ul>
         </div>

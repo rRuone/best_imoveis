@@ -17,10 +17,11 @@ class ItemCardapio extends Model
                     ->withTimestamps();
     }
 
-    public function adicionais(){
-        return $this->belongsTo(Adicionais::class, 'adicionais_item_pedido')
-                    ->withPivot('quantidade', 'preco')
-                    ->withTimestamps();
+
+    public function adicionais()
+    {
+        return $this->belongsToMany(Adicionais::class, 'adicionais_item_cardapio', 'item_cardapio_id', 'adicionais_id')
+                    ->withPivot('preco', 'quantidade');
     }
 
     public function categoria(){
