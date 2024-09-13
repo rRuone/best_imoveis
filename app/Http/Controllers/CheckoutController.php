@@ -50,4 +50,22 @@ class CheckoutController extends Controller
          // Redireciona de volta ao checkout (ou para a próxima etapa do processo)
          return redirect()->route('checkout.index')->with('success', 'Endereço selecionado com sucesso!');
      }
+
+     // Selecionar o método de pagamento no checkout
+    public function selecionarPagamento(Request $request)
+    {
+        // Valida se o método de pagamento foi selecionado
+        $request->validate([
+            'metodo_pagamento' => 'required|in:dinheiro,cartao,pix',
+        ]);
+
+        // Recupera o método de pagamento selecionado
+        $metodoPagamento = $request->input('metodo_pagamento');
+
+        // Salva o método de pagamento na sessão
+        session()->put('metodo_pagamento', $metodoPagamento);
+        
+        // Redireciona de volta ao checkout (ou para a próxima etapa do processo)
+        return redirect()->route('checkout.index')->with('success', 'Método de pagamento selecionado com sucesso!');
+    }
 }

@@ -96,6 +96,7 @@ Route::post('/pedidos', [PedidoController::class, 'store'])->name('pedidos.store
 //Checkout
 Route::get('/index-checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 Route::post('/checkout/endereco/selecionar', [CheckoutController::class, 'selecionarEndereco'])->name('checkout.endereco.selecionar');
+Route::post('/checkout/pagamento/selecionar', [CheckoutController::class, 'selecionarPagamento'])->name('checkout.pagamento.selecionar');
 
 
 Route::get('/sobre', function(){

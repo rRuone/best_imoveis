@@ -74,6 +74,41 @@
                 @endif
             </div>
         </div>
+
+        {{-- Método de pagamento --}}
+        <div class="row">
+            <div class="row card-panel mb-0">
+                <h5 class="h5-header">Método de pagamento:</h5>
+                <form action="{{ route('checkout.pagamento.selecionar') }}" method="POST">
+                    @csrf
+                    <ul>
+                        <li>
+                            <label>
+                                <input type="radio" name="metodo_pagamento" value="dinheiro"
+                                    @if(session('metodo_pagamento') == 'dinheiro') checked @endif />
+                                <span>Dinheiro</span>
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="radio" name="metodo_pagamento" value="cartao"
+                                    @if(session('metodo_pagamento') == 'cartao') checked @endif />
+                                <span>Cartão</span>
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="radio" name="metodo_pagamento" value="pix"
+                                    @if(session('metodo_pagamento') == 'pix') checked @endif />
+                                <span>PIX</span>
+                            </label>
+                        </li>
+                    </ul>
+                    <button class="btn waves-effect waves-light" type="submit">Confirmar Pagamento</button>
+                </form>
+            </div>
+        </div>
+
     </div>
 @endsection
 
