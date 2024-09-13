@@ -25,7 +25,7 @@ use App\Http\Controllers\PedidoController;
 |
 */
 // Home
-Route::get('/home', [HomeController::class, 'index'])->name('home.index');
+
 Route::get('/', [HomeController::class, 'index'])->name('home.index'); 
 
 Route::get('/admin/index-cidade',[CidadesController::class,'cidades'])->name('cidades.index');
@@ -91,13 +91,13 @@ Route::post('/carrinho/store/{id}', [CarrinhoController::class, 'store'])->name(
 
 // Pedidos
 Route::post('/pedidos', [PedidoController::class, 'store'])->name('pedidos.store');
-
+Route::get('/pedido/{id}', [CheckoutController::class, 'detalhesPedido'])->name('pedido.detalhes');
 
 //Checkout
 Route::get('/index-checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 Route::post('/checkout/endereco/selecionar', [CheckoutController::class, 'selecionarEndereco'])->name('checkout.endereco.selecionar');
 Route::post('/checkout/pagamento/selecionar', [CheckoutController::class, 'selecionarPagamento'])->name('checkout.pagamento.selecionar');
-
+Route::post('checkout/finalizar', [CheckoutController::class, 'finalizarPedido'])->name('checkout.finalizar');
 
 Route::get('/sobre', function(){
     return '<h1>Sobre</h1>';

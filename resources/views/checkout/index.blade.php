@@ -25,6 +25,83 @@
                     </div>
                 </div>
             @endforeach
+
+            {{-- Exibe os endereços do cliente com checkboxes --}}
+            <div class="row">
+                <div class="row card-panel mb-0">
+                    <h5 class="h5-header">Endereço de entrega:</h5>
+                    @if($enderecos->isEmpty())
+                        <a href="{{ route('admin.enderecos.create') }}" class="btn waves-effect waves-light">Adicionar Novo Endereço</a>
+                    @else
+                    <form action="{{ route('checkout.endereco.selecionar') }}" method="POST">
+                        @csrf
+                        <ul>
+                            @foreach($enderecos as $endereco)
+                                <li>
+                                    <label>
+                                        {{-- Marca o checkbox do endereço selecionado --}}
+                                        <input type="radio" name="endereco_id" value="{{ $endereco->id }}"
+                                            @if(session('endereco_id') == $endereco->id) checked @endif />
+                                        <span>{{ $endereco->logradouro }}, {{ $endereco->bairro }}</span>
+                                    </label>
+                                </li>
+                            @endforeach
+                        </ul>
+                        <button class="btn waves-effect waves-light" type="submit">Confirmar Endereço</button>
+                    </form>
+                    @endif
+                </div>
+            </div>
+
+            {{-- Método de pagamento --}}
+            <div class="row">
+                <div class="row card-panel mb-0">
+                    <h5 class="h5-header">Método de pagamento:</h5>
+                    <form action="{{ route('checkout.pagamento.selecionar') }}" method="POST">
+                        @csrf
+                        <ul>
+                            <li>
+                                <label>
+                                    <input type="radio" name="metodo_pagamento" value="dinheiro"
+                                        @if(session('metodo_pagamento') == 'dinheiro') checked @endif />
+                                    <span>Dinheiro</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="radio" name="metodo_pagamento" value="cartao"
+                                        @if(session('metodo_pagamento') == 'cartao') checked @endif />
+                                    <span>Cartão</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="radio" name="metodo_pagamento" value="pix"
+                                        @if(session('metodo_pagamento') == 'pix') checked @endif />
+                                    <span>PIX</span>
+                                </label>
+                            </li>
+                        </ul>
+                        <button class="btn waves-effect waves-light" type="submit">Confirmar Método de Pagamento</button>
+                    </form>
+                </div>
+            </div>
+
+            {{-- Exibe o subtotal --}}
+            <div class="card-panel">
+                <h5 class="h5-header">Subtotal:</h5>
+                <p>R$ {{ number_format($subtotal, 2, ',', '.') }}</p>
+            </div>
+
+            {{-- Formulário para finalizar o pedido --}}
+            <div class="card-panel">
+                <h5 class="h5-header">Finalizar Pedido:</h5>
+                <form action="{{ route('checkout.finalizar') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="metodo_pagamento" value="{{ session('metodo_pagamento') }}">
+                    <button class="btn waves-effect waves-light" type="submit">Finalizar Pedido</button>
+                </form>
+            </div>
         @endif
 
         <style>
@@ -47,71 +124,5 @@
                 margin-bottom: 5px; /* Diminui a margem abaixo dos headers */
             }
         </style>
-
-        {{-- Exibe os endereços do cliente com checkboxes --}}
-        <div class="row">
-            <div class="row card-panel mb-0">
-                <h5 class="h5-header">Endereço de entrega:</h5>
-                @if($enderecos->isEmpty())
-                    <a href="{{ route('admin.enderecos.create') }}" class="btn waves-effect waves-light">Adicionar Novo Endereço</a>
-                @else
-                <form action="{{ route('checkout.endereco.selecionar') }}" method="POST">
-                    @csrf
-                    <ul>
-                        @foreach($enderecos as $endereco)
-                            <li>
-                                <label>
-                                    {{-- Marca o checkbox do endereço selecionado --}}
-                                    <input type="radio" name="endereco_id" value="{{ $endereco->id }}"
-                                        @if(session('endereco_id') == $endereco->id) checked @endif />
-                                    <span>{{ $endereco->logradouro }}, {{ $endereco->bairro }}</span>
-                                </label>
-                            </li>
-                        @endforeach
-                    </ul>
-                    <button class="btn waves-effect waves-light" type="submit">Confirmar Endereço</button>
-                </form>
-                @endif
-            </div>
-        </div>
-
-        {{-- Método de pagamento --}}
-        <div class="row">
-            <div class="row card-panel mb-0">
-                <h5 class="h5-header">Método de pagamento:</h5>
-                <form action="{{ route('checkout.pagamento.selecionar') }}" method="POST">
-                    @csrf
-                    <ul>
-                        <li>
-                            <label>
-                                <input type="radio" name="metodo_pagamento" value="dinheiro"
-                                    @if(session('metodo_pagamento') == 'dinheiro') checked @endif />
-                                <span>Dinheiro</span>
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="radio" name="metodo_pagamento" value="cartao"
-                                    @if(session('metodo_pagamento') == 'cartao') checked @endif />
-                                <span>Cartão</span>
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="radio" name="metodo_pagamento" value="pix"
-                                    @if(session('metodo_pagamento') == 'pix') checked @endif />
-                                <span>PIX</span>
-                            </label>
-                        </li>
-                    </ul>
-                    <button class="btn waves-effect waves-light" type="submit">Confirmar Pagamento</button>
-                </form>
-            </div>
-        </div>
-
     </div>
-@endsection
-
-@section('conteudo-secundario')
-    {{-- Aqui você pode adicionar conteúdo secundário se necessário --}}
 @endsection
