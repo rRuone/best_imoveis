@@ -15,8 +15,8 @@
 
                         {{-- Se houver adicionais, exibe a lista --}}
                         @if(!empty($item['adicionais']))
-                           {{-- <h5>Adicionais:</h5>
-                             <ul>
+                            {{-- <h5>Adicionais:</h5>
+                            <ul>
                                 @foreach($item['adicionais'] as $adicionalId => $adicional)
                                     <li>{{ $adicional['nome'] }} - R$ {{ number_format($adicional['preco'], 2, ',', '.') }}</li>
                                 @endforeach
@@ -34,47 +34,46 @@
                 border: 1px solid #e0e0e0; /* Cria uma borda fina ao redor */
                 border-radius: 0; /* Remove o arredondamento */
             }
-        
+
             .divider {
                 margin: 10px 0; /* Ajusta o espaçamento vertical da linha divisória */
             }
-        
+
             .section {
                 padding: 0; /* Remove preenchimento extra da section */
             }
-        
+
             .h5-header {
                 margin-bottom: 5px; /* Diminui a margem abaixo dos headers */
             }
         </style>
-        {{-- Links para selecionar ou criar um endereço --}}
+
+        {{-- Exibe os endereços do cliente com checkboxes --}}
         <div class="row">
-            <!-- Primeira Div -->
-            <div class="row card-panel mb-0">
-                <div class="col s6">
-                    <h5 class="h5-header">Selecione Endereço:</h5> 
-                </div>
-                <div class="col s6">
-                    <a href=""><h6 class="h5-header">Novo Endereço</h6></a>
-                </div>
-            </div>
-        
-           
-            
-        
-            <!-- Segunda Div -->
             <div class="row card-panel mb-0">
                 <h5 class="h5-header">Endereço de entrega:</h5>
-                
-            </div>
-            <div class="row card-panel mb-0">
-                    Retirada
+                @if($enderecos->isEmpty())
+                    <a href="{{ route('admin.enderecos.create') }}" class="btn waves-effect waves-light">Adicionar Novo Endereço</a>
+                @else
+                <form action="{{ route('checkout.endereco.selecionar') }}" method="POST">
+                    @csrf
+                    <ul>
+                        @foreach($enderecos as $endereco)
+                            <li>
+                                <label>
+                                    {{-- Marca o checkbox do endereço selecionado --}}
+                                    <input type="radio" name="endereco_id" value="{{ $endereco->id }}"
+                                        @if(session('endereco_id') == $endereco->id) checked @endif />
+                                    <span>{{ $endereco->logradouro }}, {{ $endereco->bairro }}</span>
+                                </label>
+                            </li>
+                        @endforeach
+                    </ul>
+                    <button class="btn waves-effect waves-light" type="submit">Confirmar Endereço</button>
+                </form>
+                @endif
             </div>
         </div>
-        
-        
-
-      
     </div>
 @endsection
 

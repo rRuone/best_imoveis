@@ -7,6 +7,9 @@
         <form action="{{ route('admin.enderecos.store') }}" method="POST">
             @csrf
 
+            <!-- Campo oculto para cliente_id -->
+            <input type="hidden" name="cliente_id" value="{{ session('cliente_id') }}" />
+
             <!-- Campo de seleção para cidades -->
             <div class="input-field">
                 <select name="cidades_id" id="cidades_id">

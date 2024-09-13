@@ -7,7 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Endereco extends Model
 {
+
     use HasFactory;
+    protected $table = 'enderecos';
+
+    // Campos que podem ser atribuídos em massa
+    protected $fillable = [
+        'cliente_id',   // Adiciona cliente_id aqui
+        'cidades_id',
+        'logradouro',
+        'bairro',
+        'complemento'
+    ];
+    
     public function cliente(){
         return $this->belongsTo((Cliente::class));
     }
