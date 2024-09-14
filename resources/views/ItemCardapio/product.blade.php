@@ -30,7 +30,7 @@
 </head>
 <body>
     <div class="container">
-        <h4>Item</h4>
+        <h4>Detalhes do produto</h4>
 
         <div class="card">
             <div class="card-image">
@@ -50,7 +50,7 @@
         <form action="{{ route('itemCardapio.salvarAdicionais', $itemCardapio) }}" method="POST" class="form-container">
             @csrf
 
-            {{-- <h5>Escolha Adicionais</h5> --}}
+            {{-- <h5>Escolha Adicionais</h5>  --}}
             @foreach($adicionais as $adicional)
                 <div class="input-field">
                     <label>
