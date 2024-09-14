@@ -87,17 +87,23 @@ class ItemCardapioController extends Controller
     }
 
     public function product(ItemCardapio $itemCardapio)
-    {
-        // Obter os adicionais selecionados da sessão
+{
+    // Inicializa a variável $adicionais como um array vazio
+    $adicionais = [];
+
+    // Verifica se o item pertence à categoria de "Lanche"
+    if ($itemCardapio->categoria->nome === 'Lanche') {
+        // Se for um "Lanche", carrega os adicionais
         $adicionais = Adicionais::all();
-    
-        return view('itemCardapio.product', [
-            'itemCardapio' => $itemCardapio,
-            'adicionais' => $adicionais
-        ]);
-    
-        //return view('itemCardapio.product');
     }
+
+    // Retorna a view com ou sem adicionais, dependendo da categoria
+    return view('itemCardapio.product', [
+        'itemCardapio' => $itemCardapio,
+        'adicionais' => $adicionais
+    ]);
+}
+
 
 
     public function salvarAdicionais(Request $request, ItemCardapio $itemCardapio)

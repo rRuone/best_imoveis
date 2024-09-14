@@ -31,6 +31,7 @@ class CheckoutController extends Controller
             $enderecos = collect(); // Retorna uma coleção vazia se o cliente não estiver logado
         }
 
+        
 
         // dd([
         //     'pedido' => $pedido,
