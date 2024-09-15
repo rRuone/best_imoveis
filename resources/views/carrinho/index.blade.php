@@ -11,28 +11,41 @@
     <div class="container">
         <h4>Seu Carrinho</h4>
 
+        {{-- Verifica se o pedido está vazio --}}
         @if(empty($pedido))
             <p>Seu carrinho está vazio.</p>
         @else
+            {{-- Itera sobre cada item do pedido --}}
             @foreach($pedido as $item)
                 <div class="card">
                     <div class="card-content">
-                        <span class="card-title">{{ $item['item_cardapio']->nome }}</span>
-                        <p>R$ {{ number_format($item['item_cardapio']->preco, 2, ',', '.') }}</p>
+                        {{-- Verifica se o item_cardapio existe antes de tentar acessá-lo --}}
+                        @if(isset($item['item_cardapio']))
+                            {{-- Exibe o nome do item do cardápio --}}
+                            <span class="card-title">{{ $item['item_cardapio']->nome }}</span>
+                            
+                            {{-- Exibe o preço formatado do item --}}
+                            <p>R$ {{ number_format($item['item_cardapio']->preco, 2, ',', '.') }}</p>
+                        @else
+                            <p>Item do cardápio não encontrado.</p>
+                        @endif
 
-                        @if(!empty($item['adicionais']))
+                        {{-- Verifica se há adicionais e os exibe --}}
+                        {{-- @if(!empty($item['adicionais']))
                             <h5>Adicionais:</h5>
                             <ul>
-                                {{-- @foreach($item['adicionais'] as $adicional)
+                                @foreach($item['adicionais'] as $adicional)
+                                   
                                     <li>{{ $adicional['nome'] }} - R$ {{ number_format($adicional['preco'], 2, ',', '.') }}</li>
-                                @endforeach --}}
+                                @endforeach
                             </ul>
-                        @endif
+                        @endif --}}
                     </div>
                 </div>
             @endforeach
         @endif
 
+        {{-- Link para avançar para o próximo passo --}}
         <a href="{{ route('cliente.create') }}" class="btn waves-effect waves-light">Avançar</a>
 
     </div>

@@ -62,29 +62,29 @@ class ItemCardapioController extends Controller
         return redirect()->route('itemCardapio.index')->with('success', 'Item criado com sucesso.');
     }
     
-    public function addAdicionaisToSession(Request $request, ItemCardapio $itemCardapio)
-    {
-        // Validar a seleção de adicionais
-        $request->validate([
-            'adicionais' => 'array',
-            'adicionais.*' => 'exists:adicionais,id',
-        ]);
+    // public function addAdicionaisToSession(Request $request, ItemCardapio $itemCardapio)
+    // {
+    //     // Validar a seleção de adicionais
+    //     $request->validate([
+    //         'adicionais' => 'array',
+    //         'adicionais.*' => 'exists:adicionais,id',
+    //     ]);
 
-        // Obter os adicionais selecionados
-        $adicionaisSelecionados = $request->input('adicionais', []);
+    //     // Obter os adicionais selecionados
+    //     $adicionaisSelecionados = $request->input('adicionais', []);
 
-        // Armazenar os adicionais e o item do cardápio na sessão temporariamente
-        $pedidoSessao = [
-            'item_cardapio_id' => $itemCardapio->id,
-            'adicionais' => $adicionaisSelecionados
-        ];
+    //     // Armazenar os adicionais e o item do cardápio na sessão temporariamente
+    //     $pedidoSessao = [
+    //         'item_cardapio_id' => $itemCardapio->id,
+    //         'adicionais' => $adicionaisSelecionados
+    //     ];
 
-        // Salvar na sessão
-        session()->put('pedido_temporario', $pedidoSessao);
+    //     // Salvar na sessão
+    //     session()->put('pedido_temporario', $pedidoSessao);
 
-        // Redirecionar para o processo de login ou verificação do cliente
-        return redirect()->route('clientes.create');
-    }
+    //     // Redirecionar para o processo de login ou verificação do cliente
+    //     return redirect()->route('clientes.create');
+    // }
 
     public function product(ItemCardapio $itemCardapio)
 {
