@@ -14,28 +14,33 @@ return new class extends Migration
     public function up()
     {
         Schema::create('pedido_item', function (Blueprint $table) {
+            $table->id();  // Cria um campo 'id' como chave primária
+
+            // Relacionamento com a tabela 'pedido'
             $table->foreignId('pedido_id')
                 ->constrained('pedido')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             
+            // Relacionamento com a tabela 'item_cardapio'
             $table->foreignId('item_cardapio_id')
                 ->constrained('item_cardapio')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            // Defina adicional_id como nullable e não parte da chave primária
+            // Relacionamento opcional com a tabela 'adicionais'
             $table->foreignId('adicional_id')
                 ->nullable() 
                 ->constrained('adicionais') 
                 ->onDelete('set null') 
                 ->onUpdate('cascade');
             
+            // Outros campos
             $table->integer('quantidade');
             $table->decimal('preco', 8, 2);
             
-            // Ajuste a chave primária para não incluir adicional_id
-            $table->primary(['pedido_id', 'item_cardapio_id', 'quantidade', 'preco']);
+            // Criação dos timestamps
+            $table->timestamps();
         });
     }
 

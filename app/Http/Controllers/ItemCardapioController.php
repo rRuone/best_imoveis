@@ -62,75 +62,56 @@ class ItemCardapioController extends Controller
         return redirect()->route('itemCardapio.index')->with('success', 'Item criado com sucesso.');
     }
     
-    // public function addAdicionaisToSession(Request $request, ItemCardapio $itemCardapio)
-    // {
-    //     // Validar a seleção de adicionais
-    //     $request->validate([
-    //         'adicionais' => 'array',
-    //         'adicionais.*' => 'exists:adicionais,id',
-    //     ]);
-
-    //     // Obter os adicionais selecionados
-    //     $adicionaisSelecionados = $request->input('adicionais', []);
-
-    //     // Armazenar os adicionais e o item do cardápio na sessão temporariamente
-    //     $pedidoSessao = [
-    //         'item_cardapio_id' => $itemCardapio->id,
-    //         'adicionais' => $adicionaisSelecionados
-    //     ];
-
-    //     // Salvar na sessão
-    //     session()->put('pedido_temporario', $pedidoSessao);
-
-    //     // Redirecionar para o processo de login ou verificação do cliente
-    //     return redirect()->route('clientes.create');
-    // }
-
+    
     public function product(ItemCardapio $itemCardapio)
-{
-    // Inicializa a variável $adicionais como um array vazio
-    $adicionais = [];
-
-    // Verifica se o item pertence à categoria de "Lanche"
-    if ($itemCardapio->categoria->nome === 'Lanche') {
-        // Se for um "Lanche", carrega os adicionais
-        $adicionais = Adicionais::all();
-    }
-
-    // Retorna a view com ou sem adicionais, dependendo da categoria
-    return view('itemCardapio.product', [
-        'itemCardapio' => $itemCardapio,
-        'adicionais' => $adicionais
-    ]);
-}
-
-
-
-    public function salvarAdicionais(Request $request, ItemCardapio $itemCardapio)
     {
-        // Validar os dados do formulário
-        $request->validate([
-            'adicionais.*.id' => 'exists:adicionais,id', // Verifica se o ID do adicional existe
-        ]);
+        // Inicializa a variável $adicionais como um array vazio
+        $adicionais = [];
     
-        // Obter adicionais do formulário
-        $adicionais = $request->input('adicionais', []);
+        // Verifica se a categoria do item é carregada
+        if ($itemCardapio->categoria && $itemCardapio->categoria->nome === 'Lanche') {
+            // Se for um "Lanche", carrega os adicionais
+            $adicionais = Adicionais::all();
+        }
     
-        // Obter o pedido atual da sessão ou criar um novo
-        $pedido = session()->get('pedido', []);
-    
-        // Adicionar ou atualizar o item do pedido na sessão
-        $pedido[$itemCardapio->id] = [
-            'item_cardapio' => $itemCardapio,
+        // Retorna a view ou realiza outras ações necessárias
+        return view('itemCardapio.product', [
+            'itemCardapio' => $itemCardapio,
             'adicionais' => $adicionais
-        ];
-    
-        // Atualizar a sessão com os dados do pedido
-        session()->put('pedido', $pedido);
-    
-        // Redirecionar para a página do carrinho
-        return redirect()->route('carrinho.index')->with('success', 'Adicionais adicionados ao pedido com sucesso!');
+        ]);
     }
+
+
+
+public function salvarAdicionais(Request $request, ItemCardapio $itemCardapio)
+{
+    // Validar os dados do formulário
+    $request->validate([
+        'adicionais.*.id' => 'exists:adicionais,id', // Verifica se o ID do adicional existe
+    ]);
+
+    // Obter adicionais do formulário
+    $adicionais = $request->input('adicionais', []);
+
+    // Obter o pedido atual da sessão ou criar um novo array vazio
+    $pedido = session()->get('pedido', []);
+
+    // Gerar um novo ID único para o item no pedido
+    // O ID será baseado no número de itens já existentes na sessão
+    $novoItemId = uniqid(); // Gera um ID único
+
+    // Adicionar o novo item ao pedido
+    $pedido[$novoItemId] = [
+        'item_cardapio' => $itemCardapio,
+        'adicionais' => $adicionais
+    ];
+
+    // Atualizar a sessão com os dados do pedido
+    session()->put('pedido', $pedido);
+
+    // Redirecionar para a página do carrinho
+    return redirect()->route('carrinho.index')->with('success', 'Adicionais adicionados ao pedido com sucesso!');
+}
     
 
 

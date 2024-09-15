@@ -14,14 +14,12 @@ class Pedido extends Model
     public function itens()
     {
         return $this->belongsToMany(ItemCardapio::class, 'pedido_item')
-                    ->withPivot('quantidade', 'preco');
-                    
+                    ->withPivot('quantidade', 'preco', 'adicional_id');
     }
 
     public function adicionais()
     {
-        return $this->belongsToMany(Adicionais::class, 'adicionais_item_pedido')
+        return $this->belongsToMany(Adicionais::class, 'pedido_item')
                     ->withPivot('preco');
-                    
     }
 }

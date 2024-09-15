@@ -13,6 +13,8 @@ class CheckoutController extends Controller
         
         // Recupera o pedido salvo na sessão
         $pedido = session()->get('pedido', []);
+        
+        //dd($pedido);
         $clienteId = session()->get('cliente_id');
 
         // Calcula o subtotal
@@ -32,7 +34,7 @@ class CheckoutController extends Controller
         }
 
         
-
+        
         // dd([
         //     'pedido' => $pedido,
         //     'cliente_id' => $clienteId,
@@ -92,7 +94,7 @@ class CheckoutController extends Controller
     public function detalhesPedido($id)
     {
         $pedido = Pedido::with(['itens'])->findOrFail($id);
-        
+        //dd($pedido);
         return view('pedido.detalhes', compact('pedido'));
     }
 
@@ -114,27 +116,22 @@ class CheckoutController extends Controller
 
 public function finalizarPedido(Request $request)
 {
-    // Verifica se o método de requisição é POST
     if ($request->isMethod('post')) {
-        // Recupera os dados da sessão e do pedido
         $pedido = session()->get('pedido', []);
         $clienteId = session()->get('cliente_id');
         $enderecoId = session()->get('endereco_id');
         $metodoPagamento = $request->input('metodo_pagamento');
 
-        // Valida se todas as informações necessárias estão presentes
         if (!$clienteId || !$enderecoId || !$metodoPagamento) {
             return redirect()->route('checkout.index')->with('error', 'Preencha todas as informações para finalizar o pedido.');
         }
 
-        // Calcula o subtotal
         $subtotal = array_sum(array_map(function ($item) {
             $precoItem = $item['item_cardapio']->preco;
             $quantidade = $item['quantidade'] ?? 1;
             return $precoItem * $quantidade;
         }, $pedido));
 
-        // Cria o pedido
         $novoPedido = Pedido::create([
             'cliente_id' => $clienteId,
             'data_Pedido' => now(),
@@ -143,35 +140,23 @@ public function finalizarPedido(Request $request)
             'total' => $subtotal,
         ]);
 
-        // Adiciona os itens ao pedido
         foreach ($pedido as $item) {
             $novoPedido->itens()->attach($item['item_cardapio']->id, [
                 'quantidade' => $item['quantidade'] ?? 1,
-                'preco' => $item['item_cardapio']->preco
+                'preco' => $item['item_cardapio']->preco,
+                'adicional_id' => $item['adicionais'][0]['id'] ?? null // Adicione lógica se houver múltiplos adicionais
             ]);
         }
 
-        // Adiciona os adicionais ao pedido
-        // foreach ($pedido as $item) {
-        //     if (!empty($item['adicionais'])) {
-        //         foreach ($item['adicionais'] as $adicional) {
-        //             $novoPedido->adicionais()->attach($adicional['id'], [
-        //                 'preco' => $adicional['preco']
-        //             ]);
-        //         }
-        //     }
-        // }
-
-        // Limpa a sessão do pedido
         session()->forget('pedido');
         session()->forget('endereco_id');
         session()->forget('metodo_pagamento');
 
-        // Redireciona para a tela de detalhes do pedido
         return redirect()->route('pedido.detalhes', ['id' => $novoPedido->id])->with('success', 'Pedido finalizado com sucesso!');
     }
 
-    // Se o método de requisição não for POST, retorna um erro
     return redirect()->route('checkout.index')->with('error', 'Método não permitido.');
 }
+
+
 }

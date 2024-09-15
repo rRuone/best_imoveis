@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,28 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 class ItemCardapio extends Model
 {
     use HasFactory;
-    protected $table = 'item_cardapio'; //ajuste porque o laravel padroniza no plural 
-    protected $fillable = ['nome','categoria_id', 'preco', 'foto'];
 
-    public function pedidos(){
-        return $this->belongsTo(Pedido::class, 'pedido_item')
-                    ->withPivot('quantidade', 'preco')
-                    ->withTimestamps();
-    }
+    protected $table = 'item_cardapio';
 
+    protected $fillable = ['nome', 'preco', 'descricao', 'categoria', 'foto'];
 
-    public function adicionais()
+    public function pedidos()
     {
-        return $this->belongsToMany(Adicionais::class, 'adicionais_item_cardapio', 'item_cardapio_id', 'adicionais_id')
-                    ->withPivot('preco', 'quantidade');
+        return $this->belongsToMany(Pedido::class, 'pedido_item')
+                    ->withPivot('quantidade', 'preco', 'adicional_id');
     }
 
     public function categoria(){
         return $this->belongsTo(Categoria::class);
     }
     
-
-
-
 
 }
