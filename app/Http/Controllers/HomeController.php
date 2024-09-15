@@ -11,7 +11,7 @@ class HomeController extends Controller
     {
         // Recupera todas as categorias e seus itens do cardápio
         $categorias = Categoria::with('itensCardapio')->get();
-
+        //dd($categorias);
         // Retorna a view com as categorias e itens
         return view('home.index', compact('categorias'));
     }

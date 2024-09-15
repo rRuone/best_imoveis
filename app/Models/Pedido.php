@@ -11,12 +11,18 @@ class Pedido extends Model
     protected $table = 'pedido'; // Definindo a tabela correta
     protected $fillable = ['cliente_id', 'data_Pedido', 'metdPag', 'status', 'total'];
 
+    /**
+     * Relacionamento com o ItemCardapio através da tabela pivô pedido_item.
+     */
     public function itens()
     {
         return $this->belongsToMany(ItemCardapio::class, 'pedido_item')
                     ->withPivot('quantidade', 'preco', 'adicional_id');
     }
 
+    /**
+     * Relacionamento com Adicionais através da tabela pivô pedido_item.
+     */
     public function adicionais()
     {
         return $this->belongsToMany(Adicionais::class, 'pedido_item')

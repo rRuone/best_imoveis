@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Endereco;
 use App\Models\Pedido;
 use Illuminate\Http\Request;
+use App\Models\PedidoItem;
+use App\Models\PedidoItemAdicional;
+use Illuminate\Support\Facades\DB;
+
+
 
 class CheckoutController extends Controller
 {
@@ -117,6 +122,7 @@ class CheckoutController extends Controller
 public function finalizarPedido(Request $request)
 {
     if ($request->isMethod('post')) {
+        // Recupera os dados da sessão e do pedido
         $pedido = session()->get('pedido', []);
         $clienteId = session()->get('cliente_id');
         $enderecoId = session()->get('endereco_id');
@@ -126,12 +132,14 @@ public function finalizarPedido(Request $request)
             return redirect()->route('checkout.index')->with('error', 'Preencha todas as informações para finalizar o pedido.');
         }
 
+        // Calcula o subtotal
         $subtotal = array_sum(array_map(function ($item) {
             $precoItem = $item['item_cardapio']->preco;
             $quantidade = $item['quantidade'] ?? 1;
             return $precoItem * $quantidade;
         }, $pedido));
 
+        // Cria o pedido
         $novoPedido = Pedido::create([
             'cliente_id' => $clienteId,
             'data_Pedido' => now(),
@@ -140,23 +148,50 @@ public function finalizarPedido(Request $request)
             'total' => $subtotal,
         ]);
 
+        // Adiciona os itens e adicionais ao pedido
         foreach ($pedido as $item) {
-            $novoPedido->itens()->attach($item['item_cardapio']->id, [
+            // Adiciona o item ao pedido
+            $pedidoItem = PedidoItem::create([
+                'pedido_id' => $novoPedido->id,
+                'item_cardapio_id' => $item['item_cardapio']->id,
                 'quantidade' => $item['quantidade'] ?? 1,
                 'preco' => $item['item_cardapio']->preco,
-                'adicional_id' => $item['adicionais'][0]['id'] ?? null // Adicione lógica se houver múltiplos adicionais
             ]);
+
+            // Se houver adicionais, adicione um registro para cada adicional na tabela pivô
+            if (!empty($item['adicionais'])) {
+                foreach ($item['adicionais'] as $adicional) {
+                    PedidoItemAdicional::create([
+                        'pedido_item_id' => $pedidoItem->id,
+                        'adicional_id' => $adicional['id'],
+                        'quantidade' => 1, // Caso deseje adicionar controle de quantidade de adicionais
+                        'preco' => $adicional['preco'],
+                    ]);
+                }
+            }
         }
 
+        // Limpa a sessão do pedido
         session()->forget('pedido');
         session()->forget('endereco_id');
         session()->forget('metodo_pagamento');
 
+        // Redireciona para a tela de detalhes do pedido
         return redirect()->route('pedido.detalhes', ['id' => $novoPedido->id])->with('success', 'Pedido finalizado com sucesso!');
     }
 
     return redirect()->route('checkout.index')->with('error', 'Método não permitido.');
 }
 
+    
+
 
 }
+
+
+
+
+
+
+
+

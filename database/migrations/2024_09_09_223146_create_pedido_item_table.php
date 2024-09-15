@@ -28,16 +28,11 @@ return new class extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
 
-            // Relacionamento opcional com a tabela 'adicionais'
-            $table->foreignId('adicional_id')
-                ->nullable() 
-                ->constrained('adicionais') 
-                ->onDelete('set null') 
-                ->onUpdate('cascade');
+          
             
             // Outros campos
             $table->integer('quantidade');
-            $table->decimal('preco', 8, 2);
+            $table->decimal('preco', 10, 2);
             
             // Criação dos timestamps
             $table->timestamps();

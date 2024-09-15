@@ -17,4 +17,9 @@ class Adicionais extends Model
         return $this->belongsToMany(Pedido::class, 'pedido_item')
                     ->withPivot('preco');
     }
+
+    public function itensCardapio()
+    {
+        return $this->belongsToMany(ItemCardapio::class);
+    }
 }

@@ -19,8 +19,8 @@ class PedidoItem extends Model
         return $this->belongsTo(ItemCardapio::class);
     }
 
-    public function adicional()
+    public function adicionais()
     {
-        return $this->belongsTo(Adicionais::class, 'adicional_id');
+        return $this->belongsTo(Adicionais::class, 'pedido_item_adicional');
     }
 }
