@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pedido;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -24,7 +25,9 @@ class AdminController extends Controller
 
      public function index()
      {
-         return view('admin.pedidos.index');
+
+        $produtosPendentes = Pedido::where('status', 'pendente')->count();
+         return view('admin.pedidos.index', compact('produtosPendentes'));
      }
 
 
