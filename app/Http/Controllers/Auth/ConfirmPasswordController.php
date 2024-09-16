@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ConfirmsPasswords;
+use Illuminate\Http\Request;
 
 class ConfirmPasswordController extends Controller
 {
@@ -25,7 +26,7 @@ class ConfirmPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/admin/dashboard';
 
     /**
      * Create a new controller instance.
@@ -35,5 +36,22 @@ class ConfirmPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    /**
+     * Handle a successful login attempt.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param mixed $user
+     * @return \Illuminate\Http\Response
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        // Verifica se o usuário é um administrador
+        if ($user->isAdmin()) {
+            // Redireciona para o dashboard do admin
+            return redirect()->route('admin.pedidos.index');
+        }
+
     }
 }
