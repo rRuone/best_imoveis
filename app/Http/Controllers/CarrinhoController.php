@@ -13,7 +13,7 @@ class CarrinhoController extends Controller
     {
         $pedido = session()->get('pedido', []);
         // Retorna a view com os itens no carrinho
-        //dd($pedido);
+      
       
         return view('carrinho.index', compact('pedido'));
     }
@@ -57,4 +57,34 @@ class CarrinhoController extends Controller
 
         return redirect()->route('carrinho.index')->with('success', 'Item adicionado ao carrinho.');
     }
+
+    public function update(Request $request)
+    {
+        $itemId = $request->input('item_id');
+        $action = $request->input('action');
+        
+        // Recupera o carrinho da sessão
+        $carrinho = session()->get('carrinho', []);
+        
+        // Verifica se o item existe no carrinho
+        foreach ($carrinho as &$item) {
+            if (isset($item['id']) && $item['id'] == $itemId) {
+                // Atualiza a quantidade com base na ação
+                if ($action == 'increment') {
+                    $item['quantidade']++;
+                } elseif ($action == 'decrement' && $item['quantidade'] > 1) {
+                    $item['quantidade']--;
+                }
+                // Atualiza a sessão com o carrinho modificado
+                session()->put('carrinho', $carrinho);
+                
+                // Retorna a nova quantidade para atualizar a interface
+                return response()->json(['newQuantity' => $item['quantidade']]);
+            }
+        }
+        
+        // Caso o item não seja encontrado, retorna um erro
+        return response()->json(['error' => 'Item não encontrado'], 404);
+    }
+
 }
