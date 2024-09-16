@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\CidadesController;
 use App\Http\Controllers\Admin\EnderecosController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\HomeController;
@@ -31,7 +32,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/admin/index-cidade',[CidadesController::class,'cidades'])->name('cidades.index');
 
 //Usa-se esse prefixo pra agrupar as rotas que tem admin em comum
-Route::prefix('admin')->name('admin.')->group(function(){
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/pedidos', [PedidoController::class, 'index'])->name('admin.pedidos');
     Route::get('/pedidos/{id}', [PedidoController::class, 'show'])->name('admin.pedidos.show');
@@ -107,3 +108,11 @@ Route::get('/sobre', function(){
     return '<h1>Sobre</h1>';
 }
 );
+
+// Auth::routes();
+
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('login', [LoginController::class, 'login']);
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
