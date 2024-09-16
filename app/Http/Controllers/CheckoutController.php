@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Adicionais;
 use App\Models\Endereco;
+use App\Models\ItemCardapio;
 use App\Models\Pedido;
 use Illuminate\Http\Request;
 use App\Models\PedidoItem;
@@ -14,41 +16,42 @@ use Illuminate\Support\Facades\DB;
 class CheckoutController extends Controller
 {
     // Exibe o checkout
-    public function index(Request $request){
-        
-        // Recupera o pedido salvo na sessão
-        $pedido = session()->get('pedido', []);
-        
-        //dd($pedido);
-        $clienteId = session()->get('cliente_id');
+    public function index(Request $request)
+{
+    // Recupera o pedido salvo na sessão
+    $pedido = session()->get('pedido', []);
 
-        // Calcula o subtotal
-        $subtotal = array_sum(array_map(function ($item) {
-            // Se o item tem uma chave 'quantidade', multiplique pelo preço
-            // Caso contrário, apenas some o preço
-            $precoItem = $item['item_cardapio']->preco;
-            $quantidade = $item['quantidade'] ?? 1; // Assume 1 se 'quantidade' não estiver definido
-            return $precoItem * $quantidade;
-        }, $pedido));
-
-        if ($clienteId) {
-            // Busca os endereços do cliente
-            $enderecos = Endereco::where('cliente_id', $clienteId)->get();
-        } else {
-            $enderecos = collect(); // Retorna uma coleção vazia se o cliente não estiver logado
-        }
-
+    // Recupera o ID do cliente da sessão
+    $clienteId = session()->get('cliente_id');
+   
+    // Itera sobre os itens do pedido e carrega adicionais e item_cardapio
+    foreach ($pedido as &$item) {
+        // Carrega o item do cardápio com os relacionamentos necessários
+        $item['item_cardapio'] = ItemCardapio::find($item['item_cardapio']['id']);
         
-        
-        // dd([
-        //     'pedido' => $pedido,
-        //     'cliente_id' => $clienteId,
-        //     'cliente' => $clienteId ? \App\Models\Cliente::find($clienteId) : null
-        // ]);
-
-        return view('checkout.index', compact('pedido','enderecos', 'subtotal'));
+        // Verifica se existem adicionais salvos na sessão para este item
+        $item['adicionais'] = isset($item['adicionais']) ? $item['adicionais'] : [];
     }
 
+    // Calcula o subtotal
+    $subtotal = array_sum(array_map(function ($item) {
+        $precoItem = $item['item_cardapio']->preco;
+        $quantidade = $item['quantidade'] ?? 1;
+        return $precoItem * $quantidade;
+    }, $pedido));
+
+    // Recupera os endereços do cliente, se estiver logado
+    if ($clienteId) {
+        $enderecos = Endereco::where('cliente_id', $clienteId)->get();
+    } else {
+        $enderecos = collect(); // Retorna uma coleção vazia se o cliente não estiver logado
+    }
+    //dd($pedido);
+    // Retorna a view do checkout com os dados do pedido, endereços e subtotal
+    return view('checkout.index', compact('pedido', 'enderecos', 'subtotal'));
+}
+
+    
     
     
 
@@ -119,10 +122,10 @@ class CheckoutController extends Controller
     return redirect()->route('checkout.index');
 }
 
+
 public function finalizarPedido(Request $request)
 {
     if ($request->isMethod('post')) {
-        // Recupera os dados da sessão e do pedido
         $pedido = session()->get('pedido', []);
         $clienteId = session()->get('cliente_id');
         $enderecoId = session()->get('endereco_id');
@@ -134,7 +137,7 @@ public function finalizarPedido(Request $request)
 
         // Calcula o subtotal
         $subtotal = array_sum(array_map(function ($item) {
-            $precoItem = $item['item_cardapio']->preco;
+            $precoItem = $item['item_cardapio']->preco; // Acessa como objeto
             $quantidade = $item['quantidade'] ?? 1;
             return $precoItem * $quantidade;
         }, $pedido));
@@ -148,45 +151,49 @@ public function finalizarPedido(Request $request)
             'total' => $subtotal,
         ]);
 
-        // Adiciona os itens e adicionais ao pedido
         foreach ($pedido as $item) {
-            // Adiciona o item ao pedido
-            $pedidoItem = PedidoItem::create([
+            // Cria o registro na tabela pedido_item
+            $pedidoItemData = [
                 'pedido_id' => $novoPedido->id,
-                'item_cardapio_id' => $item['item_cardapio']->id,
+                'item_cardapio_id' => $item['item_cardapio']->id, // Acessa como objeto
                 'quantidade' => $item['quantidade'] ?? 1,
-                'preco' => $item['item_cardapio']->preco,
-            ]);
+                'preco' => $item['item_cardapio']->preco, // Acessa como objeto
+            ];
 
-            // Se houver adicionais, adicione um registro para cada adicional na tabela pivô
-            if (!empty($item['adicionais'])) {
-                foreach ($item['adicionais'] as $adicional) {
-                    PedidoItemAdicional::create([
-                        'pedido_item_id' => $pedidoItem->id,
-                        'adicional_id' => $adicional['id'],
-                        'quantidade' => 1, // Caso deseje adicionar controle de quantidade de adicionais
-                        'preco' => $adicional['preco'],
-                    ]);
-                }
-            }
+            $pedidoItem = PedidoItem::create($pedidoItemData);
         }
 
-        // Limpa a sessão do pedido
+        
+        // Salva adicionais para o pedido_item
+        foreach ($item['adicionais'] as $adicional) {
+            // Certifica-se de que o adicional contém um ID e preço
+            $pedidoItemAdicionalData = [
+                'pedido_item_id' => $pedidoItem->id, // ID do PedidoItem
+                'adicional_id' => $adicional['id'], // ID do adicional
+                'quantidade' => $adicional['quantidade'] ?? 1,
+                'preco' => $adicional['preco'],
+            ];
+
+            // Cria o adicional para o pedido_item
+            PedidoItemAdicional::create($pedidoItemAdicionalData);
+        }
+
+    
+
+        // Limpar sessão
         session()->forget('pedido');
         session()->forget('endereco_id');
         session()->forget('metodo_pagamento');
 
-        // Redireciona para a tela de detalhes do pedido
         return redirect()->route('pedido.detalhes', ['id' => $novoPedido->id])->with('success', 'Pedido finalizado com sucesso!');
     }
-
-    return redirect()->route('checkout.index')->with('error', 'Método não permitido.');
 }
 
-    
-
-
 }
+
+
+
+
 
 
 

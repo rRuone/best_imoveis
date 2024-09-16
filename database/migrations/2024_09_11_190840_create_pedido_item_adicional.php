@@ -14,27 +14,28 @@ return new class extends Migration
     public function up()
     {
         Schema::create('pedido_item_adicional', function (Blueprint $table) {
-            $table->id(); // ID da tabela pivô
-
-            // Cria a chave estrangeira para a tabela pedido_item
+            // Cria as chaves estrangeiras
             $table->foreignId('pedido_item_id')
                 ->constrained('pedido_item')
                 ->onDelete('cascade');
-
-            // Cria a chave estrangeira para a tabela adicional
+                
             $table->foreignId('adicional_id')
                 ->constrained('adicionais')
                 ->onDelete('cascade');
 
-            // Quantidade de adicionais adicionados
+            // Quantidade de adicionais
             $table->integer('quantidade')->default(1);
 
             // Preço do adicional
             $table->decimal('preco', 8, 2);
 
+            // Define a chave primária composta
+            $table->primary(['pedido_item_id', 'adicional_id']);
+
             $table->timestamps(); // Campos created_at e updated_at
         });
     }
+    
 
     /**
      * Reverse the migrations.

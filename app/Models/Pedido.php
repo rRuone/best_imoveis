@@ -17,15 +17,15 @@ class Pedido extends Model
     public function itens()
     {
         return $this->belongsToMany(ItemCardapio::class, 'pedido_item')
-                    ->withPivot('quantidade', 'preco', 'adicional_id');
+                    ->withPivot('quantidade', 'preco');
     }
 
     /**
      * Relacionamento com Adicionais através da tabela pivô pedido_item.
      */
-    public function adicionais()
-    {
-        return $this->belongsToMany(Adicionais::class, 'pedido_item')
-                    ->withPivot('preco');
-    }
+    // public function adicionais()
+    // {
+    //     return $this->belongsToMany(Adicionais::class, 'pedido_item')
+    //                 ->withPivot('preco');
+    // }
 }

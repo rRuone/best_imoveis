@@ -7,24 +7,20 @@
         @if(empty($pedido))
             <p>Seu carrinho está vazio.</p>
         @else
-            @foreach($pedido as $item)
-                <div class="card">
-                    <div class="card-content">
-                        <span class="card-title">{{ $item['item_cardapio']->nome }}</span>
-                        <p>R$ {{ number_format($item['item_cardapio']->preco, 2, ',', '.') }}</p>
-
-                        {{-- Se houver adicionais, exibe a lista --}}
-                        @if(!empty($item['adicionais']))
-                            {{-- <h5>Adicionais:</h5>
-                            <ul>
-                                @foreach($item['adicionais'] as $adicionalId => $adicional)
-                                    <li>{{ $adicional['nome'] }} - R$ {{ number_format($adicional['preco'], 2, ',', '.') }}</li>
-                                @endforeach
-                            </ul> --}}
-                        @endif
-                    </div>
-                </div>
-            @endforeach
+        @foreach ($pedido as $item)
+        <h3>{{ $item['item_cardapio']->nome }}</h3>
+        <p>Preço: R$ {{ number_format($item['item_cardapio']->preco, 2, ',', '.') }}</p>
+        
+    
+        {{-- @if ($item['adicionais']->isNotEmpty())
+            <h4>Adicionais:</h4>
+            <ul>
+                @foreach ($item['adicionais'] as $adicional)
+                    <li>{{ $adicional->nome }} - R$ {{ number_format($adicional->preco, 2, ',', '.') }}</li>
+                @endforeach
+            </ul>
+        @endif --}}
+    @endforeach
 
             {{-- Exibe os endereços do cliente com checkboxes --}}
             <div class="row">

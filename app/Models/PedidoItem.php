@@ -11,7 +11,7 @@ class PedidoItem extends Model
     protected $table = 'pedido_item';
 
     protected $fillable = [
-        'pedido_id', 'item_cardapio_id', 'adicional_id', 'quantidade', 'preco'
+        'pedido_id', 'item_cardapio_id', 'quantidade', 'preco'
     ];
 
     public function itemCardapio()
@@ -19,8 +19,14 @@ class PedidoItem extends Model
         return $this->belongsTo(ItemCardapio::class);
     }
 
+    public function PedidoItemAdicional()
+    {
+        return $this->belongsTo(PedidoItemAdicional::class);
+    }
+
     public function adicionais()
     {
-        return $this->belongsTo(Adicionais::class, 'pedido_item_adicional');
+        return $this->belongsToMany(Adicionais::class, 'pedido_item_adicional', 'pedido_item_id', 'adicional_id')
+                    ->withPivot('quantidade', 'preco'); // se você precisar dos campos adicionais da tabela pivô
     }
 }

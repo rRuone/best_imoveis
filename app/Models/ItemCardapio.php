@@ -24,6 +24,6 @@ class ItemCardapio extends Model
     
     public function adicionais()
     {
-        return $this->belongsToMany(Adicionais::class, 'pedido_item', 'item_cardapio_id');
+        return $this->belongsToMany(Adicionais::class, 'pedido_item_adicional', 'item_cardapio_id', 'adicional_id');
     }
 }

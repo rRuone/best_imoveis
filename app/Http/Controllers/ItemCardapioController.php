@@ -84,33 +84,36 @@ class ItemCardapioController extends Controller
 
 
     public function salvarAdicionais(Request $request, ItemCardapio $itemCardapio)
-    {
-        // Validar os dados do formulário
-        $request->validate([
-            'adicionais.*.id' => 'exists:adicionais,id', // Verifica se o ID do adicional existe
-        ]);
-    
-        // Obter adicionais do formulário
-        $adicionais = $request->input('adicionais', []);
-    
-        // Obter o pedido atual da sessão ou criar um novo array vazio
-        $pedido = session()->get('pedido', []);
-        
-        // Gerar um novo ID único para o item no pedido
-        $novoItemId = uniqid(); // Gera um ID único
-    
-        // Adicionar o novo item ao pedido
-        $pedido[$novoItemId] = [
-            'item_cardapio' => $itemCardapio,
-            'adicionais' => $adicionais
-        ];
-    
-        // Atualizar a sessão com os dados do pedido
-        session()->put('pedido', $pedido);
-    
-        // Redirecionar para a página do carrinho
-        return redirect()->route('carrinho.index')->with('success', 'Adicionais adicionados ao pedido com sucesso!');
-    }
-    
+{
+    // Validar os dados do formulário
+    $request->validate([
+        'adicionais.*' => 'exists:adicionais,id', // Verifica se os IDs dos adicionais existem
+    ]);
+
+    // Obter os IDs dos adicionais selecionados
+    $adicionaisIds = $request->input('adicionais', []);
+
+    // Recuperar os objetos dos adicionais a partir dos IDs
+    $adicionais = Adicionais::whereIn('id', $adicionaisIds)->get();
+
+    // Obter o pedido atual da sessão ou criar um novo array vazio
+    $pedido = session()->get('pedido', []);
+
+    // Gerar um novo ID único para o item no pedido (caso queira identificar cada item do pedido individualmente)
+    $novoItemId = uniqid(); // Gera um ID único para o item no pedido
+
+    // Adicionar o novo item ao pedido com o objeto ItemCardapio e os objetos Adicionais
+    $pedido[$novoItemId] = [
+        'item_cardapio' => $itemCardapio, // Salva o objeto completo do ItemCardapio
+        'adicionais' => $adicionais // Salva os objetos completos dos adicionais
+    ];
+
+    // Atualizar a sessão com os dados do pedido
+    session()->put('pedido', $pedido);
+
+    // Redirecionar para a página do carrinho com uma mensagem de sucesso
+    return redirect()->route('carrinho.index')->with('success', 'Adicionais adicionados ao pedido com sucesso!');
+}
+
 
 }
