@@ -33,6 +33,10 @@ Route::get('/admin/index-cidade',[CidadesController::class,'cidades'])->name('ci
 //Usa-se esse prefixo pra agrupar as rotas que tem admin em comum
 Route::prefix('admin')->name('admin.')->group(function(){
 
+    Route::get('/pedidos', [PedidoController::class, 'index'])->name('admin.pedidos');
+    Route::get('/pedidos/{id}', [PedidoController::class, 'show'])->name('admin.pedidos.show');
+
+
     Route::get('/cidades',[CidadesController::class, 'cidades'] )->name('cidades.listar');
 
     Route::get('/cidades/salvar',[CidadesController::class, 'formAdicionar'] )->name('cidades.form');

@@ -6,7 +6,24 @@ use App\Models\ItemCardapio;
 use Illuminate\Http\Request;
 
 class PedidoController extends Controller
-{
+{   
+    public function index()
+    {
+        // Obtém todos os pedidos
+        $pedidos = Pedido::all();
+        return view('admin.pedidos.index', compact('pedidos'));
+    }
+
+    public function show($id)
+    {
+        // Obtém o pedido específico com suas relações (itens e adicionais)
+        $pedido = Pedido::with('itens.itemCardapio.adicionais')->findOrFail($id);
+        return view('admin.pedidos.show', compact('pedido'));
+    }
+
+
+
+
     public function store(Request $request)
     {
         // Validação dos dados
