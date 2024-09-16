@@ -21,7 +21,7 @@ class AdminMiddleware
             return $next($request);
         }
 
-        return redirect('/')->with('error', 'Acesso negado: você não tem permissão para acessar essa página.');
+        return redirect()->route('dashboard');
     
     }
 }

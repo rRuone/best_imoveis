@@ -14,7 +14,7 @@
     <div class="container">
         <h4>Gestão de Pedidos</h4>
 
-        @if($pedidos->isEmpty())
+        {{-- @if($pedidos->isEmpty())
             <p>Nenhum pedido encontrado.</p>
         @else
             <table class="striped">
@@ -28,7 +28,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- @foreach($pedidos as $pedido)
+                    @foreach($pedidos as $pedido)
                         <tr>
                             <td>{{ $pedido->id }}</td>
                             <td>{{ $pedido->cliente->nome }}</td>
@@ -38,10 +38,10 @@
                                 <a href="{{ route('admin.pedidos.show', $pedido->id) }}" class="btn blue">Ver Detalhes</a>
                             </td>
                         </tr>
-                    @endforeach --}}
+                    @endforeach
                 </tbody>
             </table>
-        @endif
+        @endif --}}
     </div>
 </body>
 </html>

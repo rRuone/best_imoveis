@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\CidadesController;
 use App\Http\Controllers\Admin\EnderecosController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ClientesController;
@@ -34,7 +35,10 @@ Route::get('/admin/index-cidade',[CidadesController::class,'cidades'])->name('ci
 //Usa-se esse prefixo pra agrupar as rotas que tem admin em comum
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
 
-    Route::get('/pedidos', [PedidoController::class, 'index'])->name('admin.pedidos');
+    //Administrador 
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.pedidos.index');
+
+    //Route::get('/pedidos', [PedidoController::class, 'index'])->name('admin.pedidos');
     Route::get('/pedidos/{id}', [PedidoController::class, 'show'])->name('admin.pedidos.show');
 
 
