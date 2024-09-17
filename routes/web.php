@@ -41,6 +41,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     //Route::get('/pedidos', [PedidoController::class, 'index'])->name('admin.pedidos');
     Route::get('/pedidos/{id}', [PedidoController::class, 'show'])->name('admin.pedidos.show');
     Route::post('/pedidos/avancar/{id}', [PedidoController::class, 'avancar'])->name('pedidos.avancar');
+    Route::post('/pedidos/avancarPr/{id}', [PedidoController::class, 'avancarPr'])->name('pedidos.avancarPr');
 
 
     Route::get('/cidades',[CidadesController::class, 'cidades'] )->name('cidades.listar');

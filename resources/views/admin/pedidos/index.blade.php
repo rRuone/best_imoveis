@@ -7,7 +7,7 @@
             <div class="card-panel orange lighten-1 center-align">
                 <div class="valign-wrapper">
                     <i class="material-icons white-text"><strong>search</strong></i>
-                    <h5 class="white-text" style="margin-left: 8px;"><strong>Em análise</strong></h5>
+                    <h5 class="white-text flow-text" style="margin-left: 8px;"><strong>Pendentes</strong></h5>
                 </div>
                 @if($produtosPendentes->isNotEmpty())
                     @foreach($produtosPendentes as $pedido)
@@ -21,15 +21,14 @@
                     
                     <div class="pedido-info" style="border: 1px solid #ccc; padding: 15px; border-radius: 15px; background-color: #fff; margin-bottom: 20px;">
                         <div class="pedido-info-header">
-                            <p><strong>Pedido:</strong> {{ $pedido->id }} 
+                            <p class="flow-text"><strong>Pedido:</strong> {{ $pedido->id }} 
                                 <span style="margin-left: 20px;">
                                     <i class="material-icons" style="vertical-align: middle;"> <strong>access_time</strong></i>
-                                     {{ $pedido->hora }}</span>
-                            
+                                    {{ \Carbon\Carbon::parse($pedido->created_at)->format('H:i') }}</span>
                         </div>
                         <hr>
                         <p><strong>Cliente:</strong> {{ $pedido->cliente->nome }}</p>
-                        <p><strong>Valor Total:</strong> R$ {{ number_format($pedido->total, 2, ',', '.') }}</p>
+                        <p><strong>Total:</strong> R$ {{ number_format($pedido->total, 2, ',', '.') }}</p>
                         <hr>
                         <p><strong>Endereço:</strong></p>
                         <!-- Botão para avançar o pedido para a próxima etapa -->
@@ -37,7 +36,9 @@
                             @csrf 
                             <button type="submit" class="waves-effect waves-light btn btn-custom">
                                 <strong>Avançar</strong>
-                                <i class="material-icons">chevron_right</i>
+                                <span style="margin-left: 20px;">
+                                    <i class="material-icons">arrow_forward</i>
+                                </span>
                             </button>
                         </form>
                     </div>
@@ -50,9 +51,40 @@
         </div>
         <div class="col s4">
             <div class="card-panel yellow lighten-1 center-align">
-                <i class="material-icons">build</i>
-                <h5>Em produção</h5>
-                <p>Receba pedidos e visualize os que estão em produção</p>
+                <div class="valign-wrapper">
+                    <h5 class="black-text flow-text" style="margin-left: 8px;"><strong>Em produção</strong></h5>
+                </div>
+                @if($pedidosEmProcesso->isNotEmpty())
+                    @foreach($pedidosEmProcesso as $pedido)
+                        <div class="pedido-info" style="border: 1px solid #ccc; padding: 15px; border-radius: 15px; background-color: #fff; margin-bottom: 20px;">
+                            <div>
+                                <p class="flow-text"><strong>Pedido:</strong> {{ $pedido->id }} 
+                                    <span style="margin-left: 20px;">
+                                        <i class="material-icons" style="vertical-align: middle;"> <strong>access_time</strong></i>
+                                        {{ \Carbon\Carbon::parse($pedido->created_at)->format('H:i') }}</span>
+                            </div>
+                            <hr>
+                            <p><strong>Cliente:</strong> {{ $pedido->cliente->nome }} 
+                            <span style="margin-left: 20px;">
+                                <strong>Total:</strong> R$ {{ number_format($pedido->total, 2, ',', '.') }} </p>
+                            </span>
+                            <hr>
+                            <p><strong>Endereço:</strong></p>
+                            <form action="{{route('admin.pedidos.avancarPr', $pedido->id)}}" method="POST" style="display:block;" >
+                                @csrf 
+                                <button type="submit" class="waves-effect waves-light btn btn-custom">
+                                    <strong>Avançar</strong>
+                                    <span style="margin-left: 20px;">
+                                        <i class="material-icons">arrow_forward</i>
+                                    </span>
+                                </button>
+                            </form>
+                        </div>
+                        <hr>
+                    @endforeach
+                @else
+                <p> Nenhum Pedido em Produção</p>
+                @endif
             </div>
         </div>
         <div class="col s4">

@@ -90,5 +90,19 @@ class PedidoController extends Controller
         // Redireciona de volta com uma mensagem de sucesso
         return redirect()->back()->with('success', 'Pedido avançado para Em Produção.');
     }
+
+    public function avancarPr($id){
+
+        $pedido = Pedido::find($id);
+
+        if (!$pedido) {
+            return redirect()->back()->with('error', 'Pedido não encontrado.');
+        }
+
+        $pedido->status = 'concluido';
+        $pedido->save();
+
+        return redirect()->back()->with('success', 'Pedido avançado para Concluido.');
+    }
     
 }

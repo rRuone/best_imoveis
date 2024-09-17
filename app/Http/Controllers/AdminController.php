@@ -28,7 +28,7 @@ class AdminController extends Controller
      {
 
         $produtosPendentes = Pedido::where('status', 'pendente')->get();
-
+        $pedidosEmProcesso = Pedido::where('status', 'em_processo')->get();
          // Adiciona a hora do pedido formatada para cada pedido
          foreach ($produtosPendentes as $pedido) {
             // Assume que `data_pedido` é um campo do tipo datetime no banco de dados
@@ -38,7 +38,7 @@ class AdminController extends Controller
         //dd($produtosPendentes);
 
 
-         return view('admin.pedidos.index', compact('produtosPendentes'));
+         return view('admin.pedidos.index', compact('produtosPendentes', 'pedidosEmProcesso'));
      }
 
 
