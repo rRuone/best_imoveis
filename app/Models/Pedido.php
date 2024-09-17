@@ -20,6 +20,11 @@ class Pedido extends Model
                     ->withPivot('quantidade', 'preco');
     }
 
+    public function cliente()
+    {
+        return $this->belongsTo(Cliente::class);
+    }
+
     /**
      * Relacionamento com Adicionais através da tabela pivô pedido_item.
      */

@@ -21,9 +21,6 @@ class PedidoController extends Controller
         return view('admin.pedidos.show', compact('pedido'));
     }
 
-
-
-
     public function store(Request $request)
     {
         // Validação dos dados
@@ -75,4 +72,23 @@ class PedidoController extends Controller
 
         return redirect()->route('pedidos.index')->with('success', 'Pedido criado com sucesso.');
     }
+
+    public function avancar($id)
+    {
+        // Busca o pedido pelo ID
+        $pedido = Pedido::find($id);
+
+        // Verifica se o pedido foi encontrado
+        if (!$pedido) {
+            return redirect()->back()->with('error', 'Pedido não encontrado.');
+        }
+
+        // Atualiza o status para "em_processo"
+        $pedido->status = 'em_processo';
+        $pedido->save();
+
+        // Redireciona de volta com uma mensagem de sucesso
+        return redirect()->back()->with('success', 'Pedido avançado para Em Produção.');
+    }
+    
 }
