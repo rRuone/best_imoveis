@@ -6,8 +6,15 @@
         <div class="col s4">
             <div class="card-panel orange lighten-1 center-align">
                 <div class="valign-wrapper">
-                    <i class="material-icons white-text"><strong>search</strong></i>
-                    <h5 class="white-text flow-text" style="margin-left: 8px;"><strong>Pendentes</strong></h5>
+                    <i class="material-icons white-text"><strong style="margin-right: 10px;">
+                        search</strong></i>
+                    <span>
+                        <h5 class="white-text flow-text" style="display:flex; align-items: center;">
+                            <strong style="margin-right: 190px;">Pendentes</strong>
+                            <span >{{ $numeroPedidosPendentes }} </span>
+                         </h5>
+                    </span>
+                    
                 </div>
                 @if($produtosPendentes->isNotEmpty())
                     @foreach($produtosPendentes as $pedido)
@@ -52,7 +59,13 @@
         <div class="col s4">
             <div class="card-panel yellow lighten-1 center-align">
                 <div class="valign-wrapper">
-                    <h5 class="black-text flow-text" style="margin-left: 8px;"><strong>Em produção</strong></h5>
+                    <span>
+                        <h5 class="black-text flow-text" style="display:flex; align-items: center;">
+                            <strong style="margin-right:200px;">Em produção</strong>
+                            <span >{{ $numeroPedidosEmProcesso }} </span>
+                         </h5>
+                    </span>
+                  
                 </div>
                 @if($pedidosEmProcesso->isNotEmpty())
                     @foreach($pedidosEmProcesso as $pedido)

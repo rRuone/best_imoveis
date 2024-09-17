@@ -27,6 +27,11 @@ class AdminController extends Controller
      public function index()
      {
 
+        // Conta o número de pedidos pendentes e em processo
+        $numeroPedidosPendentes = Pedido::where('status', 'pendente')->count();
+        $numeroPedidosEmProcesso = Pedido::where('status', 'em_processo')->count();
+
+
         $produtosPendentes = Pedido::where('status', 'pendente')->get();
         $pedidosEmProcesso = Pedido::where('status', 'em_processo')->get();
          // Adiciona a hora do pedido formatada para cada pedido
@@ -38,7 +43,8 @@ class AdminController extends Controller
         //dd($produtosPendentes);
 
 
-         return view('admin.pedidos.index', compact('produtosPendentes', 'pedidosEmProcesso'));
+         return view('admin.pedidos.index', compact('produtosPendentes', 'pedidosEmProcesso', 
+                    'numeroPedidosPendentes', 'numeroPedidosEmProcesso'));
      }
 
 
