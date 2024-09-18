@@ -104,5 +104,9 @@ class PedidoController extends Controller
 
         return redirect()->back()->with('success', 'Pedido avançado para Concluido.');
     }
+
+    public function finalizado($id){
+        
+    }
     
 }

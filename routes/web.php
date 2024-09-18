@@ -1,9 +1,9 @@
 <?php
 
+
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdicionaisController;
 use App\Http\Controllers\Admin\CategoriasController;
-use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\Admin\CidadesController;
 use App\Http\Controllers\Admin\EnderecosController;
 use App\Http\Controllers\AdminController;
@@ -42,6 +42,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('/pedidos/{id}', [PedidoController::class, 'show'])->name('admin.pedidos.show');
     Route::post('/pedidos/avancar/{id}', [PedidoController::class, 'avancar'])->name('pedidos.avancar');
     Route::post('/pedidos/avancarPr/{id}', [PedidoController::class, 'avancarPr'])->name('pedidos.avancarPr');
+    Route::post('/pedidos/finalizado/{id}', [PedidoController::class, 'finalizado'])->name('pedidos.finalizado');
 
 
     Route::get('/cidades',[CidadesController::class, 'cidades'] )->name('cidades.listar');
