@@ -33,9 +33,11 @@
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
                     <!-- Left Side Of Navbar -->
+                    @auth
                     <li><a href="{{ url('/index-itemCardapio') }}">Cardápio</a></li>
                     {{-- <li><a href="{{ url('/admin/products') }}">Produtos</a></li>
                     <li><a href="{{ url('/admin/orders') }}">Pedidos</a></li> --}}
+                    @endauth
 
                     <!-- Authentication Links -->
                     @guest
@@ -68,9 +70,12 @@
 
         <!-- Mobile Menu -->
         <ul class="sidenav" id="mobile-demo">
+            @auth
             <li><a href="{{ url('/index-itemCardapio') }}">Cardápio</a></li>
             <li><a href="{{ url('/admin/products') }}">Produtos</a></li>
             <li><a href="{{ url('/admin/orders') }}">Pedidos</a></li>
+            @endauth
+            
             @guest
                 @if (Route::has('login'))
                     <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
