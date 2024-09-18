@@ -2,8 +2,11 @@
 
 @section('content')
     <div class="container">
-        <br>
-        <h4>Lista de Adicionais</h4>
+        <div class="header-container">
+            <br>
+            <h4 class="inline">Lista de Adicionais</h4>
+            <a href="{{ route('admin.adicionais.create') }}" class="btn-small waves-effect waves-light gren inline">Adicionar</a>
+        </div>
         <hr>
         <section class="section">
             <div class="table-container">
@@ -34,6 +37,28 @@
     </div>
 
     <style>
+
+        .header-container {
+            display: flex;
+            align-items: center; /* Alinha verticalmente ao centro */
+            justify-content: space-between; /* Espaça igualmente entre os itens */
+            margin-bottom: 2px; /* Espaço abaixo do cabeçalho */
+        }
+
+        hr {
+            margin-top: 1px; /* Diminui o espaço acima do hr */
+            margin-bottom: 20px; /* Espaço abaixo do hr */
+        }
+
+        .header-container h4 {
+            margin: 1%; /* Remove margem padrão do título */
+        }
+
+        .header-container .btn-small {
+            margin-left: auto; /* Alinha o botão à direita */
+        }
+
+   
         .table-container {
             max-width: 70%; /* Ajuste a largura máxima da tabela conforme necessário */
             margin: 0 auto; /* Centraliza o container da tabela */
@@ -55,8 +80,8 @@
             background-color: #f5f5f5; /* Cor de fundo para o cabeçalho */
         }
 
-        .btn-small {
-            padding: 5px 10px;
+        .btn-small {   /*Botão adicionar  */
+            padding: 5px 10px; 
             font-size: 12px;
         }
     </style>

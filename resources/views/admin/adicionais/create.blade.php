@@ -2,7 +2,6 @@
 @section('content')
 <div class="section container">
     <div class="header-container">
-        <br>
         <h4 class="inline">Adicionar Adicional</h4>
         <a href="{{ route('admin.adicionais.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a>
     </div>
@@ -45,15 +44,26 @@
             display: flex;
             align-items: center; /* Alinha verticalmente ao centro */
             justify-content: space-between; /* Espaça igualmente entre os itens */
-            margin-bottom: 20px; /* Espaço abaixo do cabeçalho */
+            margin-bottom: 1px; /* Espaço abaixo do cabeçalho */
+            
+        }
+
+        hr {
+            margin-top: 1px; /* Diminui o espaço acima do hr */
+            margin-bottom: 20px; /* Espaço abaixo do hr */
         }
 
         .header-container h4 {
-            margin: 0; /* Remove margem padrão do título */
+            margin: 1%; /* Remove margem padrão do título */
         }
 
         .header-container .btn-small {
             margin-left: auto; /* Alinha o botão à direita */
+        }
+
+        hr {
+            margin-top: 5px; /* Diminui o espaço acima do hr */
+            margin-bottom: 20px; /* Espaço abaixo do hr */
         }
 
         .input-field {
