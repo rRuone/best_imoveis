@@ -29,7 +29,7 @@
                         <div class="pedido-info-header">
                             <p class="flow-text"><strong>Pedido:</strong> {{ $pedido->id }} 
                                 <span style="margin-left: 110px;">
-                                    <i class="material-icons" style="vertical-align: middle;"> <strong>timelapse</strong></i>
+                                    <i class="material-icons" style="vertical-align: middle;"> <strong>access_time</strong></i>
                                     {{ \Carbon\Carbon::parse($pedido->created_at)->format('H:i') }}</span>
                             </p>
                         </div>
@@ -77,7 +77,7 @@
                             <div>
                                 <p class="flow-text"><strong>Pedido:</strong> {{ $pedido->id }} 
                                     <span style="margin-left: 100px;">
-                                        <i class="material-icons" style="vertical-align: middle;"> <strong>timelapse</strong></i>
+                                        <i class="material-icons" style="vertical-align: middle;"> <strong>access_time</strong></i>
                                         {{ \Carbon\Carbon::parse($pedido->created_at)->format('H:i') }}</span>
                                 </p>
                             </div>
