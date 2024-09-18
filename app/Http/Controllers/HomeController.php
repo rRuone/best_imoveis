@@ -10,6 +10,7 @@ class HomeController extends Controller
     
     public function index()
     {
+        
         // Recupera todas as categorias e seus itens do cardápio
         $categorias = Categoria::with('itensCardapio')->get();
         //dd($categorias);

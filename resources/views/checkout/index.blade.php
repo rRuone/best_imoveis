@@ -8,19 +8,9 @@
             <p>Seu carrinho está vazio.</p>
         @else
         @foreach ($pedido as $item)
-        <h3>{{ $item['item_cardapio']->nome }}</h3>
-        <p>Preço: R$ {{ number_format($item['item_cardapio']->preco, 2, ',', '.') }}</p>
+            <h3>{{ $item['item_cardapio']->nome }} - R$ {{ number_format($item['item_cardapio']->preco, 2, ',', '.') }}</h3>
         
-    
-        {{-- @if ($item['adicionais']->isNotEmpty())
-            <h4>Adicionais:</h4>
-            <ul>
-                @foreach ($item['adicionais'] as $adicional)
-                    <li>{{ $adicional->nome }} - R$ {{ number_format($adicional->preco, 2, ',', '.') }}</li>
-                @endforeach
-            </ul>
-        @endif --}}
-    @endforeach
+            @endforeach
 
             {{-- Exibe os endereços do cliente com checkboxes --}}
             <div class="row">
@@ -88,14 +78,13 @@
                 <h5 class="h5-header">Subtotal:</h5>
                 <p>R$ {{ number_format($subtotal, 2, ',', '.') }}</p>
             </div>
-
+            <hr>
             {{-- Formulário para finalizar o pedido --}}
-            <div class="card-panel">
-                <h5 class="h5-header">Finalizar Pedido:</h5>
+            <div class="card-panel" style="display: flex; justify-content: center;">
                 <form action="{{ route('checkout.finalizar') }}" method="POST">
                     @csrf
                     <input type="hidden" name="metodo_pagamento" value="{{ session('metodo_pagamento') }}">
-                    <button class="btn waves-effect waves-light" type="submit">Finalizar Pedido</button>
+                    <button type="submit" class="waves-effect waves-light btn btn-custom">Finalizar Pedido</button>
                 </form>
             </div>
         @endif

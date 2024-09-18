@@ -14,7 +14,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemCardapioController;
 use App\Http\Controllers\CarrinhoController;
 use App\Http\Controllers\PedidoController;
-
+use App\Http\Controllers\SessaoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +26,9 @@ use App\Http\Controllers\PedidoController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Home
+
+//Para reniciar a sessão atual 
+//Route::get('/reiniciar-sessao', [SessaoController::class, 'reiniciarSessao'])->name('sessao.reiniciar');
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index'); 
 

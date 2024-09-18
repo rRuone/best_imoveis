@@ -1,24 +1,6 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Cardápio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <style>
-        .card {
-            width: 100%;
-            max-width: 300px;
-            margin: 10px auto;
-        }
-        .card-image img {
-            height: 150px;
-            object-fit: cover;
-        }
-    </style>
-</head>
-<body>
+@extends('admin.layouts.principal')
+
+@section('conteudo-principal')
     <div class="container">
         <h4>Bem-vindo à Master Dog</h4>
         <p>Explore nosso cardápio!</p>
@@ -43,16 +25,14 @@
                                 <p>R$ {{ number_format($item->preco, 2, ',', '.') }}</p>
                                 <p>{{ $item->descricao }}</p>
                             </div>
-                            <div class="card-action">
-                                <a href="{{ route('itemCardapio.product', $item->id) }}">Ver Detalhes</a>
-                            </div>
                         </div>
                     </div>
                 @endforeach
+                <hr>
             </div>
         @endforeach
+        
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-</body>
-</html>
+@endsection

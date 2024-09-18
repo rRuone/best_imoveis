@@ -1,7 +1,7 @@
 @extends('admin.layouts.principal')
 
 @section('conteudo-principal')
-    <h1>Lista de Adicionais</h1>
+    <h4>Lista de Adicionais</h4>
     <section class="section">
         <table class="highight">
             <thead>
