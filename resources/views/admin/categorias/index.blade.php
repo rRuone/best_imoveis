@@ -11,7 +11,7 @@
                     <thead>
                         <tr>
                             <th>Categoria</th>
-                            <th>Ações</th>
+                            {{-- <th>Ações</th> --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -19,8 +19,8 @@
                             <tr>
                                 <td>{{ $categoria->nome }}</td>
                                 <td class="right-align">
-                                    <a href="#" class="btn-small waves-effect waves-light red">Excluir</a> 
-                                    <a href="#" class="btn-small waves-effect waves-light orange">Remover</a>
+                                    {{-- <a href="#" class="btn-small waves-effect waves-light blue">Editar</a> 
+                                    <a href="#" class="btn-small waves-effect waves-light red">Remover</a> --}}
                                 </td>
                             </tr>
                         @empty
