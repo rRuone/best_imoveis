@@ -20,7 +20,7 @@
         <form action="{{ route('admin.adicionais.store') }}" method="POST" class="form-container">
             @csrf
             <div class="input-field">
-                <label for="nome">Nome do Adicional</label>
+                <label for="nome">Nome do Adicional*</label>
                 <input type="text" id="nome" name="nome" value="{{ old('nome') }}">
             </div>
 
