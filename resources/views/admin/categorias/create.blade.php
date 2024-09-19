@@ -3,7 +3,7 @@
 <div class="section container">
     <div class="header-container">
         <br>
-        <h4 class="inline">Adicionar Categorial</h4>
+        <h4 class="inline">Adicionar Categoriais</h4>
         <a href="{{ route('admin.categorias.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a>
     </div>
     <hr>
