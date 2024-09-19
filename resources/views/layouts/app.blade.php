@@ -61,7 +61,7 @@
         <ul id="dropdownCardapio" class="dropdown-content">
             <li><a href="{{ url('/index-itemCardapio') }}">Cardápio</a></li>
             <li><a href="{{ url('/admin/index-adicionais') }}">Adicionais</a></li>
-            <li><a href="{{ url('/admin/index-categorias') }}">Categoria</a></li>
+            <li><a href="{{ url('/admin/index-categorias') }}">Categorias</a></li>
         </ul>
 
         <!-- Dropdown Structure for user-->
@@ -80,8 +80,8 @@
         <ul class="sidenav" id="mobile-demo">
             @auth
             <li><a href="{{ url('/index-itemCardapio') }}">Cardápio</a></li>
-            <li><a href="{{ url('/admin/products') }}">Produtos</a></li>
-            <li><a href="{{ url('/admin/orders') }}">Pedidos</a></li>
+            <li><a href="{{ url('/admin/index-adicionais') }}">Adicionais</a></li>
+            <li><a href="{{ url('/admin/index-categorias') }}">Categorias</a></li>
             @endauth
             
             @guest
