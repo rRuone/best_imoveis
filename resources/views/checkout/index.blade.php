@@ -2,11 +2,11 @@
 
 @section('conteudo-principal')
     <div class="container">
-        <h4>Seu Pedido</h4>
 
         @if(empty($pedido))
             <p>Seu carrinho está vazio.</p>
         @else
+        
         @foreach ($pedido as $item)
             <h3>{{ $item['item_cardapio']->nome }} - R$ {{ number_format($item['item_cardapio']->preco, 2, ',', '.') }}</h3>
         
@@ -80,13 +80,16 @@
             </div>
             <hr>
             {{-- Formulário para finalizar o pedido --}}
-            <div class="card-panel" style="display: flex; justify-content: center;">
-                <form action="{{ route('checkout.finalizar') }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="metodo_pagamento" value="{{ session('metodo_pagamento') }}">
-                    <button type="submit" class="waves-effect waves-light btn btn-custom">Finalizar Pedido</button>
-                </form>
+            <div class="row">
+                <div class="col s12 center-align">
+                    <form action="{{ route('checkout.finalizar') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="metodo_pagamento" value="{{ session('metodo_pagamento') }}">
+                        <button type="submit" class="waves-effect waves-light btn btn-custom">Finalizar Pedido</button>
+                    </form>
+                </div>
             </div>
+            
         @endif
 
         <style>

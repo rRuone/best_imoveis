@@ -1,20 +1,15 @@
 @extends('admin.layouts.principal')
 
 @section('conteudo-principal')
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Carrinho</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-</head>
-<body>
+    
     <div class="container">
-        <h4>Carrinho</h4>
-
+        <div class="header-container">
+            {{-- <a href="{{ route('home.index') }}" class=" waves-effect waves-light">
+                <i class="material-icons black-text">arrow_back</i>
+            </a> --}}
+            <h4 class="inline">Detalhes do Pedido</h4>
+        </div>
+        <hr>
         {{-- Verifica se o pedido está vazio --}}
         @if(empty($pedido))
             <p>Seu carrinho está vazio.</p>
@@ -45,14 +40,13 @@
                         <span class="quantity" data-id="{{ $item['id'] }}">{{ $item['quantidade'] }}</span>
                         <button class="btn decrement" data-id="{{ $item['id'] }}">-</button>
                     </div> --}}
-                </div>
             </div>
-            
+        </div>
             @endforeach
         @endif
 
         {{-- Link para avançar para o próximo passo --}}
-        <a href="{{ route('cliente.create') }}" class="btn waves-effect waves-light">Avançar</a>
+        <a href="{{ route('cliente.create') }}" class="btn-small waves-effect waves-light gren inline">Avançar</a>
     </div>
 
     {{-- <script>
@@ -89,6 +83,5 @@
 });
 
     </script> --}}
-</body>
-</html>
+
 @endsection
