@@ -106,7 +106,13 @@ class PedidoController extends Controller
     }
 
     public function finalizado($id){
-        
+        $pedido = Pedido::find($id);
+
+        $pedido->status = 'finalizado';
+        $pedido->save();
+
+        return redirect()->back()->with('success', 'Pedido finalizado.');
+
     }
     
 }

@@ -157,7 +157,7 @@ public function finalizarPedido(Request $request)
                 'pedido_id' => $novoPedido->id,
                 'item_cardapio_id' => $item['item_cardapio']->id, // Acessa como objeto
                 'quantidade' => $item['quantidade'] ?? 1,
-                'preco' => $item['item_cardapio']->preco, // Acessa como objeto
+                
             ];
 
             $pedidoItem = PedidoItem::create($pedidoItemData);
@@ -171,7 +171,7 @@ public function finalizarPedido(Request $request)
                 'pedido_item_id' => $pedidoItem->id, // ID do PedidoItem
                 'adicional_id' => $adicional['id'], // ID do adicional
                 'quantidade' => $adicional['quantidade'] ?? 1,
-                'preco' => $adicional['preco'],
+               
             ];
 
             // Cria o adicional para o pedido_item

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('cliente_id')->constrained()->onDelete('cascade');
             $table->dateTime('data_Pedido')->useCurrent();
             $table->string('metdPag');
-            $table->enum('status', ['pendente', 'em_processo', 'concluido', 'cancelado'])->default('pendente');
+            $table->enum('status', ['pendente', 'em_processo', 'concluido', 'finalizado','cancelado'])->default('pendente');
             $table->decimal('total', 8, 2);
             $table->timestamps();
         });

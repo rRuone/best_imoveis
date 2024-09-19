@@ -15,7 +15,7 @@ class PedidoItemAdicional extends Model
         'pedido_item_id',
         'adicional_id',
         'quantidade',
-        'preco',
+
     ];
 
     // Desativa a auto-incrementação, pois a chave primária não é auto-incrementada

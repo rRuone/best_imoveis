@@ -180,7 +180,7 @@
                             </p>
                             <hr>
                             {{-- <p><strong>Endereço:</strong></p> --}}
-                            <form action="" method="POST">
+                            <form action="{{route('admin.pedidos.finalizado', $pedido->id)}}" method="POST">
                                 @csrf
                                 <button  button type="submit" style="margin-left:110px" class="waves-effect waves-light btn btn-custom">
                                     <strong>Finalizar</strong>
