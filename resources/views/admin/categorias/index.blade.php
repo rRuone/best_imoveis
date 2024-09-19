@@ -1,9 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <br>
-    <h4>Lista de Categorias</h4>
-    <hr>
+    <div class="header-container">
+        <br>
+        <h4>Lista de Categorias</h4>
+        <a href="{{ route('admin.categorias.create') }}" class="btn-small waves-effect waves-light gren inline">Adicionar</a>
+    </div>
+        <hr>
     <div class="container">
         <section class="section">
             <div class="table-container">
@@ -35,6 +38,27 @@
     </div>
 
     <style>
+
+        .header-container {
+            display: flex;
+            align-items: center; /* Alinha verticalmente ao centro */
+            justify-content: space-between; /* Espaça igualmente entre os itens */
+            margin-bottom: 2px; /* Espaço abaixo do cabeçalho */
+        }
+
+        hr {
+            margin-top: 1px; /* Diminui o espaço acima do hr */
+            margin-bottom: 20px; /* Espaço abaixo do hr */
+        }
+
+        .header-container h4 {
+            margin: 1%; /* Remove margem padrão do título */
+        }
+
+        .header-container .btn-small {
+            margin-left: auto; /* Alinha o botão à direita */
+        }
+        
         .table-container {
             max-width: 70%; /* Ajuste a largura máxima da tabela conforme necessário */
             margin: 0 auto; /* Centraliza o container da tabela */

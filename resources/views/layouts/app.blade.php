@@ -34,9 +34,11 @@
                 <ul class="right hide-on-med-and-down">
                     <!-- Left Side Of Navbar -->
                     @auth
-                    <li><a href="{{ url('/index-itemCardapio') }}">Cardápio</a></li>
-                    {{-- <li><a href="{{ url('/admin/products') }}">Produtos</a></li>
-                    <li><a href="{{ url('/admin/orders') }}">Pedidos</a></li> --}}
+                    <li>
+                        <a class="dropdown-trigger" href="#!" data-target="dropdownCardapio">
+                            Cardápio<i class="material-icons right">arrow_drop_down</i>
+                        </a>
+                    </li>
                     @endauth
 
                     <!-- Authentication Links -->
@@ -56,7 +58,13 @@
             </div>
         </nav>
 
-        <!-- Dropdown Structure -->
+        <ul id="dropdownCardapio" class="dropdown-content">
+            <li><a href="{{ url('/index-itemCardapio') }}">Cardápio</a></li>
+            <li><a href="{{ url('/admin/index-adicionais') }}">Adicionais</a></li>
+            <li><a href="{{ url('/admin/index-categorias') }}">Categoria</a></li>
+        </ul>
+
+        <!-- Dropdown Structure for user-->
         <ul id="dropdown1" class="dropdown-content">
             {{-- <li><a href="#!">Meu Perfil</a></li> --}}
             <li class="divider"></li>
