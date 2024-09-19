@@ -1,37 +1,59 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Adicionar Adicionais</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+@extends('admin.layouts.principal')
+
+@section('conteudo-principal')
+
     <style>
+          .header-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px; /* Ajuste o espaço inferior conforme necessário */
+    }
+
+   
+    .header-container a {
+        margin-right: 20px; /* Espaço entre o ícone e o título */
+    }
+
+    .header-container h4 {
+        margin: 0; /* Remove a margem padrão do título */
+    }
+
         .card {
             width: 100%;
             max-width: 300px;
             margin: 10px auto;
         }
+    
         .card-image img {
             height: 150px;
             object-fit: cover;
         }
+
         .form-container {
             margin-top: 20px;
         }
+
         .btn-container {
             margin-top: 20px;
             text-align: right; /* Alinha o botão à direita */
         }
-        .input-field {
-            margin-bottom: 10px; /* Espaçamento entre os adicionais */
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h4>Detalhes do produto</h4>
 
+        .input-field {
+        margin-bottom: 10px; /* Espaçamento entre os adicionais */
+        }
+
+    </style>
+
+    <div class="container">
+        
+            <div class="header-container">
+                <a href="{{ route('home.index') }}" class=" waves-effect waves-light">
+                    <i class="material-icons black-text">arrow_back</i>
+                </a>
+                <h4 class="inline">Detalhes do Pedido</h4>
+            </div>
+            <hr>
+        
         <div class="card">
             <div class="card-image">
                 @if($itemCardapio->foto)
@@ -66,7 +88,6 @@
             </div>
         </form>
     </div>
+@endsection
+    
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-</body>
-</html>
