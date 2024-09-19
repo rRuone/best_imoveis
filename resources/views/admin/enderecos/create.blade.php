@@ -52,7 +52,7 @@
                 @enderror
             </div>
 
-            <button class="btn waves-effect waves-light" type="submit">Salvar Endereço</button>
+            <button class="btn-small waves-effect waves-light" type="submit">Salvar Endereço</button>
         </form>
     </div>
 

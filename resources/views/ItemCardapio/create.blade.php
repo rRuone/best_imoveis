@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="section container">
         <div class="header-container">
@@ -8,8 +7,6 @@
             <a href="{{ route('itemCardapio.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a>
         </div>
         <hr>
-
-        
 
         <!-- Mensagens de erro -->
         @if($errors->any())
@@ -75,7 +72,7 @@
     </script>
      <style>
 
-.form-container{
+    .form-container{
             max-width: 70%; 
             margin: 0 auto; 
         }
