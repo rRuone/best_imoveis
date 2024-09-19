@@ -1,9 +1,11 @@
 @extends('admin.layouts.principal')
 
 @section('conteudo-principal')
-    <div class="container">
-        <h4>Criar Novo Endereço</h4>
-
+    <div class="section container">
+        <div class="header-container">
+            <h4>Criar Novo Endereço</h4>
+            <hr>
+        </div>
         <form action="{{ route('admin.enderecos.store') }}" method="POST">
             @csrf
 
