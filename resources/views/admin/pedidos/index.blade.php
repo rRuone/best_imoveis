@@ -103,12 +103,12 @@
                                 <br>
                                 <p>
                                     @php
-                                        $telefone = $pedido->cliente->telefone;
-                                        if(strlen($telefone) == 11) { // Verifica se o número tem 11 dígitos (incluindo DDD)
-                                            $telefoneFormatado = '(' . substr($telefone, 0, 2) . ') ' . substr($telefone, 2, 5) . '-' . substr($telefone, 7);
-                                        } else {
-                                            $telefoneFormatado = $telefone; // Caso não tenha 11 dígitos, exibe o número como está
-                                        }
+                                    $telefone = $pedido->cliente->telefone;
+                                    if(strlen($telefone) == 11) { // Verifica se o número tem 11 dígitos (incluindo DDD)
+                                        $telefoneFormatado = '(' . substr($telefone, 0, 2) . ') ' . substr($telefone, 2, 5) . '-' . substr($telefone, 7);
+                                    } else {
+                                        $telefoneFormatado = $telefone; // Caso não tenha 11 dígitos, exibe o número como está
+                                    }
                                     @endphp
                                     {{$telefoneFormatado}}
                                 </p>
