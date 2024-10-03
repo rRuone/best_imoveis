@@ -87,4 +87,20 @@ class CarrinhoController extends Controller
         return response()->json(['error' => 'Item não encontrado'], 404);
     }
 
+
+    public function avancar()
+    {
+        // Verifica se o cliente está logado (presente na sessão)
+        $clienteId = session()->get('cliente_id');
+
+        if ($clienteId) {
+            // Se o cliente estiver logado, redireciona para o checkout
+            return redirect()->route('checkout.index');
+        } else {
+            // Se o cliente não estiver logado, redireciona para a página de criação de cliente
+            return redirect()->route('cliente.create')->with('error', 'Por favor, crie ou faça login para continuar.');
+        }
+    }
+
+
 }

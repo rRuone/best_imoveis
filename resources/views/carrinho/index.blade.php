@@ -45,8 +45,13 @@
             @endforeach
         @endif
 
-        {{-- Link para avançar para o próximo passo --}}
-        <a href="{{ route('cliente.create') }}" class="btn-small waves-effect waves-light gren inline">Avançar</a>
+         {{-- Link para avançar para o próximo passo (formulário) --}}
+         <form action="{{ route('carrinho.avancar') }}" method="POST">
+            @csrf
+            <button type="submit" class="btn-small waves-effect waves-light gren inline">Avançar</button>
+        </form>
+
+        
     </div>
 
     {{-- <script>

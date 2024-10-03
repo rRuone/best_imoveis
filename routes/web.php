@@ -101,7 +101,7 @@ Route::post('itemCardapio/{itemCardapio}/salvar-adicionais', [ItemCardapioContro
 Route::get('/carrinho', [CarrinhoController::class, 'index'])->name('carrinho.index');
 Route::post('/carrinho/store/{id}', [CarrinhoController::class, 'store'])->name('carrinho.store');
 Route::put('/carrinho/update', [CarrinhoController::class, 'update'])->name('carrinho.update');
-
+Route::post('/carrinho/avancar', [CarrinhoController::class, 'avancar'])->name('carrinho.avancar');
 
 // Pedidos
 Route::post('/pedidos', [PedidoController::class, 'store'])->name('pedidos.store');
