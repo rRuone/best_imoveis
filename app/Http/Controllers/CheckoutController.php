@@ -23,6 +23,7 @@ class CheckoutController extends Controller
 
     // Recupera o ID do cliente da sessão
     $clienteId = session()->get('cliente_id');
+
    
     // Itera sobre os itens do pedido e carrega adicionais e item_cardapio
     foreach ($pedido as &$item) {
@@ -184,7 +185,8 @@ public function finalizarPedido(Request $request)
         session()->forget('pedido');
         session()->forget('endereco_id');
         session()->forget('metodo_pagamento');
-
+        session()->forget('cliente_id'); 
+        
         return redirect()->route('pedido.detalhes', ['id' => $novoPedido->id])->with('success', 'Pedido finalizado com sucesso!');
     }
 }
