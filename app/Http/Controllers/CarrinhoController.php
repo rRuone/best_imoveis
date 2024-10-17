@@ -102,5 +102,28 @@ class CarrinhoController extends Controller
         }
     }
 
+    public function removeCarrinho(Request $request, $index){
+        // Recupera o carrinho da sessão
+    $pedido = session()->get('pedido', []);
+
+    // Verifica se o item existe no carrinho
+    if (isset($pedido[$index])) {
+        // Remove o item pelo índice
+        unset($pedido[$index]);
+
+        // Reorganiza os índices do array para evitar lacunas
+        $pedido = array_values($pedido);
+
+        // Atualiza a sessão com o carrinho atualizado
+        session()->put('pedido', $pedido);
+
+        // Redireciona para o carrinho atualizado com mensagem de sucesso
+        return redirect()->route('carrinho.index')->with('success', 'Item removido do carrinho com sucesso!');
+    }
+
+    // Se o item não for encontrado, redireciona de volta para o carrinho com mensagem de erro
+    return redirect()->route('carrinho.index')->with('error', 'Item não encontrado no carrinho.');
+
+    }
 
 }

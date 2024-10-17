@@ -102,6 +102,8 @@ Route::get('/carrinho', [CarrinhoController::class, 'index'])->name('carrinho.in
 Route::post('/carrinho/store/{id}', [CarrinhoController::class, 'store'])->name('carrinho.store');
 Route::put('/carrinho/update', [CarrinhoController::class, 'update'])->name('carrinho.update');
 Route::post('/carrinho/avancar', [CarrinhoController::class, 'avancar'])->name('carrinho.avancar');
+Route::delete('/carrinho/remover{id}',[CarrinhoController::class, 'removeCarrinho'])->name('carrinho.remover');
+
 
 // Pedidos
 Route::post('/pedidos', [PedidoController::class, 'store'])->name('pedidos.store');

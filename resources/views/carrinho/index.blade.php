@@ -33,6 +33,14 @@
                             @endforeach
                         </ul>
                     @endif
+
+                    <div style="position: absolute; top: 10px; right: 10px;">
+                        <form action="{{ route('carrinho.remover', $index) }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn-floating waves-effect waves-light red"><i class="material-icons">clear</i> </button>
+                        </form>
+                    </div>
             
                     {{-- <!-- Botões de incremento e decremento -->
                     <div class="input-field col s12">
