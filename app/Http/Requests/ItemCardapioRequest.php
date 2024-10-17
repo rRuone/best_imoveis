@@ -24,7 +24,7 @@ class ItemCardapioRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome' => 'required|string|max:255',
+            'nome' => 'required',
             'preco' => 'required',
             'categoria_id' => 'required|exists:categorias,id',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', 
@@ -34,14 +34,14 @@ class ItemCardapioRequest extends FormRequest
      /**
      * Obtenha as mensagens de erro personalizadas para as regras de validação.
      *
-     * @return array
+     * 
      */
-    public function messages()
+    public function messages(): array
     {
         return [
             'nome.required' => 'O nome do item é obrigatório.',
             
-            'preco.numeric' => 'O preço deve ser um valor numérico.',
+            'preco.required' => 'O preço deve ser um valor numérico.',
         ];
     }
 }

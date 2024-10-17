@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('item_cardapio', function (Blueprint $table) {
             $table->id(); 
-            $table->string('nome', 20); 
+            $table->string('nome', 50); 
             $table->decimal('preco', 10, 2); 
             $table->string('categoria'); 
             $table->binary('foto')->nullable(); 

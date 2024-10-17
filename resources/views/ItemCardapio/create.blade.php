@@ -10,14 +10,14 @@
 
         <!-- Mensagens de erro -->
         @if($errors->any())
-            <div class="card-panel red lighten-4">
-                <span class="red-text">
-                    @foreach ($errors->all() as $error)
-                        {{ $error }}<br>
-                    @endforeach
-                </span>
-            </div>
+            <span style="color: #ff0000">
+                @foreach ($errors->all() as $error)
+                    {{ $error }}<br>
+                @endforeach
+            </span>
+            <br>
         @endif
+        
         <div class="section container">
             <form action="{{ route('itemCardapio.store') }}" method="POST" enctype="multipart/form-data" class="form-container">
                 @csrf

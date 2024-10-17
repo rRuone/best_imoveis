@@ -40,6 +40,7 @@ class ItemCardapioController extends Controller
 
     public function store(ItemCardapioRequest $request)
     {
+        $request->validated();
         // Formatar o preço e tratar a imagem
         $preco = str_replace(',', '.', preg_replace('/[^\d.,]/', '', $request->preco));
         if (!is_numeric($preco)) {
