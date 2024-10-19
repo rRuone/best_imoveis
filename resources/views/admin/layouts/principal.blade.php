@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
      <!-- Compiled and minified CSS -->
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+     @livewireStyles
      <!-- Compiled and minified JavaScript -->
      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
@@ -35,13 +36,17 @@
     @if (session('sucesso'))
 
     M.toast({html: '{{session('sucesso')}}'});
-
-
     @endif
+
+   
 </script>
+    @yield('scripts')
+
 {{-- Conteudo secundário --}}
-<div>
-    @yield('conteudo-secundario')
-</div>
+    <div>
+        @yield('conteudo-secundario')
+    </div>
+
+    @livewireScripts
 </body>
 </html>

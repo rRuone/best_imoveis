@@ -13,7 +13,7 @@ class CarrinhoController extends Controller
     {
         $pedido = session()->get('pedido', []);
         // Retorna a view com os itens no carrinho
-      
+        //dd($pedido);
       
         return view('carrinho.index', compact('pedido'));
     }
@@ -90,17 +90,28 @@ class CarrinhoController extends Controller
 
     public function avancar()
     {
-        // Verifica se o cliente está logado (presente na sessão)
-        $clienteId = session()->get('cliente_id');
+    $pedido = session()->get('pedido', []);
+    $novoPedido = [];
 
-        if ($clienteId) {
-            // Se o cliente estiver logado, redireciona para o checkout
-            return redirect()->route('checkout.index');
-        } else {
-            // Se o cliente não estiver logado, redireciona para a página de criação de cliente
-            return redirect()->route('cliente.create')->with('error', 'Por favor, crie ou faça login para continuar.');
-        }
+    // Adiciona os itens ao novo pedido sem duplicação
+    foreach ($pedido as $item) {
+        // Adiciona o item na nova sessão
+        $novoPedido[] = $item; // Adiciona o item ao novo pedido
     }
+
+    // Atualiza a sessão com o novo pedido
+    session()->put('pedido', $novoPedido);
+
+    // Redireciona conforme a lógica
+    $clienteId = session()->get('cliente_id');
+    if ($clienteId) {
+        return redirect()->route('checkout.index');
+    } else {
+        return redirect()->route('cliente.create')->with('error', 'Por favor, crie ou faça login para continuar.');
+    }
+    }
+
+
 
     public function removeCarrinho(Request $request, $index){
         // Recupera o carrinho da sessão
@@ -125,5 +136,6 @@ class CarrinhoController extends Controller
     return redirect()->route('carrinho.index')->with('error', 'Item não encontrado no carrinho.');
 
     }
+
 
 }

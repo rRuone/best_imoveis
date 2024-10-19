@@ -103,6 +103,8 @@ Route::post('/carrinho/store/{id}', [CarrinhoController::class, 'store'])->name(
 Route::put('/carrinho/update', [CarrinhoController::class, 'update'])->name('carrinho.update');
 Route::post('/carrinho/avancar', [CarrinhoController::class, 'avancar'])->name('carrinho.avancar');
 Route::delete('/carrinho/remover{id}',[CarrinhoController::class, 'removeCarrinho'])->name('carrinho.remover');
+Route::post('/carrinho/incrementar/{index}', [CarrinhoController::class, 'incrementar'])->name('carrinho.incrementar');
+Route::post('/carrinho/decrementar/{index}', [CarrinhoController::class, 'decrementar'])->name('carrinho.decrementar');
 
 
 // Pedidos

@@ -71,3 +71,9 @@ npm run dev
 php artisan serve
 ```
 
+10 Instalar o liveware 
+
+```
+composer require livewire/livewire
+``` 
+

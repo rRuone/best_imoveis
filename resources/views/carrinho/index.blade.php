@@ -1,13 +1,10 @@
 @extends('admin.layouts.principal')
 
 @section('conteudo-principal')
-    
+
     <div class="container">
         <div class="header-container">
-            {{-- <a href="{{ route('home.index') }}" class=" waves-effect waves-light">
-                <i class="material-icons black-text">arrow_back</i>
-            </a> --}}
-            <h4 class="inline">Detalhes do Pedido</h4>
+            <h4 class="inline">Seu Carrinho</h4>
         </div>
         <hr>
         {{-- Verifica se o pedido está vazio --}}
@@ -24,7 +21,7 @@
                     @else
                         <p>Item do cardápio não encontrado.</p>
                     @endif
-            
+        
                     @if(!empty($item['adicionais']))
                         <h5>Adicionais:</h5>
                         <ul>
@@ -33,68 +30,26 @@
                             @endforeach
                         </ul>
                     @endif
-
+        
+                    {{-- Componente Livewire para controle de quantidade --}}
+                    <livewire:carrinho-item :index="$index" />
+        
                     <div style="position: absolute; top: 10px; right: 10px;">
-                        <form action="{{ route('carrinho.remover', $index) }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn-floating waves-effect waves-light red"><i class="material-icons">clear</i> </button>
-                        </form>
+                            <form action="{{ route('carrinho.remover', $index) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn-floating waves-effect waves-light red"><i class="material-icons">clear</i></button>
+                            </form>
                     </div>
-            
-                    {{-- <!-- Botões de incremento e decremento -->
-                    <div class="input-field col s12">
-                        <button class="btn increment" data-id="{{ $item['id'] }}">+</button>
-                        <span class="quantity" data-id="{{ $item['id'] }}">{{ $item['quantidade'] }}</span>
-                        <button class="btn decrement" data-id="{{ $item['id'] }}">-</button>
-                    </div> --}}
-            </div>
-        </div>
+                    </div>
+                </div>
             @endforeach
         @endif
-
-         {{-- Link para avançar para o próximo passo (formulário) --}}
-         <form action="{{ route('carrinho.avancar') }}" method="POST">
+        {{-- Para avançar para o próximo passo (formulário) --}}
+        <form action="{{ route('carrinho.avancar') }}" method="POST">
             @csrf
-            <button type="submit" class="btn-small waves-effect waves-light gren inline">Avançar</button>
+            <button type="submit" class="btn-small waves-effect waves-light green inline">Avançar</button>
         </form>
-
-        
     </div>
-
-    {{-- <script>
-    $(document).ready(function() {
-    $('.increment').on('click', function() {
-        updateQuantity($(this).data('id'), 'increment');
-    });
-
-    $('.decrement').on('click', function() {
-        updateQuantity($(this).data('id'), 'decrement');
-    });
-
-    function updateQuantity(itemId, action) {
-        $.ajax({
-            url: '{{ route('carrinho.update') }}',
-            type: 'POST',
-            data: {
-                _token: '{{ csrf_token() }}',
-                item_id: itemId,
-                action: action
-            },
-            success: function(response) {
-                if (response.newQuantity !== undefined) {
-                    $('span.quantity[data-id="' + itemId + '"]').text(response.newQuantity);
-                } else {
-                    alert('Erro ao atualizar a quantidade.');
-                }
-            },
-            error: function(xhr) {
-                alert('Erro ao atualizar a quantidade.');
-            }
-        });
-    }
-});
-
-    </script> --}}
 
 @endsection
