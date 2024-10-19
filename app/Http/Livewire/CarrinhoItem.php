@@ -6,13 +6,14 @@ use Livewire\Component;
 
 class CarrinhoItem extends Component
 {
+    protected $listeners = ['carrinhoAtualizado' => '$refresh']; // Atualiza a view
     public $index;
     public $quantidade;
 
     public function mount()
     {
         $pedido = session()->get('pedido', []);
-
+        
         // Inicializa a quantidade com base no valor atual da sessão
         if (isset($pedido[$this->index]['quantidade'])) {
             $this->quantidade = $pedido[$this->index]['quantidade'];
@@ -24,7 +25,7 @@ class CarrinhoItem extends Component
     public function incrementar()
     {
         $pedido = session()->get('pedido', []);
-
+        
         // Verifica se o item já está no carrinho
         if (isset($pedido[$this->index])) {
             $pedido[$this->index]['quantidade'] = $this->quantidade + 1;
@@ -33,8 +34,6 @@ class CarrinhoItem extends Component
 
         // Atualiza a sessão com o carrinho atualizado
         session()->put('pedido', $pedido);
-
-        // Emite um evento para atualizar a interface em tempo real
         $this->emit('carrinhoAtualizado');
     }
 
@@ -53,13 +52,39 @@ class CarrinhoItem extends Component
 
         // Atualiza a sessão com o carrinho atualizado
         session()->put('pedido', $pedido);
+        $this->emit('carrinhoAtualizado');
+    }
+
+    public function deletar()
+    {
+        $pedido = session()->get('pedido', []);
+
+        // Remove o item do carrinho baseado no índice
+        if (isset($pedido[$this->index])) {
+            unset($pedido[$this->index]);
+        }
+
+        // Atualiza a sessão com o carrinho atualizado
+        session()->put('pedido', $pedido);
+
+        // Atualiza a quantidade local para zero
+        $this->quantidade = 0;
 
         // Emite um evento para atualizar a interface em tempo real
-        $this->emit('carrinhoAtualizado');
+        $this->emitSelf('carrinhoAtualizado'); // Atualiza o componente em que o item está sendo exibido
     }
 
     public function render()
     {
-        return view('livewire.carrinho-item');
+        $pedido = session()->get('pedido', []);
+        $itemCardapio = $pedido[$this->index]['item_cardapio'] ?? null; // Pega o item do cardápio
+        $adicionais = $pedido[$this->index]['adicionais'] ?? []; // Pega os adicionais
+
+         // Verifica se o item ainda existe no pedido
+        if (is_null($itemCardapio)) {
+            return view('carrinho.index');
+        }
+
+        return view('livewire.carrinho-item', compact('itemCardapio', 'adicionais'));
     }
 }
