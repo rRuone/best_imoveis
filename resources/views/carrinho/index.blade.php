@@ -12,13 +12,14 @@
                     <livewire:carrinho-item :index="$index" :key="$index" />
                 @endforeach
             @else
-                <div style="text-align: center; margin-top: 20px;">
-                    <h5>Seu carrinho está vazio.</h5>
-                    <p>Adicione itens ao seu carrinho para começar.</p>
-                </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="{{ route('home.index') }}" class="btn-small waves-effect waves-light green">Adicionar Produtos</a>
+            </div>
             @endif
         </div>
     </div>
 
-    <livewire:carrinho-total /> <!-- Mantenha o componente fora do contêiner principal -->
+    <livewire:carrinho-total />
+
+    
 @endsection

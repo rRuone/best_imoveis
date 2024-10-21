@@ -68,10 +68,13 @@ class CarrinhoItem extends Component
         // Atualiza a sessão com o carrinho atualizado
         session()->put('pedido', $pedido);
     
-        // Atualiza a quantidade local para zero
-        $this->quantidade = 0;
+        // Verifica se o carrinho está vazio
+        if (empty($pedido)) {
+            // Redireciona para a rota carrinho.index
+            return redirect()->route('carrinho.index');
+        }
     
-        // Emite um evento para atualizar a interface em tempo real em outros componentes
+        // Emite um evento para atualizar a interface em tempo real
         $this->emit('carrinhoAtualizado'); // Atualiza o total em CarrinhoTotal
     }
     
