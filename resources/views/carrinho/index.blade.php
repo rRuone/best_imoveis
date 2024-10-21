@@ -1,8 +1,7 @@
 @extends('admin.layouts.principal')
 
 @section('conteudo-principal')
-
-    <div class="container">
+    <div class="container" style="padding-bottom: 80px;"> <!-- Aumente o padding inferior conforme necessário -->
         <div class="header-container">
             <h4 class="inline">Seu Carrinho</h4>
         </div>
@@ -19,12 +18,7 @@
                 </div>
             @endif
         </div>
-        
-        {{-- Para avançar para o próximo passo (formulário) --}}
-        <form action="{{ route('carrinho.avancar') }}" method="POST">
-            @csrf
-            <button type="submit" class="btn-small waves-effect waves-light green inline">Avançar</button>
-        </form>
     </div>
 
+    <livewire:carrinho-total /> <!-- Mantenha o componente fora do contêiner principal -->
 @endsection

@@ -10,6 +10,7 @@ class CarrinhoItem extends Component
     public $index;
     public $quantidade;
 
+    
     public function mount()
     {
         $pedido = session()->get('pedido', []);
@@ -58,22 +59,22 @@ class CarrinhoItem extends Component
     public function deletar()
     {
         $pedido = session()->get('pedido', []);
-
+    
         // Remove o item do carrinho baseado no índice
         if (isset($pedido[$this->index])) {
             unset($pedido[$this->index]);
         }
-
+    
         // Atualiza a sessão com o carrinho atualizado
         session()->put('pedido', $pedido);
-
+    
         // Atualiza a quantidade local para zero
         $this->quantidade = 0;
-
-        // Emite um evento para atualizar a interface em tempo real
-        $this->emitSelf('carrinhoAtualizado'); // Atualiza o componente em que o item está sendo exibido
+    
+        // Emite um evento para atualizar a interface em tempo real em outros componentes
+        $this->emit('carrinhoAtualizado'); // Atualiza o total em CarrinhoTotal
     }
-
+    
     public function render()
     {
         $pedido = session()->get('pedido', []);
