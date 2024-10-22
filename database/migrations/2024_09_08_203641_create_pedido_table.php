@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('pedido', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->foreignId('cliente_id')->constrained()->onDelete('cascade');
+            $table->dateTime('data_Pedido')->useCurrent();
+            $table->string('metdPag');
+            $table->enum('status', ['pendente', 'em_processo', 'concluido', 'finalizado','cancelado'])->default('pendente');
+            $table->decimal('total', 8, 2);
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('pedido');
     }
 };

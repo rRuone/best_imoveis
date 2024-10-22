@@ -28,6 +28,10 @@
                 @error('nome')
                     <span class="red-text text-accent-3"><small>{{$message}}</small></span>
                 @enderror
+                <input type="text" class="text" name='sigla' id='sigla'>
+                <label for="sigla">Estado</label>
+                
+
 
             </div>
 
