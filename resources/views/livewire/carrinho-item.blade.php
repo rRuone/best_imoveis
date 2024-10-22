@@ -39,6 +39,6 @@
             <button wire:click="deletar" class="btn-floating waves-effect waves-light red"><i class="material-icons">clear</i></button>
         </div>
     </div>
+   
 </div>
-
-
+    

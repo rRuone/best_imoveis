@@ -13,10 +13,17 @@
                 @endforeach
             @else
             <div style="text-align: center; margin-top: 20px;">
-                <a href="{{ route('home.index') }}" class="btn-small waves-effect waves-light green">Adicionar Produtos</a>
+                <a href="{{ route('home.index') }}" class="btn-small waves-effect waves-light orange darken-4" style="width:790px">Adicionar Produtos</a>
             </div>
             @endif
         </div>
+
+        @if(session()->get('pedido'))
+            <div style="text-align:center; margin-top:25px">
+                <a href="{{ route('home.index') }}" class="btn-small waves-effect waves-dark orange darken-4" 
+                style="width:790px; color:white; background-color:transparent;">Adicionar Mais Itens</a> 
+            </div>
+        @endif
     </div>
 
     <livewire:carrinho-total />
