@@ -25,8 +25,9 @@
 
         <!-- Campo para Telefone -->
         <div class="input-field">
-            <label for="telefone">Telefone</label>
-            <input type="text" id="telefone" name="telefone" value="{{ old('telefone') }}" required>
+            <label for="telefone">Telefone (DDD)</label>
+            <input type="tel" id="telefone" name="telefone"
+                placeholder="(XX) XXXXX-XXXX" required oninput="formatarTelefone(this)">
             @error('telefone')
                 <span class="error">{{ $message }}</span>
             @enderror
@@ -36,5 +37,23 @@
         <button type="submit" class="btn">Salvar</button>
     </form>
 </section>
+
+<script>
+function formatarTelefone(telefone) {
+    // Remove todos os caracteres não numéricos
+    let numero = telefone.value.replace(/\D/g, '');
+
+    // Formatação do DDD e número de telefone
+    if (numero.length > 10) {
+        telefone.value = `(${numero.slice(0, 2)}) ${numero.slice(2, 7)}-${numero.slice(7, 11)}`;
+    } else if (numero.length > 6) {
+        telefone.value = `(${numero.slice(0, 2)}) ${numero.slice(2, 7)}-${numero.slice(7)}`;
+    } else if (numero.length > 2) {
+        telefone.value = `(${numero.slice(0, 2)}) ${numero.slice(2)}`;
+    } else {
+        telefone.value = numero;
+    }
+}
+</script>
 
 @endsection
