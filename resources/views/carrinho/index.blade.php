@@ -1,10 +1,35 @@
 @extends('admin.layouts.principal')
 
-
-
 @section('conteudo-principal')
+    <style>
+        .header-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px; /* Ajuste o espaço inferior conforme necessário */
+        }
+
+
+        .header-container a {
+         margin-right: 20px; /* Espaço entre o ícone e o título */
+        }
+
+        header-container h4 {
+        margin: 0; /* Remove a margem padrão do título */
+        }
+
+        .header-container i {
+        font-size: 24px; /* Ajuste o tamanho do ícone conforme necessário */
+        vertical-align: middle; /* Ajusta a altura da linha do ícone */
+        }
+
+    </style>
+
+
     <div class="container" style="padding-bottom: 80px;"> <!-- Aumente o padding inferior conforme necessário -->
         <div class="header-container">
+            <a href="{{ route('home.index') }}" class=" waves-effect waves-light">
+                <i class="material-icons black-text">arrow_back</i>
+            </a>
             <h4 class="inline">Seu Carrinho</h4>
         </div>
         <hr>
