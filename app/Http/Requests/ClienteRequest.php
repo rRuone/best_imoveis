@@ -6,36 +6,24 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ClienteRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize()
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules()
     {
         return [
-            'nome' =>  'required',
-            'telefone' => 'required'
-
+            'nome' => 'nullable|string|max:255', // Nome pode ser nulo, se você quiser buscar só pelo telefone
+            'telefone' => 'required|numeric', // Telefone é obrigatório
         ];
     }
 
-    public function messages(): array
+    public function messages()
     {
-        return[
-            'nome.required' => 'Campo nome é obrigatório',
-            'telefone.required' => 'Campo telefone é obrigatório'
+        return [
+            'telefone.required' => 'O telefone é obrigatório.',
+            'telefone.numeric' => 'O telefone deve ser um número válido.',
         ];
     }
 }
-

@@ -28,23 +28,24 @@ class ClientesController extends Controller
     }
 
     // Cadastrar no banco de dados novo cliente 
-    public  function store(ClienteRequest $request){
-       
-
-        $cliente = Cliente::where('telefone', $request->input('telefone'))
-                            ->orWhere('nome', $request->input('nome'))
-                            ->first();
-
-        if($cliente){
-            // se o cliente ja existir, salva o ID na sessão
+    public function store(ClienteRequest $request)
+    {
+        
+        // Verifica se o cliente já existe pelo telefone ou nome
+        $cliente = Cliente::where('telefone', $request->input('telefone'))->first();
+    
+        if ($cliente) {
+            // Se o cliente já existir, salva o ID na sessão
             $request->session()->put('cliente_id', $cliente->id);
         } else {
+            // Se o cliente não existir, cria um novo registro
             $cliente = Cliente::create($request->all());
+            // Salva o ID do novo cliente na sessão
             $request->session()->put('cliente_id', $cliente->id);
         }
-
+    
+        // Redireciona para a próxima etapa
         return redirect()->route('checkout.index');
-
     }
 
 }
