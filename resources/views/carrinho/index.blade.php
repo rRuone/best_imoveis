@@ -1,5 +1,7 @@
 @extends('admin.layouts.principal')
 
+
+
 @section('conteudo-principal')
     <div class="container" style="padding-bottom: 80px;"> <!-- Aumente o padding inferior conforme necessário -->
         <div class="header-container">
