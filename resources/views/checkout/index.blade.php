@@ -19,22 +19,7 @@
                     @if($enderecos->isEmpty())
                         <a href="{{ route('admin.enderecos.create') }}" class="btn waves-effect waves-light">Adicionar Novo Endereço</a>
                     @else
-                    <form action="{{ route('checkout.endereco.selecionar') }}" method="POST">
-                        @csrf
-                        <ul>
-                            @foreach($enderecos as $endereco)
-                                <li>
-                                    <label>
-                                        {{-- Marca o checkbox do endereço selecionado --}}
-                                        <input type="radio" name="endereco_id" value="{{ $endereco->id }}"
-                                            @if(session('endereco_id') == $endereco->id) checked @endif />
-                                        <span>{{ $endereco->logradouro }}, {{ $endereco->bairro }}</span>
-                                    </label>
-                                </li>
-                            @endforeach
-                        </ul>
-                        <button class="btn waves-effect waves-light" type="submit">Confirmar Endereço</button>
-                    </form>
+                    @livewire('endereco-selecionado', ['enderecos' => $enderecos])
                     @endif
                 </div>
             </div>
@@ -43,33 +28,7 @@
             <div class="row">
                 <div class="row card-panel mb-0">
                     <h5 class="h5-header">Método de pagamento:</h5>
-                    <form action="{{ route('checkout.pagamento.selecionar') }}" method="POST">
-                        @csrf
-                        <ul>
-                            <li>
-                                <label>
-                                    <input type="radio" name="metodo_pagamento" value="dinheiro"
-                                        @if(session('metodo_pagamento') == 'dinheiro') checked @endif />
-                                    <span>Dinheiro</span>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="radio" name="metodo_pagamento" value="cartao"
-                                        @if(session('metodo_pagamento') == 'cartao') checked @endif />
-                                    <span>Cartão</span>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="radio" name="metodo_pagamento" value="pix"
-                                        @if(session('metodo_pagamento') == 'pix') checked @endif />
-                                    <span>PIX</span>
-                                </label>
-                            </li>
-                        </ul>
-                        <button class="btn waves-effect waves-light" type="submit">Confirmar Método de Pagamento</button>
-                    </form>
+                    @livewire('metodo-pagamento')
                 </div>
             </div>
 
@@ -80,15 +39,8 @@
             </div>
             <hr>
             {{-- Formulário para finalizar o pedido --}}
-            <div class="row">
-                <div class="col s12 center-align">
-                    <form action="{{ route('checkout.finalizar') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="metodo_pagamento" value="{{ session('metodo_pagamento') }}">
-                        <button type="submit" class="waves-effect waves-light btn btn-custom">Finalizar Pedido</button>
-                    </form>
-                </div>
-            </div>
+            @livewire('finalizar-pedido')
+
             
         @endif
 
