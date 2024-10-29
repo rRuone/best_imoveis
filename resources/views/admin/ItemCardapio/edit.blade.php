@@ -5,7 +5,7 @@
         <div class="header-container">
             <br>
             <h4 class="inline">Editar Item do Cardápio</h4>
-            <a href="{{ route('itemCardapio.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a>
+            <a href="{{ route('admin.itemCardapio.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a>
         </div>
         <hr>
 
@@ -20,7 +20,7 @@
         @endif
 
         <div class="section container">
-            <form action="{{ route('itemCardapio.update', $itemCardapio->id) }}" method="POST" enctype="multipart/form-data" class="form-container">
+            <form action="{{ route('admin.itemCardapio.update', $itemCardapio->id) }}" method="POST" enctype="multipart/form-data" class="form-container">
                 @csrf
                 @method('PUT')
 

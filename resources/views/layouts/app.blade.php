@@ -30,13 +30,13 @@
         <nav class="orange darken-4">
             <div class="nav-wrapper container">
                 <a href="{{ url('/admin/dashboard') }}" class="brand-logo">{{ config('app.name', 'Master Dog') }}</a>
-                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">Menu</i></a>
                 <ul class="right hide-on-med-and-down">
                     <!-- Left Side Of Navbar -->
                     @auth
                     <li>
                         <a class="dropdown-trigger" href="#!" data-target="dropdownCardapio">
-                            Cardápio<i class="material-icons right">arrow_drop_down</i>
+                            Menu<i class="material-icons right">arrow_drop_down</i>
                         </a>
                     </li>
                     @endauth
@@ -59,7 +59,7 @@
         </nav>
 
         <ul id="dropdownCardapio" class="dropdown-content">
-            <li><a href="{{ url('/index-itemCardapio') }}">Cardápio</a></li>
+            <li><a href="{{ url('/admin/index-itemCardapio') }}">Cardápio</a></li>
             <li><a href="{{ url('/admin/index-adicionais') }}">Adicionais</a></li>
             <li><a href="{{ url('/admin/index-categorias') }}">Categorias</a></li>
         </ul>
@@ -79,7 +79,7 @@
         <!-- Mobile Menu -->
         <ul class="sidenav" id="mobile-demo">
             @auth
-            <li><a href="{{ url('/index-itemCardapio') }}">Cardápio</a></li>
+            <li><a href="{{ url('/admin/index-itemCardapio') }}">Cardápio</a></li>
             <li><a href="{{ url('/admin/index-adicionais') }}">Adicionais</a></li>
             <li><a href="{{ url('/admin/index-categorias') }}">Categorias</a></li>
             @endauth

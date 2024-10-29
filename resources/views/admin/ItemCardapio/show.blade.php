@@ -5,7 +5,7 @@
     <div class="header-container">
         <br>
         <h4>Itens do Cardápio</h4>
-        <a href="{{ route('itemCardapio.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a>
+        <a href="{{ route('admin.itemCardapio.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a>
     </div>
     <hr>
 

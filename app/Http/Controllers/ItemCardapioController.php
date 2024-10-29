@@ -36,7 +36,7 @@ class ItemCardapioController extends Controller
         ->get();
 
     $categorias = Categoria::all();
-    return view('itemCardapio.index', ['itemCardapio' => $itemCardapio, 'sort' => $sort, 'direction' => $direction, 'categorias' => $categorias]);
+    return view('admin.itemCardapio.index', ['itemCardapio' => $itemCardapio, 'sort' => $sort, 'direction' => $direction, 'categorias' => $categorias]);
 }
 
 
@@ -46,7 +46,7 @@ class ItemCardapioController extends Controller
         $categorias = Categoria::all();
 
         // Retornar a visualização com as categorias
-        return view('itemCardapio.create', compact('categorias'));
+        return view('admin.itemCardapio.create', compact('categorias'));
     }
 
     public function store(ItemCardapioRequest $request)
@@ -82,7 +82,7 @@ class ItemCardapioController extends Controller
         'foto' => $path,
     ]);
 
-    return redirect()->route('itemCardapio.index')->with('success', 'Item criado com sucesso.');
+    return redirect()->route('admin.itemCardapio.index')->with('success', 'Item criado com sucesso.');
 }
 
 
@@ -99,7 +99,7 @@ class ItemCardapioController extends Controller
         }
 
         // Retorna a view ou realiza outras ações necessárias
-        return view('itemCardapio.product', [
+        return view('admin.itemCardapio.product', [
             'itemCardapio' => $itemCardapio,
             'adicionais' => $adicionais
         ]);
@@ -143,7 +143,7 @@ class ItemCardapioController extends Controller
 public function delete(ItemCardapio $itemCardapio)
 {
     // Show a delete confirmation view
-    return view('itemCardapio.delete', ['itemCardapio' => $itemCardapio]);
+    return view('admin.itemCardapio.delete', ['itemCardapio' => $itemCardapio]);
 }
 
 public function destroy(ItemCardapio $itemCardapio)
@@ -152,7 +152,7 @@ public function destroy(ItemCardapio $itemCardapio)
     $itemCardapio->delete();
 
     // Redirect back to the index page with a success message
-    return redirect()->route('itemCardapio.index')->with('success', 'Item deletado com sucesso.');
+    return redirect()->route('admin.itemCardapio.index')->with('success', 'Item deletado com sucesso.');
 }
 
 public function update(Request $request, ItemCardapio $itemCardapio)
@@ -195,7 +195,7 @@ public function update(Request $request, ItemCardapio $itemCardapio)
     // Salvar o item atualizado
     $itemCardapio->save();
 
-    return redirect()->route('itemCardapio.index')->with('success', 'Item atualizado com sucesso.');
+    return redirect()->route('admin.itemCardapio.index')->with('success', 'Item atualizado com sucesso.');
 }
 
 
@@ -204,12 +204,12 @@ public function update(Request $request, ItemCardapio $itemCardapio)
 public function edit(ItemCardapio $itemCardapio)
 {
     $categorias = Categoria::all(); // Get all categories
-    return view('itemCardapio.edit', compact('itemCardapio', 'categorias')); // Pass item and categories to the view
+    return view('admin.itemCardapio.edit', compact('itemCardapio', 'categorias')); // Pass item and categories to the view
 }
 
 public function show(ItemCardapio $itemCardapio)
 {
-    return view('itemCardapio.show', compact('itemCardapio'));
+    return view('admin.itemCardapio.show', compact('itemCardapio'));
 }
 
 }

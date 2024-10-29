@@ -5,7 +5,7 @@
     <div class="header-container">
         <br>
         <h4 class="header-title">Itens do Cardápio</h4>
-        <a href="{{ route('itemCardapio.create') }}" class="btn-small waves-effect waves-light green inline">Adicionar</a>
+        <a href="{{ route('admin.itemCardapio.create') }}" class="btn-small waves-effect waves-light green inline">Adicionar</a>
     </div>
     <hr>
 
@@ -37,7 +37,7 @@
             <thead>
                 <tr>
                     <th>
-                        <a href="{{ route('itemCardapio.index', ['sort' => 'nome', 'direction' => $direction === 'asc' ? 'desc' : 'asc']) }}" class="header-link">
+                        <a href="{{ route('admin.itemCardapio.index', ['sort' => 'nome', 'direction' => $direction === 'asc' ? 'desc' : 'asc']) }}" class="header-link">
                             Nome
                             @if ($sort === 'nome')
                                 <i class="material-icons">{{ $direction === 'asc' ? 'arrow_drop_up' : 'arrow_drop_down' }}</i>
@@ -45,7 +45,7 @@
                         </a>
                     </th>
                     <th>
-                        <a href="{{ route('itemCardapio.index', ['sort' => 'categoria_id', 'direction' => $direction === 'asc' ? 'desc' : 'asc']) }}" class="header-link">
+                        <a href="{{ route('admin.itemCardapio.index', ['sort' => 'categoria_id', 'direction' => $direction === 'asc' ? 'desc' : 'asc']) }}" class="header-link">
                             Categoria
                             @if ($sort === 'categoria_id')
                                 <i class="material-icons">{{ $direction === 'asc' ? 'arrow_drop_up' : 'arrow_drop_down' }}</i>
@@ -53,7 +53,7 @@
                         </a>
                     </th>
                     <th>
-                        <a href="{{ route('itemCardapio.index', ['sort' => 'preco', 'direction' => $direction === 'asc' ? 'desc' : 'asc']) }}" class="header-link">
+                        <a href="{{ route('admin.itemCardapio.index', ['sort' => 'preco', 'direction' => $direction === 'asc' ? 'desc' : 'asc']) }}" class="header-link">
                             Preço
                             @if ($sort === 'preco')
                                 <i class="material-icons">{{ $direction === 'asc' ? 'arrow_drop_up' : 'arrow_drop_down' }}</i>
@@ -78,14 +78,14 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('itemCardapio.show', $item->id) }}" class="btn blue btn-small">
+                            <a href="{{ route('admin.itemCardapio.show', $item->id) }}" class="btn blue btn-small">
                                 <i class="material-icons">remove_red_eye</i>
                             </a>
-                            <a href="{{ route('itemCardapio.edit', $item->id) }}" class="btn green btn-small">
+                            <a href="{{ route('admin.itemCardapio.edit', $item->id) }}" class="btn green btn-small">
                                 <i class="material-icons">edit</i>
                             </a>
                             <button class="btn red btn-small modal-trigger" data-target="deleteModal"
-                                    data-url="{{ route('itemCardapio.destroy', $item->id) }}"
+                                    data-url="{{ route('admin.itemCardapio.destroy', $item->id) }}"
                                     data-name="{{ $item->nome }}">
                                 <i class="material-icons">delete</i>
                             </button>

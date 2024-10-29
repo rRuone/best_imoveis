@@ -9,7 +9,7 @@
         margin-bottom: 10px; /* Ajuste o espaço inferior conforme necessário */
     }
 
-   
+
     .header-container a {
         margin-right: 20px; /* Espaço entre o ícone e o título */
     }
@@ -23,7 +23,7 @@
             max-width: 300px;
             margin: 10px auto;
         }
-    
+
         .card-image img {
             height: 150px;
             object-fit: cover;
@@ -45,7 +45,7 @@
     </style>
 
     <div class="container">
-        
+
             <div class="header-container">
                 <a href="{{ route('home.index') }}" class=" waves-effect waves-light">
                     <i class="material-icons black-text">arrow_back</i>
@@ -53,7 +53,7 @@
                 <h4 class="inline">Detalhes do Pedido</h4>
             </div>
             <hr>
-        
+
         <div class="card">
             <div class="card-image">
                 @if($itemCardapio->foto)
@@ -69,7 +69,7 @@
             </div>
         </div>
 
-        <form action="{{ route('itemCardapio.salvarAdicionais', $itemCardapio) }}" method="POST" class="form-container">
+        <form action="{{ route('admin.itemCardapio.salvarAdicionais', $itemCardapio) }}" method="POST" class="form-container">
             @csrf
 
             {{-- <h5>Escolha Adicionais</h5>  --}}
@@ -89,5 +89,5 @@
         </form>
     </div>
 @endsection
-    
+
 
