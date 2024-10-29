@@ -10,24 +10,34 @@ use Illuminate\Http\Request;
 
 class ItemCardapioController extends Controller
 {
-    public function index(){
-      
-        $itemCardapio = ItemCardapio::orderBy('nome')->get();
-       
-        return view('itemCardapio.index',['itemCardapio' => $itemCardapio]);
+    // public function index(){
+
+    //     $itemCardapio = ItemCardapio::orderBy('nome')->get();
+
+    //     return view('itemCardapio.index',['itemCardapio' => $itemCardapio]);
+    // }
+    public function index(Request $request)
+{
+    // Default order by name
+    $sort = $request->get('sort', 'nome');
+    $direction = $request->get('direction', 'asc');
+
+    // Validate the sort parameters
+    $validSorts = ['nome', 'categoria_id', 'preco'];
+    if (!in_array($sort, $validSorts) || !in_array($direction, ['asc', 'desc'])) {
+        $sort = 'nome'; // fallback to default if invalid
+        $direction = 'asc';
     }
 
+    // Fetch items with sorting
+    $itemCardapio = ItemCardapio::with('categoria')
+        ->orderBy($sort, $direction)
+        ->get();
 
-    
-    public function show(ItemCardapio $itemCardapio)
-    {
-        // Carregar adicionais associados ao itemCardapio
-        $itemCardapio->load('adicionais');
-    
-        return view('itemCardapio.show', ['itemCardapio' => $itemCardapio]);
-        dd($itemCardapio->adicionais);
-    }
-    
+    $categorias = Categoria::all();
+    return view('itemCardapio.index', ['itemCardapio' => $itemCardapio, 'sort' => $sort, 'direction' => $direction, 'categorias' => $categorias]);
+}
+
 
     public function create()
     {
@@ -48,7 +58,7 @@ class ItemCardapioController extends Controller
         }
 
         // Armazenar imagem se existir
-        $path = $request->hasFile('foto') 
+        $path = $request->hasFile('foto')
                 ? $request->file('foto')->storeAs('public/fotos', time() . '.' . $request->file('foto')->getClientOriginalExtension())
                 : null;
 
@@ -62,19 +72,19 @@ class ItemCardapioController extends Controller
 
         return redirect()->route('itemCardapio.index')->with('success', 'Item criado com sucesso.');
     }
-    
-    
+
+
     public function product(ItemCardapio $itemCardapio)
     {
         // Inicializa a variável $adicionais como um array vazio
         $adicionais = [];
-    
+
         // Verifica se a categoria do item é carregada
         if ($itemCardapio->categoria && $itemCardapio->categoria->nome === 'Lanche') {
             // Se for um "Lanche", carrega os adicionais
             $adicionais = Adicionais::all();
         }
-    
+
         // Retorna a view ou realiza outras ações necessárias
         return view('itemCardapio.product', [
             'itemCardapio' => $itemCardapio,
@@ -114,6 +124,95 @@ class ItemCardapioController extends Controller
 
     // Redirecionar para a página do carrinho com uma mensagem de sucesso
     return redirect()->route('carrinho.index')->with('success', 'Adicionais adicionados ao pedido com sucesso!');
+}
+
+
+public function delete(ItemCardapio $itemCardapio)
+{
+    // Show a delete confirmation view
+    return view('itemCardapio.delete', ['itemCardapio' => $itemCardapio]);
+}
+
+public function destroy(ItemCardapio $itemCardapio)
+{
+    // Delete the item from storage
+    $itemCardapio->delete();
+
+    // Redirect back to the index page with a success message
+    return redirect()->route('itemCardapio.index')->with('success', 'Item deletado com sucesso.');
+}
+
+// public function update(Request $request, ItemCardapio $itemCardapio)
+// {
+//     $request->validate([
+//         'nome' => 'required|string|max:255',
+//         'categoria_id' => 'required|exists:categorias,id',
+//         'preco' => ['required', 'regex:/^\d+(\.\d{1,2})?$/'],
+//         'foto' => 'nullable|image|max:2048',
+//     ]);
+
+//     // Update item properties
+//     $itemCardapio->nome = $request->nome;
+//     $itemCardapio->categoria_id = $request->categoria_id;
+
+//     // Format the price
+//     $preco = str_replace(',', '.', preg_replace('/[^\d.,]/', '', $request->preco));
+//     if (!is_numeric($preco)) {
+//         return redirect()->back()->withErrors(['preco' => 'O preço deve ser um valor numérico.']);
+//     }
+//     $itemCardapio->preco = number_format($preco, 2, '.', '');
+
+//     // Handle file upload for the photo
+//     if ($request->hasFile('foto')) {
+//         // Store the new photo
+//         $path = $request->file('foto')->storeAs('public/fotos', time() . '.' . $request->file('foto')->getClientOriginalExtension());
+//         $itemCardapio->foto = $path; // Update the photo path
+//     }
+
+//     // Save the updated item
+//     $itemCardapio->save();
+
+//     return redirect()->route('itemCardapio.index')->with('success', 'Item atualizado com sucesso.');
+// }
+
+public function update(Request $request, ItemCardapio $itemCardapio)
+{
+    $request->validate([
+        'nome' => 'required|string|max:255',
+        'categoria_id' => 'required|exists:categorias,id',
+        'preco' => ['required', 'regex:/^\d+(,\d{1,2})?$/'], // Aceita valores com vírgula como separador decimal
+        'foto' => 'nullable|image|max:2048',
+    ]);
+
+    // Atualizar as propriedades do item
+    $itemCardapio->nome = $request->nome;
+    $itemCardapio->categoria_id = $request->categoria_id;
+
+    // Converter o preço para o formato numérico com ponto
+    $preco = str_replace(',', '.', preg_replace('/[^\d,]/', '', $request->preco));
+    if (!is_numeric($preco)) {
+        return redirect()->back()->withErrors(['preco' => 'O preço deve ser um valor numérico.']);
+    }
+    $itemCardapio->preco = number_format($preco, 2, '.', '');
+
+    // Tratamento do upload de arquivo para a foto
+    if ($request->hasFile('foto')) {
+        // Armazenar a nova foto
+        $path = $request->file('foto')->storeAs('public/fotos', time() . '.' . $request->file('foto')->getClientOriginalExtension());
+        $itemCardapio->foto = $path; // Atualizar o caminho da foto
+    }
+
+    // Salvar o item atualizado
+    $itemCardapio->save();
+
+    return redirect()->route('itemCardapio.index')->with('success', 'Item atualizado com sucesso.');
+}
+
+
+public function edit(ItemCardapio $itemCardapio)
+{
+    $categorias = Categoria::all(); // Get all categories
+    return view('itemCardapio.edit', compact('itemCardapio', 'categorias')); // Pass item and categories to the view
 }
 
 

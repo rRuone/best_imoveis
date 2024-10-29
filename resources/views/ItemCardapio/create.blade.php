@@ -17,21 +17,21 @@
             </span>
             <br>
         @endif
-        
+
         <div class="section container">
             <form action="{{ route('itemCardapio.store') }}" method="POST" enctype="multipart/form-data" class="form-container">
                 @csrf
-    
+
                 <div class="input-field">
                     <label for="nome">Nome do Item</label>
                     <input type="text" id="nome" name="nome" value="{{ old('nome') }}">
                 </div>
-    
+
                 <div class="input-field">
                     <label for="preco">Preço</label>
                     <input type="text" id="preco" name="preco" value="{{ old('preco') }}">
                 </div>
-    
+
                 <div class="input-field">
                     <label for="categoria_id"></label>
                     <select id="categoria_id" name="categoria_id">
@@ -41,16 +41,16 @@
                     </select>
                     <label>Categoria</label>
                 </div>
-    
+
                 <div class="input-field">
                     <label for="foto"></label>
                     <input type="file" id="foto" name="foto">
                 </div>
-    
+
                 <button type="submit" class="btn-small waves-effect waves-light">Salvar</button>
             </form>
         </div>
-       
+
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -73,8 +73,8 @@
      <style>
 
     .form-container{
-            max-width: 70%; 
-            margin: 0 auto; 
+            max-width: 70%;
+            margin: 0 auto;
         }
 
         .header-container {
@@ -82,7 +82,7 @@
             align-items: center; /* Alinha verticalmente ao centro */
             justify-content: space-between; /* Espaça igualmente entre os itens */
             margin-bottom: 1px; /* Espaço abaixo do cabeçalho */
-            
+
         }
 
         hr {
