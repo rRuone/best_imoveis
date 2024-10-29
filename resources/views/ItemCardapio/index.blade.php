@@ -5,7 +5,8 @@
         <div class="header-container">
             <br>
             <h4>Itens do Cardápio</h4>
-            <a href="{{ route('itemCardapio.create') }}"class="btn-small waves-effect waves-light gren inline">Adicionar</a>
+            <a href="{{ route('itemCardapio.create') }}"class="btn-small waves-effect waves-light green inline">Adicionar</a>
+        {{-- <a href="{{ route('itemCardapio.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a> --}}
         </div>
         <hr>
 
@@ -161,6 +162,10 @@
 
         table th {
             background-color: #f5f5f5; /* Cor de fundo para o cabeçalho */
+        }
+
+        table th:last-child, table td:last-child {
+            text-align: right; /* Alinha a última coluna à direita */
         }
 
         .btn-small {   /*Botão adicionar  */

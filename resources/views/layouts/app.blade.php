@@ -83,7 +83,7 @@
             <li><a href="{{ url('/admin/index-adicionais') }}">Adicionais</a></li>
             <li><a href="{{ url('/admin/index-categorias') }}">Categorias</a></li>
             @endauth
-            
+
             @guest
                 @if (Route::has('login'))
                     <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
@@ -93,7 +93,7 @@
                 @endif
             @else
                 <li><a href="#!">{{ Auth::user()->name }}</a></li>
-                <li><a href="{{ route('logout') }}" 
+                <li><a href="{{ route('logout') }}"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a></li>
             @endguest
         </ul>
@@ -101,7 +101,7 @@
         {{-- <main class="py-4">
             @yield('content')
         </main> --}}
-        
+
     </div>
     <div class="container">
         @yield('content')

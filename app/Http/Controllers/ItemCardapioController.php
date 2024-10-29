@@ -183,7 +183,7 @@ public function update(Request $request, ItemCardapio $itemCardapio)
 public function edit(ItemCardapio $itemCardapio)
 {
     $categorias = Categoria::all(); // Get all categories
-    return view('itemCardapio.edit', compact('itemCardapio', 'categorias')); // Pass item and categories to the view
+    return view('itemCardapio.update', compact('itemCardapio', 'categorias')); // Pass item and categories to the view
 }
 
 public function show(ItemCardapio $itemCardapio)

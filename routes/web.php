@@ -53,13 +53,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::post('/cidades/salvar',[CidadesController::class, 'adicionar'] )->name('cidades.adicionar');
 
     //Adicional
-    Route::get('/index-adicionais',[AdicionaisController::class, 'index'])->name('adicionais.index');
-    Route::get('/create-adicionais',[AdicionaisController::class, 'create'])->name('adicionais.create');
-    Route::post('/store-adicionais',[AdicionaisController::class, 'store'])->name('adicionais.store');
-    Route::get('/show-adicionais/{adicionais}',[AdicionaisController::class, 'show'])->name('adicionais.show');
-    Route::get('/edit-adicionais/{adicionais}',[AdicionaisController::class, 'edit'])->name('adicionais.edit');
-    Route::put('/update-adicionais/{adicionais}',[AdicionaisController::class, 'update'])->name('adicionais.update');
-    Route::delete('/destroy-adicionais/{adicionais}',[AdicionaisController::class, 'destroy'])->name('adicionais.destroy');
+    Route::get('/index-adicionais', [AdicionaisController::class, 'index'])->name('adicionais.index');
+    Route::get('/create-adicionais', [AdicionaisController::class, 'create'])->name('adicionais.create');
+    Route::post('/store-adicionais', [AdicionaisController::class, 'store'])->name('adicionais.store');
+    Route::get('/show-adicionais/{adicionais}', [AdicionaisController::class, 'show'])->name('adicionais.show');
+    Route::get('/edit-adicionais/{adicionais}', [AdicionaisController::class, 'edit'])->name('adicionais.edit'); // método GET para exibir o formulário de edição
+    Route::put('/update-adicionais/{adicionais}', [AdicionaisController::class, 'update'])->name('adicionais.update'); // método PUT para a atualização
+    Route::delete('/destroy-adicionais/{adicionais}', [AdicionaisController::class, 'destroy'])->name('adicionais.destroy');
 
     //Categorias
     Route::get('/index-categorias',[CategoriasController::class,'index'])->name('categorias.index');
