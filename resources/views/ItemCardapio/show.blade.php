@@ -1,33 +1,90 @@
-@extends('admin.layouts.principal')
+@extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h1>Personalizar Pedido: {{ $itemCardapio->nome }}</h1>
+<div class="section container">
+    <div class="header-container">
+        <br>
 
-    <!-- Formulário para selecionar adicionais -->
-    <form action="{{ route('itemCardapio.adicionais', $itemCardapio->id) }}" method="POST">
-        @csrf
+        <h4>Detalhes do Item do Cardápio</h4>
+        </h4><a href="{{ route('itemCardapio.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a>
 
-        <div class="mb-3">
-            <h4>Selecione os Adicionais:</h4>
+    </div>
+    <hr>
 
-            {{-- <!-- Lista de adicionais com checkbox -->
-            @if($itemCardapio->adicionais->isNotEmpty())
-                @foreach($itemCardapio->adicionais as $adicional)
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="adicionais[]" value="{{ $adicional->id }}" id="adicional_{{ $adicional->id }}">
-                        <label class="form-check-label" for="adicional_{{ $adicional->id }}">
-                            {{ $adicional->nome }} - R$ {{ number_format($adicional->pivot->preco, 2, ',', '.') }}
-                        </label>
-                    </div>
-                @endforeach
-            @else
-                <p>Não há adicionais disponíveis para este item.</p>
-            @endif --}}
-        </div>
+    <div class="container">
+        <h4 class="inline">Detalhes do Item: {{ $itemCardapio->nome}}
+        <table class="striped">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Categoria</th>
+                    <th>Preço</th>
+                    <th>Foto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ $itemCardapio->nome }}</td>
+                    <td>{{ $itemCardapio->categoria ? $itemCardapio->categoria->nome : 'Sem Categoria' }}</td>
+                    <td>R$ {{ number_format($itemCardapio->preco, 2, ',', '.') }}</td>
+                    <td>
+                        @if($itemCardapio->foto)
+                            <img src="{{ url("storage/{$itemCardapio->foto}") }}" alt="{{ $itemCardapio->nome }}" style="width: 200px; height: auto;">
+                        @else
+                            <p>Sem Foto</p>
+                        @endif
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-        <!-- Botão de avançar para login -->
-        <button type="submit" class="btn btn-primary">Avançar para Login</button>
-    </form>
+
+
 </div>
+<style>
+.form-container{
+    max-width: 70%;
+    margin: 0 auto;
+}
+
+.header-container {
+    display: flex;
+    align-items: center; /* Alinha verticalmente ao centro */
+    justify-content: space-between; /* Espaça igualmente entre os itens */
+    margin-bottom: 1px; /* Espaço abaixo do cabeçalho */
+
+}
+
+hr {
+    margin-top: 1px; /* Diminui o espaço acima do hr */
+    margin-bottom: 20px; /* Espaço abaixo do hr */
+}
+
+.header-container h4 {
+    margin: 1%; /* Remove margem padrão do título */
+}
+
+.header-container .btn-small {
+    margin-left: auto; /* Alinha o botão à direita */
+}
+
+hr {
+    margin-top: 5px; /* Diminui o espaço acima do hr */
+    margin-bottom: 20px; /* Espaço abaixo do hr */
+}
+
+.input-field {
+    margin-bottom: 20px; /* Espaço entre os campos do formulário */
+}
+
+.btn-small {
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+.center-align {
+    text-align: center; /* Centraliza o conteúdo */
+}
+</style>
 @endsection

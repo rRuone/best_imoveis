@@ -142,45 +142,13 @@ public function destroy(ItemCardapio $itemCardapio)
     return redirect()->route('itemCardapio.index')->with('success', 'Item deletado com sucesso.');
 }
 
-// public function update(Request $request, ItemCardapio $itemCardapio)
-// {
-//     $request->validate([
-//         'nome' => 'required|string|max:255',
-//         'categoria_id' => 'required|exists:categorias,id',
-//         'preco' => ['required', 'regex:/^\d+(\.\d{1,2})?$/'],
-//         'foto' => 'nullable|image|max:2048',
-//     ]);
-
-//     // Update item properties
-//     $itemCardapio->nome = $request->nome;
-//     $itemCardapio->categoria_id = $request->categoria_id;
-
-//     // Format the price
-//     $preco = str_replace(',', '.', preg_replace('/[^\d.,]/', '', $request->preco));
-//     if (!is_numeric($preco)) {
-//         return redirect()->back()->withErrors(['preco' => 'O preço deve ser um valor numérico.']);
-//     }
-//     $itemCardapio->preco = number_format($preco, 2, '.', '');
-
-//     // Handle file upload for the photo
-//     if ($request->hasFile('foto')) {
-//         // Store the new photo
-//         $path = $request->file('foto')->storeAs('public/fotos', time() . '.' . $request->file('foto')->getClientOriginalExtension());
-//         $itemCardapio->foto = $path; // Update the photo path
-//     }
-
-//     // Save the updated item
-//     $itemCardapio->save();
-
-//     return redirect()->route('itemCardapio.index')->with('success', 'Item atualizado com sucesso.');
-// }
-
 public function update(Request $request, ItemCardapio $itemCardapio)
 {
     $request->validate([
         'nome' => 'required|string|max:255',
         'categoria_id' => 'required|exists:categorias,id',
-        'preco' => ['required', 'regex:/^\d+(,\d{1,2})?$/'], // Aceita valores com vírgula como separador decimal
+        // Permitir números com pontos de milhar e vírgula como decimal
+        'preco' => ['required', 'regex:/^\d{1,3}(\.\d{3})*(,\d{2})?$/'],
         'foto' => 'nullable|image|max:2048',
     ]);
 
@@ -189,7 +157,10 @@ public function update(Request $request, ItemCardapio $itemCardapio)
     $itemCardapio->categoria_id = $request->categoria_id;
 
     // Converter o preço para o formato numérico com ponto
-    $preco = str_replace(',', '.', preg_replace('/[^\d,]/', '', $request->preco));
+    // 1. Remover os pontos de milhar
+    // 2. Substituir a vírgula por ponto como separador decimal
+    $preco = str_replace(',', '.', str_replace('.', '', $request->preco));
+
     if (!is_numeric($preco)) {
         return redirect()->back()->withErrors(['preco' => 'O preço deve ser um valor numérico.']);
     }
@@ -215,5 +186,11 @@ public function edit(ItemCardapio $itemCardapio)
     return view('itemCardapio.edit', compact('itemCardapio', 'categorias')); // Pass item and categories to the view
 }
 
+public function show(ItemCardapio $itemCardapio)
+{
+    return view('itemCardapio.show', compact('itemCardapio'));
+}
 
 }
+
+
