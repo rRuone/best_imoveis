@@ -1,44 +1,102 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="header-container">
-        <br>
-        <h4>Lista de Categorias</h4>
-        <a href="{{ route('admin.categorias.create') }}" class="btn-small waves-effect waves-light gren inline">Adicionar</a>
-    </div>
-        <hr>
     <div class="container">
-        <section class="section">
-            <div class="table-container">
-                <table class="highlight responsive-table striped">
-                    <thead>
-                        <tr>
-                            <th>Categoria</th>
-                            {{-- <th>Ações</th> --}}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($categorias as $categoria)
-                            <tr>
-                                <td>{{ $categoria->nome }}</td>
-                                <td class="right-align">
-                                    {{-- <a href="#" class="btn-small waves-effect waves-light blue">Editar</a> 
-                                    <a href="#" class="btn-small waves-effect waves-light red">Remover</a> --}}
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="2" class="center-align">Não existem categorias</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+        <div class="header-container">
+            <h4 class="header-title">Categorias</h4>
+            <a href="{{ route('admin.categorias.create') }}" class="btn-small waves-effect waves-light green inline">Adicionar</a>
+        </div>
+        <hr>
+
+        <!-- Mensagem de sucesso, se houver -->
+        @if(session('success'))
+            <div class="card-panel green lighten-4">
+                <span class="green-text">{{ session('success') }}</span>
             </div>
-        </section>
+        @endif
+
+        <!-- Modal de Confirmação de Exclusão -->
+        <div id="deleteModal" class="modal small-modal">
+            <div class="modal-content">
+                <h4>Confirmar Exclusão</h4>
+                <p>Tem certeza de que deseja excluir a categoria <strong id="item-name"></strong>?</p>
+            </div>
+            <div class="modal-footer">
+                <form id="deleteForm" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="modal-close btn red">Sim</button>
+                    <a href="#!" class="modal-close btn grey">Cancelar</a>
+                </form>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table class="striped">
+                <thead>
+                    <tr>
+                        <th>
+                            <a href="{{ route('admin.categorias.index', ['sort' => 'nome', 'direction' => $direction === 'asc' ? 'desc' : 'asc']) }}" class="header-link">
+                                Nome
+                                @if ($sort === 'nome')
+                                    <i class="material-icons">{{ $direction === 'asc' ? 'arrow_drop_up' : 'arrow_drop_down' }}</i>
+                                @endif
+                            </a>
+                        </th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($categorias as $categoria)
+                        <tr>
+                            <td>{{ $categoria->nome }}</td>
+                            <td>
+                                <a href="{{ route('admin.categorias.show', $categoria->id) }}" class="btn blue btn-small">
+                                    <i class="material-icons">remove_red_eye</i>
+                                </a>
+                                <a href="{{ route('admin.categorias.edit', $categoria->id) }}" class="btn green btn-small">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                                <button class="btn red btn-small modal-trigger" data-target="deleteModal"
+                                        data-url="{{ route('admin.categorias.destroy', $categoria->id) }}"
+                                        data-name="{{ $categoria->nome }}">
+                                    <i class="material-icons">delete</i>
+                                </button>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="2" class="center-align">Não existem categorias.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+
+        </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializa o modal
+            var elems = document.querySelectorAll('.modal');
+            var instances = M.Modal.init(elems);
+
+            // Adiciona event listener aos botões de exclusão para abrir o modal com os dados corretos
+            document.querySelectorAll('.modal-trigger').forEach(button => {
+                button.addEventListener('click', function() {
+                    // Define a URL de ação para exclusão
+                    let url = this.getAttribute('data-url');
+                    document.getElementById('deleteForm').setAttribute('action', url);
+
+                    // Define o nome do item no texto de confirmação do modal
+                    let itemName = this.getAttribute('data-name');
+                    document.getElementById('item-name').textContent = itemName;
+                });
+            });
+        });
+    </script>
 
     <style>
-
         .header-container {
             display: flex;
             align-items: center; /* Alinha verticalmente ao centro */
@@ -53,15 +111,20 @@
 
         .header-container h4 {
             margin: 1%; /* Remove margem padrão do título */
+            position: sticky; /* Faz o cabeçalho ficar fixo */
+            top: 0; /* Fica fixo no topo */
+            z-index: 10; /* Coloca acima de outros elementos */
         }
 
         .header-container .btn-small {
             margin-left: auto; /* Alinha o botão à direita */
         }
-        
+
         .table-container {
-            max-width: 70%; /* Ajuste a largura máxima da tabela conforme necessário */
+            max-width: 100%; /* Ajuste a largura máxima da tabela conforme necessário */
             margin: 0 auto; /* Centraliza o container da tabela */
+            overflow-y: auto; /* Permite rolagem vertical */
+            height: 400px; /* Ajuste a altura conforme necessário */
         }
 
         table {
@@ -71,18 +134,39 @@
         }
 
         table th, table td {
-            padding: 10px;
+            padding: 10px; /* Adiciona espaço interno nas células */
             font-size: 14px;
-            border-bottom: 1px solid #ddd; /* Adiciona linhas internas */
+            border-bottom: 1px solid #ddd; /* Adiciona apenas linhas internas */
         }
 
         table th {
             background-color: #f5f5f5; /* Cor de fundo para o cabeçalho */
+            position: sticky; /* Faz o cabeçalho ficar fixo */
+            top: 0; /* Fica fixo no topo da tabela */
+            z-index: 5; /* Coloca acima de outros elementos */
+        }
+
+        table th:last-child, table td:last-child {
+            text-align: right; /* Alinha a última coluna à direita */
         }
 
         .btn-small {
             padding: 5px 10px;
             font-size: 12px;
+        }
+
+        .modal.small-modal {
+            width: 40% !important; /* Ajusta a largura conforme necessário */
+            max-height: 300px; /* Ajusta a altura se necessário */
+        }
+
+        .header-link {
+            color: inherit; /* Faz a cor do link herdar do seu pai */
+            text-decoration: none; /* Remove o sublinhado dos links */
+        }
+
+        .header-link:hover {
+            text-decoration: underline; /* Adiciona sublinhado ao passar o mouse para melhor UX */
         }
     </style>
 @endsection

@@ -36,15 +36,26 @@ class AdicionaisController extends Controller
     public function create(){
         return view('admin.adicionais.create');
     }
+    public function store(AdicionalRequest $request)
+    {
+        // Validação dos dados recebidos, incluindo a verificação de unicidade
+        $request->validate([
+            'nome' => 'required|string|max:255|unique:adicionais,nome', // Verifica se o nome já existe
+            'preco' => 'numeric', // Supondo que você já tenha isso
+        ], [
+            'nome.unique' => 'Esse adicional já foi cadastrado. Por favor, insira um nome diferente.', // Mensagem personalizada
+        ]);
 
-    public function store(AdicionalRequest $request){
+        // Validação já realizada pelo AdicionalRequest
         $request->validated();
 
-         Adicionais::create($request->all());
-         return redirect()->route('admin.adicionais.index')
-         ->with('success', 'Adicional cadastrado com sucesso');
-
+        // Criação do adicional
+        Adicionais::create($request->all());
+        return redirect()->route('admin.adicionais.index')
+            ->with('success', 'Adicional cadastrado com sucesso');
     }
+
+
 
     public function destroy(Adicionais $adicionais)
 {
@@ -60,6 +71,8 @@ public function edit($id)
         $adicionais = Adicionais::findOrFail($id);
         return view('admin.adicionais.edit', compact('adicionais'));
     }
+
+
     public function update(AdicionalRequest $request, $id)
     {
         // Valida os dados da requisição usando o AdicionalRequest
@@ -68,27 +81,21 @@ public function edit($id)
         // Busca o item adicional específico pelo ID
         $adicionais = Adicionais::findOrFail($id);
 
+        // Validação para garantir que o nome seja único, exceto para o registro atual
+        $request->validate([
+            'nome' => 'required|string|max:255|unique:adicionais,nome,' . $adicionais->id, // Permite o próprio nome
+            // 'preco' => 'required|numeric', // Supondo que você já tenha isso
+        ], [
+            'nome.unique' => 'Esse adicional já foi cadastrado. Por favor, insira um nome diferente.',
+        ]);
+
         // Processa o campo 'preco' para garantir que esteja em formato correto
         $preco = $request->input('preco');
-
-        // Remove o "R$ " e troca a vírgula por ponto para enviar no formato correto
         $preco = str_replace(['R$', ' ', '.'], ['', '', ''], $preco); // Remove "R$ " e espaços
         $preco = str_replace(',', '.', $preco); // Troca a vírgula por ponto
 
         // Atualiza os dados do adicional com os dados da requisição
         $adicionais->update(array_merge($request->all(), ['preco' => $preco]));
-
-         // Obtém o parâmetro de ordenação, padrão é 'nome'
-    $sort = $request->get('sort', 'nome');
-
-    // Valida o parâmetro de ordenação
-    $allowedSorts = ['nome', 'preco'];
-    if (!in_array($sort, $allowedSorts)) {
-        $sort = 'nome';
-    }
-
-    // Busca os adicionais, ordenando pelo campo especificado
-    $adicionais = Adicionais::orderBy($sort)->get();
 
         // Redireciona para a página de listagem com uma mensagem de sucesso
         return redirect()->route('admin.adicionais.index')->with('success', 'Adicional atualizado com sucesso.');

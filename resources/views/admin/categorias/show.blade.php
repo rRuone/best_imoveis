@@ -4,35 +4,24 @@
 <div class="section container">
     <div class="header-container">
         <br>
-        <h4>Itens do Cardápio</h4>
-        <a href="{{ route('itemCardapio.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a>
+        <h4>Categorias</h4>
+        <a href="{{ route('admin.categorias.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a>
     </div>
     <hr>
 
     <div class="container">
-        <h4 class="inline">Detalhes do Item: {{ $itemCardapio->nome }}</h4>
+        <h4 class="inline">Detalhes da Categoria: {{ $categoria->nome }}</h4>
         <table class="striped">
             <thead>
                 <tr>
                     <th>Nome</th>
-                    <th>Categoria</th>
-                    <th>Preço</th>
-                    <th>Foto</th>
+
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>{{ $itemCardapio->nome }}</td>
-                    <td>{{ $itemCardapio->categoria ? $itemCardapio->categoria->nome : 'Sem Categoria' }}</td>
-                    <td>R$ {{ number_format($itemCardapio->preco, 2, ',', '.') }}</td>
-                    <td>
-                        @if($itemCardapio->foto)
-                            <img src="{{ url("storage/{$itemCardapio->foto}") }}" alt="{{ $itemCardapio->nome }}" style="width: 200px; height: auto;">
-                        @else
-                            <p>Sem Foto</p>
-                        @endif
-                    </td>
-                </tr>
+                    <td>{{ $categoria->nome }}</td>
+
             </tbody>
         </table>
     </div>

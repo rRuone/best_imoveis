@@ -1,47 +1,34 @@
 <?php
-
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 class ItemCardapioRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
+
     public function authorize()
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules()
     {
         return [
-            'nome' => 'required',
-            'preco' => 'required',
+            'nome' => 'required|string|max:255|regex:/^[^\d]+$/', // Validação para que o nome não seja um número
             'categoria_id' => 'required|exists:categorias,id',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', 
+            'preco' => ['required', 'regex:/^\d{1,3}(\.\d{3})*(,\d{2})?$/', 'min:0.01'], // Preço maior que 0
+            'foto' => 'nullable|image|max:2048',
         ];
     }
 
-     /**
-     * Obtenha as mensagens de erro personalizadas para as regras de validação.
-     *
-     * 
-     */
-    public function messages(): array
+    public function messages()
     {
         return [
+            'nome.regex' => 'O nome do item não pode ser um número.',
             'nome.required' => 'O nome do item é obrigatório.',
-            
-            'preco.required' => 'O preço deve ser um valor numérico.',
+            'preco.required' => 'O preço é obrigatório.',
+            'preco.min' => 'O preço deve ser maior que zero.',
+            // Outras mensagens personalizadas conforme necessário
         ];
     }
 }

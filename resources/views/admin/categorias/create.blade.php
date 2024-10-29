@@ -3,12 +3,12 @@
 <div class="section container">
     <div class="header-container">
         <br>
-        <h4 class="inline">Adicionar Categoriais</h4>
+        <h4 class="inline">Adicionar Categorias</h4>
         <a href="{{ route('admin.categorias.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a>
     </div>
     <hr>
     <div class="section container">
-        
+
         @if($errors->any())
             <span style="color: #ff0000">
                 @foreach ($errors->all() as $error)
@@ -32,8 +32,8 @@
     <style>
 
         .form-container{
-            max-width: 70%; 
-            margin: 0 auto; 
+            max-width: 70%;
+            margin: 0 auto;
         }
 
         .header-container {
@@ -63,7 +63,7 @@
 
         .center-align {
             text-align: center; /* Centraliza o conteúdo */
-            
+
         }
     </style>
 

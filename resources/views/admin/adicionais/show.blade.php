@@ -4,7 +4,7 @@
 <div class="section container">
     <div class="header-container">
         <br>
-        <h4>Detalhes do Adicional</h4>
+        <h4>Adicionais</h4>
         <a href="{{ route('admin.adicionais.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a>
     </div>
     <hr>

@@ -70,6 +70,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::put('/update-categorias/{categorias}',[CategoriasController::class,'update'])->name('categorias.update');
     Route::delete('/destroy-categorias/{categorias}',[CategoriasController::class,'destroy'])->name('categorias.destroy');
 
+
+
+
     //Enderecos
     Route::get('/index-enderecos',[EnderecosController::class, 'index'])->name('enderecos.index');
     Route::get('/create-enderecos',[EnderecosController::class, 'create'])->name('enderecos.create');
