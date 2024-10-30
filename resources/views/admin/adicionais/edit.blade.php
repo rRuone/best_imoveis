@@ -37,14 +37,38 @@
                 <button type="submit" class="btn-small waves-effect waves-light">Salvar</button>
             </form>
         </div>
+
+        <!-- Botão de Ajuda Flutuante -->
+        <div class="fixed-action-btn">
+            <a class="btn-floating btn-large blue modal-trigger" href="#helpModal">
+                <i class="large material-icons">help_outline</i>
+            </a>
+        </div>
+
+        <!-- Modal de Ajuda -->
+        <div id="helpModal" class="modal">
+            <div class="modal-content">
+                <h4>Ajuda - Edição de Adicionais</h4>
+                <p>Essa seção permite editar o nome e o preço de um adicional.</p>
+                <ul>
+                    <li><strong>Nome do Adicional:</strong> Digite o novo nome do adicional.</li>
+                    <li><strong>Preço:</strong> Insira o preço do adicional no formato monetário adequado. O valor será automaticamente formatado.</li>
+                    <li><strong>Salvar:</strong> Clique em "Salvar" para aplicar as mudanças.</li>
+                    <li><strong>Voltar:</strong> Use o botão "Voltar" para retornar à lista de adicionais sem salvar.</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close btn grey">Fechar</a>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
          M.AutoInit(); // Inicializar o Materialize JS
 
-        // Máscara para formatação do preço na interface
         $(document).ready(function() {
+            // Formatação de preço na interface
             $('#preco').on('input', function() {
                 let valor = $(this).val().replace(/\D/g, ''); // Remove caracteres não numéricos
                 if (valor) {
@@ -59,11 +83,8 @@
             $('form').on('submit', function() {
                 let precoField = $('#preco');
                 let precoValue = precoField.val();
-
-                // Remove o "R$ " e troca a vírgula por ponto para enviar no formato correto
                 precoValue = precoValue.replace('R$ ', '').replace(',', '.');
-
-                precoField.val(precoValue); // Atualiza o valor do campo com o formato correto
+                precoField.val(precoValue);
             });
         });
     </script>
@@ -105,6 +126,12 @@
 
         .center-align {
             text-align: center;
+        }
+
+        .fixed-action-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
         }
     </style>
 @endsection

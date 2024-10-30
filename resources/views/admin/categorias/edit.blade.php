@@ -32,11 +32,37 @@
                 <button type="submit" class="btn-small waves-effect waves-light">Salvar</button>
             </form>
         </div>
+
+        <!-- Floating Help Button -->
+        <div class="fixed-action-btn">
+            <a class="btn-floating btn-large blue modal-trigger" href="#helpModal">
+                <i class="large material-icons">help_outline</i>
+            </a>
+        </div>
+
+        <!-- Help Modal -->
+        <div id="helpModal" class="modal">
+            <div class="modal-content">
+                <h4>Ajuda - Edição de Categoria</h4>
+                <p>Esta página permite editar o nome da categoria selecionada.</p>
+                <ul>
+                    <li><strong>Campo Nome:</strong> Atualize o nome da categoria no campo de texto.</li>
+                    <li><strong>Salvar:</strong> Clique no botão "Salvar" para aplicar as alterações.</li>
+                    <li><strong>Voltar:</strong> Use o botão "Voltar" para retornar à lista de categorias sem salvar.</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close btn grey">Fechar</a>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
-        M.AutoInit(); // Inicializar o Materialize JS
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializa os modais
+            M.Modal.init(document.querySelectorAll('.modal'));
+        });
     </script>
 
     <style>
@@ -76,6 +102,12 @@
 
         .center-align {
             text-align: center;
+        }
+
+        .fixed-action-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
         }
     </style>
 @endsection

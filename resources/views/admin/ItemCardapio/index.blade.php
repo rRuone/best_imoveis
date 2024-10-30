@@ -6,6 +6,7 @@
         <br>
         <h4 class="header-title">Itens do Cardápio</h4>
         <a href="{{ route('admin.itemCardapio.create') }}" class="btn-small waves-effect waves-light green inline">Adicionar</a>
+
     </div>
     <hr>
 
@@ -97,6 +98,29 @@
     </div>
 </div>
 
+<div class="fixed-action-btn">
+    <a class="btn-floating btn-large blue modal-trigger" href="#helpModal">
+        <i class="large material-icons">help_outline</i>
+    </a>
+</div>
+
+<div id="helpModal" class="modal">
+    <div class="modal-content">
+        <h4>Ajuda</h4>
+        <p>Esta página permite que você visualize e gerencie os itens do cardápio. Aqui estão as funcionalidades:</p>
+        <ul>
+            <li><strong>Adicionar:</strong> Clique no botão "Adicionar" para criar um novo item de cardápio.</li>
+            <li><strong>Visualizar:</strong> O ícone de olho permite visualizar detalhes do item.</li>
+            <li><strong>Editar:</strong> O ícone de lápis permite editar um item existente.</li>
+            <li><strong>Excluir:</strong> O ícone de lixeira permite excluir um item após confirmação.</li>
+            <li><strong>Ordenar:</strong> Clique nos cabeçalhos da tabela (Nome, Categoria, Preço) para ordenar os itens.</li>
+        </ul>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close btn grey">Fechar</a>
+    </div>
+</div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Initialize the modal
@@ -179,7 +203,7 @@
 
     .modal.small-modal {
         width: 40% !important; /* Ajuste a largura conforme necessário */
-        max-height: 300px; /* Ajuste a altura se necessário */
+        max-height: 200px; /* Ajuste a altura se necessário */
     }
 
     .header-link {
@@ -189,6 +213,12 @@
 
     .header-link:hover {
         text-decoration: underline; /* Opcional: Adiciona sublinhado ao passar o mouse para melhor UX */
+    }
+
+    .fixed-action-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
     }
 </style>
 @endsection

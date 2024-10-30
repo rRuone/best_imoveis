@@ -26,7 +26,40 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Botão de Ajuda Flutuante -->
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large blue modal-trigger" href="#helpModal">
+            <i class="large material-icons">help_outline</i>
+        </a>
+    </div>
+
+    <!-- Modal de Ajuda -->
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <h4>Ajuda - Detalhes do Adicional</h4>
+            <p>Nessa seção, você pode visualizar os detalhes de um adicional específico:</p>
+            <ul>
+                <li><strong>Nome:</strong> O nome do adicional que foi selecionado.</li>
+                <li><strong>Preço:</strong> O preço do adicional, exibido em formato monetário.</li>
+                <li><strong>Voltar:</strong> Use o botão "Voltar" para retornar à lista de adicionais.</li>
+            </ul>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close btn grey">Fechar</a>
+        </div>
+    </div>
 </div>
+
+<!-- Scripts do Materialize -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inicializa todos os modais
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems);
+    });
+</script>
 
 <style>
 .header-container {
@@ -73,6 +106,12 @@ table th {
 .btn-small {
     padding: 5px 10px;
     font-size: 12px;
+}
+
+.fixed-action-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
 }
 
 .center-align {

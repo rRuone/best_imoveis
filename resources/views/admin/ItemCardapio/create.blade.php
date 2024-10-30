@@ -51,6 +51,30 @@
             </form>
         </div>
 
+        <!-- Floating Help Button -->
+        <div class="fixed-action-btn">
+            <a class="btn-floating btn-large blue modal-trigger" href="#helpModal">
+                <i class="large material-icons">help_outline</i>
+            </a>
+        </div>
+
+        <!-- Help Modal -->
+        <div id="helpModal" class="modal">
+            <div class="modal-content">
+                <h4>Ajuda - Adicionar Item ao Cardápio</h4>
+                <p>Aqui você pode preencher as informações para adicionar um novo item ao cardápio:</p>
+                <ul>
+                    <li><strong>Nome do Item:</strong> Nome do item a ser exibido no cardápio.</li>
+                    <li><strong>Preço:</strong> Insira o preço do item (o campo aplicará automaticamente a máscara de R$ XX,XX).</li>
+                    <li><strong>Categoria:</strong> Escolha uma categoria que melhor represente o item.</li>
+                    <li><strong>Foto:</strong> Opcionalmente, adicione uma foto do item. O upload é feito automaticamente ao enviar o formulário.</li>
+                    <li><strong>Salvar:</strong> Clique em “Salvar” para adicionar o item ao cardápio.</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close btn grey">Fechar</a>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -70,9 +94,9 @@
             });
         });
     </script>
-     <style>
 
-    .form-container{
+    <style>
+        .form-container {
             max-width: 70%;
             margin: 0 auto;
         }
@@ -82,11 +106,10 @@
             align-items: center; /* Alinha verticalmente ao centro */
             justify-content: space-between; /* Espaça igualmente entre os itens */
             margin-bottom: 1px; /* Espaço abaixo do cabeçalho */
-
         }
 
         hr {
-            margin-top: 1px; /* Diminui o espaço acima do hr */
+            margin-top: 5px; /* Diminui o espaço acima do hr */
             margin-bottom: 20px; /* Espaço abaixo do hr */
         }
 
@@ -98,11 +121,6 @@
             margin-left: auto; /* Alinha o botão à direita */
         }
 
-        hr {
-            margin-top: 5px; /* Diminui o espaço acima do hr */
-            margin-bottom: 20px; /* Espaço abaixo do hr */
-        }
-
         .input-field {
             margin-bottom: 20px; /* Espaço entre os campos do formulário */
         }
@@ -112,8 +130,10 @@
             font-size: 12px;
         }
 
-        .center-align {
-            text-align: center; /* Centraliza o conteúdo */
+        .fixed-action-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
         }
     </style>
 @endsection

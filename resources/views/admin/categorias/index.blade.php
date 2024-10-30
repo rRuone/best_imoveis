@@ -71,24 +71,44 @@
                     @endforelse
                 </tbody>
             </table>
+        </div>
 
+        <!-- Floating Help Button -->
+        <div class="fixed-action-btn">
+            <a class="btn-floating btn-large blue modal-trigger" href="#helpModal">
+                <i class="large material-icons">help_outline</i>
+            </a>
+        </div>
+
+        <!-- Help Modal -->
+        <div id="helpModal" class="modal">
+            <div class="modal-content">
+                <h4>Ajuda - Gerenciamento de Categorias</h4>
+                <p>Utilize esta página para gerenciar as categorias do cardápio:</p>
+                <ul>
+                    <li><strong>Adicionar:</strong> Clique no botão "Adicionar" para criar uma nova categoria.</li>
+                    <li><strong>Visualizar:</strong> Clique no ícone de olho para visualizar os detalhes de uma categoria.</li>
+                    <li><strong>Editar:</strong> Clique no ícone de lápis para editar uma categoria existente.</li>
+                    <li><strong>Excluir:</strong> Clique no ícone de lixeira para excluir uma categoria. Confirme a ação no modal de exclusão.</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close btn grey">Fechar</a>
+            </div>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Inicializa o modal
-            var elems = document.querySelectorAll('.modal');
-            var instances = M.Modal.init(elems);
+            // Inicializa os modais
+            M.Modal.init(document.querySelectorAll('.modal'));
 
-            // Adiciona event listener aos botões de exclusão para abrir o modal com os dados corretos
+            // Event listener para os botões de exclusão
             document.querySelectorAll('.modal-trigger').forEach(button => {
                 button.addEventListener('click', function() {
-                    // Define a URL de ação para exclusão
                     let url = this.getAttribute('data-url');
                     document.getElementById('deleteForm').setAttribute('action', url);
 
-                    // Define o nome do item no texto de confirmação do modal
                     let itemName = this.getAttribute('data-name');
                     document.getElementById('item-name').textContent = itemName;
                 });
@@ -99,55 +119,55 @@
     <style>
         .header-container {
             display: flex;
-            align-items: center; /* Alinha verticalmente ao centro */
-            justify-content: space-between; /* Espaça igualmente entre os itens */
-            margin-bottom: 2px; /* Espaço abaixo do cabeçalho */
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2px;
         }
 
         hr {
-            margin-top: 1px; /* Diminui o espaço acima do hr */
-            margin-bottom: 20px; /* Espaço abaixo do hr */
+            margin-top: 1px;
+            margin-bottom: 20px;
         }
 
         .header-container h4 {
-            margin: 1%; /* Remove margem padrão do título */
-            position: sticky; /* Faz o cabeçalho ficar fixo */
-            top: 0; /* Fica fixo no topo */
-            z-index: 10; /* Coloca acima de outros elementos */
+            margin: 1%;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
         .header-container .btn-small {
-            margin-left: auto; /* Alinha o botão à direita */
+            margin-left: auto;
         }
 
         .table-container {
-            max-width: 100%; /* Ajuste a largura máxima da tabela conforme necessário */
-            margin: 0 auto; /* Centraliza o container da tabela */
-            overflow-y: auto; /* Permite rolagem vertical */
-            height: 400px; /* Ajuste a altura conforme necessário */
+            max-width: 100%;
+            margin: 0 auto;
+            overflow-y: auto;
+            height: 400px;
         }
 
         table {
             margin: 0;
-            width: 100%; /* Garante que a tabela ocupe toda a largura do container */
-            border-collapse: collapse; /* Remove o espaço entre as células */
+            width: 100%;
+            border-collapse: collapse;
         }
 
         table th, table td {
-            padding: 10px; /* Adiciona espaço interno nas células */
+            padding: 10px;
             font-size: 14px;
-            border-bottom: 1px solid #ddd; /* Adiciona apenas linhas internas */
+            border-bottom: 1px solid #ddd;
         }
 
         table th {
-            background-color: #f5f5f5; /* Cor de fundo para o cabeçalho */
-            position: sticky; /* Faz o cabeçalho ficar fixo */
-            top: 0; /* Fica fixo no topo da tabela */
-            z-index: 5; /* Coloca acima de outros elementos */
+            background-color: #f5f5f5;
+            position: sticky;
+            top: 0;
+            z-index: 5;
         }
 
         table th:last-child, table td:last-child {
-            text-align: right; /* Alinha a última coluna à direita */
+            text-align: right;
         }
 
         .btn-small {
@@ -156,17 +176,23 @@
         }
 
         .modal.small-modal {
-            width: 40% !important; /* Ajusta a largura conforme necessário */
-            max-height: 300px; /* Ajusta a altura se necessário */
+            width: 40% !important;
+            max-height: 200px;
         }
 
         .header-link {
-            color: inherit; /* Faz a cor do link herdar do seu pai */
-            text-decoration: none; /* Remove o sublinhado dos links */
+            color: inherit;
+            text-decoration: none;
         }
 
         .header-link:hover {
-            text-decoration: underline; /* Adiciona sublinhado ao passar o mouse para melhor UX */
+            text-decoration: underline;
+        }
+
+        .fixed-action-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
         }
     </style>
 @endsection
