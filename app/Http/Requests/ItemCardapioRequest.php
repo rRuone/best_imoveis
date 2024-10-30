@@ -14,11 +14,13 @@ class ItemCardapioRequest extends FormRequest
     public function rules()
     {
         return [
-            'nome' => 'required|string|max:255|regex:/^[^\d]+$/', // Validação para que o nome não seja um número
+            'nome' => 'required|string',
+            'preco' => 'required',
             'categoria_id' => 'required|exists:categorias,id',
-            'preco' => ['required', 'regex:/^\d{1,3}(\.\d{3})*(,\d{2})?$/', 'min:0.01'], // Preço maior que 0
-            'foto' => 'nullable|image|max:2048',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', 
         ];
+       
+     
     }
 
     public function messages()
