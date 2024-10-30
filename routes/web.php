@@ -27,17 +27,17 @@ use App\Http\Controllers\SessaoController;
 |
 */
 
-//Para reniciar a sessão atual 
+//Para reniciar a sessão atual
 //Route::get('/reiniciar-sessao', [SessaoController::class, 'reiniciarSessao'])->name('sessao.reiniciar');
 
-Route::get('/', [HomeController::class, 'index'])->name('home.index'); 
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 Route::get('/admin/index-cidade',[CidadesController::class,'cidades'])->name('cidades.index');
 
 //Usa-se esse prefixo pra agrupar as rotas que tem admin em comum
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
 
-    //Administrador 
+    //Administrador
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.pedidos.index');
 
     //Route::get('/pedidos', [PedidoController::class, 'index'])->name('admin.pedidos');
@@ -52,14 +52,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('/cidades/salvar',[CidadesController::class, 'formAdicionar'] )->name('cidades.form');
     Route::post('/cidades/salvar',[CidadesController::class, 'adicionar'] )->name('cidades.adicionar');
 
-    //Adicional 
-    Route::get('/index-adicionais',[AdicionaisController::class, 'index'])->name('adicionais.index');
-    Route::get('/create-adicionais',[AdicionaisController::class, 'create'])->name('adicionais.create');
-    Route::post('/store-adicionais',[AdicionaisController::class, 'store'])->name('adicionais.store');
-    Route::get('/show-adicionais/{adicionais}',[AdicionaisController::class, 'show'])->name('adicionais.show');
-    Route::get('/edit-adicionais/{adicionais}',[AdicionaisController::class, 'edit'])->name('adicionais.edit');
-    Route::put('/update-adicionais/{adicionais}',[AdicionaisController::class, 'update'])->name('adicionais.update');
-    Route::delete('/destroy-adicionais/{adicionais}',[AdicionaisController::class, 'destroy'])->name('adicionais.destroy');
+    //Adicional
+    Route::get('/index-adicionais', [AdicionaisController::class, 'index'])->name('adicionais.index');
+    Route::get('/create-adicionais', [AdicionaisController::class, 'create'])->name('adicionais.create');
+    Route::post('/store-adicionais', [AdicionaisController::class, 'store'])->name('adicionais.store');
+    Route::get('/show-adicionais/{adicionais}', [AdicionaisController::class, 'show'])->name('adicionais.show');
+    Route::get('/edit-adicionais/{adicionais}', [AdicionaisController::class, 'edit'])->name('adicionais.edit'); // método GET para exibir o formulário de edição
+    Route::put('/update-adicionais/{adicionais}', [AdicionaisController::class, 'update'])->name('adicionais.update'); // método PUT para a atualização
+    Route::delete('/destroy-adicionais/{adicionais}', [AdicionaisController::class, 'destroy'])->name('adicionais.destroy');
 
     //Categorias
     Route::get('/index-categorias',[CategoriasController::class,'index'])->name('categorias.index');
@@ -70,32 +70,35 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::put('/update-categorias/{categorias}',[CategoriasController::class,'update'])->name('categorias.update');
     Route::delete('/destroy-categorias/{categorias}',[CategoriasController::class,'destroy'])->name('categorias.destroy');
 
+
+
+
     //Enderecos
     Route::get('/index-enderecos',[EnderecosController::class, 'index'])->name('enderecos.index');
     Route::get('/create-enderecos',[EnderecosController::class, 'create'])->name('enderecos.create');
     Route::post('/store-enderecos',[EnderecosController::class, 'store'])->name('enderecos.store');
     Route::get('/show-enderecos/{enderecos}',[EnderecosController::class,'show'])->name('enderecos.show');
-}
-);
 
-//Clientes 
+    //ItemCardapio
+    Route::get('/index-itemCardapio',[ItemCardapioController::class,'index'])->name('itemCardapio.index');
+    Route::get('/create-itemCardapio',[ItemCardapioController::class,'create'])->name('itemCardapio.create');
+    Route::post('/store-itemCardapio',[ItemCardapioController::class,'store'])->name('itemCardapio.store');
+    Route::get('/show-itemCardapio/{itemCardapio}',[ItemCardapioController::class,'show'])->name('itemCardapio.show');
+    Route::get('/edit-itemCardapio/{itemCardapio}',[ItemCardapioController::class,'edit'])->name('itemCardapio.edit');
+    Route::put('/show-itemCardapio/{itemCardapio}',[ItemCardapioController::class,'update'])->name('itemCardapio.update');
+    Route::delete('/destroy-itemCardapio/{itemCardapio}',[ItemCardapioController::class,'destroy'])->name('itemCardapio.destroy');
+    Route::get('itemCardapio/{itemCardapio}/product', [ItemCardapioController::class, 'product'])->name('itemCardapio.product');
+    Route::post('itemCardapio/{itemCardapio}/salvar-adicionais', [ItemCardapioController::class, 'salvarAdicionais'])->name('itemCardapio.salvarAdicionais');
+    }
+    );
+
+//Clientes
 Route::get('/index-cliente', [ClientesController::class, 'index'])->name('cliente.index');
 Route::get('/create-cliente',[ClientesController::class,'create'])->name('cliente.create');
 Route::post('/store-cliente',[ClientesController::class,'store'])->name('cliente.store');
 Route::post('/show-cliente/{cliente}',[ClientesController::class,'show'])->name('cliente.show');
 
-//ItemCardapio
-Route::get('/index-itemCardapio',[ItemCardapioController::class,'index'])->name('itemCardapio.index');
-Route::get('/create-itemCardapio',[ItemCardapioController::class,'create'])->name('itemCardapio.create');
-Route::post('/store-itemCardapio',[ItemCardapioController::class,'store'])->name('itemCardapio.store');
-Route::get('/show-itemCardapio/{itemCardapio}',[ItemCardapioController::class,'show'])->name('itemCardapio.show');
-Route::get('/edit-itemCardapio/{itemCardapio}',[ItemCardapioController::class,'edit'])->name('itemCardapio.edit');
-Route::put('/show-itemCardapio/{itemCardapio}',[ItemCardapioController::class,'update'])->name('itemCardapio.update');
-Route::delete('/destroy-itemCardapio/{itemCardapio}',[ItemCardapioController::class,'destroy'])->name('itemCardapio.destroy');
 
-Route::get('itemCardapio/{itemCardapio}/product', [ItemCardapioController::class, 'product'])->name('itemCardapio.product');
-
-Route::post('itemCardapio/{itemCardapio}/salvar-adicionais', [ItemCardapioController::class, 'salvarAdicionais'])->name('itemCardapio.salvarAdicionais');
 
 //
 Route::get('/carrinho', [CarrinhoController::class, 'index'])->name('carrinho.index');

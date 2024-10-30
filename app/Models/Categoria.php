@@ -10,11 +10,11 @@ class Categoria extends Model
     use HasFactory;
 
     protected $fillable = ['nome'];
-    
-    
+
+
     public function itensCardapio(){
         return $this->hasMany(ItemCardapio::class);
     }
 }
 
- 
+

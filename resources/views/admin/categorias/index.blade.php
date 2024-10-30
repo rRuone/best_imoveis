@@ -1,88 +1,198 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="header-container">
-        <br>
-        <h4>Lista de Categorias</h4>
-        <a href="{{ route('admin.categorias.create') }}" class="btn-small waves-effect waves-light gren inline">Adicionar</a>
-    </div>
-        <hr>
     <div class="container">
-        <section class="section">
-            <div class="table-container">
-                <table class="highlight responsive-table striped">
-                    <thead>
-                        <tr>
-                            <th>Categoria</th>
-                            {{-- <th>Ações</th> --}}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($categorias as $categoria)
-                            <tr>
-                                <td>{{ $categoria->nome }}</td>
-                                <td class="right-align">
-                                    {{-- <a href="#" class="btn-small waves-effect waves-light blue">Editar</a> 
-                                    <a href="#" class="btn-small waves-effect waves-light red">Remover</a> --}}
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="2" class="center-align">Não existem categorias</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+        <div class="header-container">
+            <h4 class="header-title">Categorias</h4>
+            <a href="{{ route('admin.categorias.create') }}" class="btn-small waves-effect waves-light green inline">Adicionar</a>
+        </div>
+        <hr>
+
+        <!-- Mensagem de sucesso, se houver -->
+        @if(session('success'))
+            <div class="card-panel green lighten-4">
+                <span class="green-text">{{ session('success') }}</span>
             </div>
-        </section>
+        @endif
+
+        <!-- Modal de Confirmação de Exclusão -->
+        <div id="deleteModal" class="modal small-modal">
+            <div class="modal-content">
+                <h4>Confirmar Exclusão</h4>
+                <p>Tem certeza de que deseja excluir a categoria <strong id="item-name"></strong>?</p>
+            </div>
+            <div class="modal-footer">
+                <form id="deleteForm" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="modal-close btn red">Sim</button>
+                    <a href="#!" class="modal-close btn grey">Cancelar</a>
+                </form>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table class="striped">
+                <thead>
+                    <tr>
+                        <th>
+                            <a href="{{ route('admin.categorias.index', ['sort' => 'nome', 'direction' => $direction === 'asc' ? 'desc' : 'asc']) }}" class="header-link">
+                                Nome
+                                @if ($sort === 'nome')
+                                    <i class="material-icons">{{ $direction === 'asc' ? 'arrow_drop_up' : 'arrow_drop_down' }}</i>
+                                @endif
+                            </a>
+                        </th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($categorias as $categoria)
+                        <tr>
+                            <td>{{ $categoria->nome }}</td>
+                            <td>
+                                <a href="{{ route('admin.categorias.show', $categoria->id) }}" class="btn blue btn-small">
+                                    <i class="material-icons">remove_red_eye</i>
+                                </a>
+                                <a href="{{ route('admin.categorias.edit', $categoria->id) }}" class="btn green btn-small">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                                <button class="btn red btn-small modal-trigger" data-target="deleteModal"
+                                        data-url="{{ route('admin.categorias.destroy', $categoria->id) }}"
+                                        data-name="{{ $categoria->nome }}">
+                                    <i class="material-icons">delete</i>
+                                </button>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="2" class="center-align">Não existem categorias.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Floating Help Button -->
+        <div class="fixed-action-btn">
+            <a class="btn-floating btn-large blue modal-trigger" href="#helpModal">
+                <i class="large material-icons">help_outline</i>
+            </a>
+        </div>
+
+        <!-- Help Modal -->
+        <div id="helpModal" class="modal">
+            <div class="modal-content">
+                <h4>Ajuda - Gerenciamento de Categorias</h4>
+                <p>Utilize esta página para gerenciar as categorias do cardápio:</p>
+                <ul>
+                    <li><strong>Adicionar:</strong> Clique no botão "Adicionar" para criar uma nova categoria.</li>
+                    <li><strong>Visualizar:</strong> Clique no ícone de olho para visualizar os detalhes de uma categoria.</li>
+                    <li><strong>Editar:</strong> Clique no ícone de lápis para editar uma categoria existente.</li>
+                    <li><strong>Excluir:</strong> Clique no ícone de lixeira para excluir uma categoria. Confirme a ação no modal de exclusão.</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close btn grey">Fechar</a>
+            </div>
+        </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializa os modais
+            M.Modal.init(document.querySelectorAll('.modal'));
+
+            // Event listener para os botões de exclusão
+            document.querySelectorAll('.modal-trigger').forEach(button => {
+                button.addEventListener('click', function() {
+                    let url = this.getAttribute('data-url');
+                    document.getElementById('deleteForm').setAttribute('action', url);
+
+                    let itemName = this.getAttribute('data-name');
+                    document.getElementById('item-name').textContent = itemName;
+                });
+            });
+        });
+    </script>
 
     <style>
-
         .header-container {
             display: flex;
-            align-items: center; /* Alinha verticalmente ao centro */
-            justify-content: space-between; /* Espaça igualmente entre os itens */
-            margin-bottom: 2px; /* Espaço abaixo do cabeçalho */
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2px;
         }
 
         hr {
-            margin-top: 1px; /* Diminui o espaço acima do hr */
-            margin-bottom: 20px; /* Espaço abaixo do hr */
+            margin-top: 1px;
+            margin-bottom: 20px;
         }
 
         .header-container h4 {
-            margin: 1%; /* Remove margem padrão do título */
+            margin: 1%;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
         .header-container .btn-small {
-            margin-left: auto; /* Alinha o botão à direita */
+            margin-left: auto;
         }
-        
+
         .table-container {
-            max-width: 70%; /* Ajuste a largura máxima da tabela conforme necessário */
-            margin: 0 auto; /* Centraliza o container da tabela */
+            max-width: 100%;
+            margin: 0 auto;
+            overflow-y: auto;
+            height: 400px;
         }
 
         table {
             margin: 0;
-            width: 100%; /* Garante que a tabela ocupe toda a largura do container */
-            border-collapse: collapse; /* Remove o espaço entre as células */
+            width: 100%;
+            border-collapse: collapse;
         }
 
         table th, table td {
             padding: 10px;
             font-size: 14px;
-            border-bottom: 1px solid #ddd; /* Adiciona linhas internas */
+            border-bottom: 1px solid #ddd;
         }
 
         table th {
-            background-color: #f5f5f5; /* Cor de fundo para o cabeçalho */
+            background-color: #f5f5f5;
+            position: sticky;
+            top: 0;
+            z-index: 5;
+        }
+
+        table th:last-child, table td:last-child {
+            text-align: right;
         }
 
         .btn-small {
             padding: 5px 10px;
             font-size: 12px;
+        }
+
+        .modal.small-modal {
+            width: 40% !important;
+            max-height: 200px;
+        }
+
+        .header-link {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .header-link:hover {
+            text-decoration: underline;
+        }
+
+        .fixed-action-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
         }
     </style>
 @endsection

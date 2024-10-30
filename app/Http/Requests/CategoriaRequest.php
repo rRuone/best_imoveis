@@ -2,35 +2,29 @@
 
 namespace App\Http\Requests;
 
+
 use Illuminate\Foundation\Http\FormRequest;
 
 class CategoriaRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize()
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules()
-    {  return [
-        'nome' => 'required'
-    ];
+    {
+        return [
+            'nome' => 'required|string|max:255|regex:/^[^\d]+$/|unique:categorias,nome,' . ($this->categoria ? $this->categoria->id : ''),
+        ];
     }
 
     public function messages()
     {
-        return[
-            'nome.required' => 'Campo nome é obrigatório',
+        return [
+            'nome.regex' => 'O nome da categoria não pode ser um número.',
+            'nome.unique' => 'Essa categoria já foi cadastrada. Por favor, insira um nome diferente.',
+            'nome' => 'O nome é obrigatório',
         ];
     }
 }

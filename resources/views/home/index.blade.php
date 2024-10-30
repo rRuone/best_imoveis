@@ -12,7 +12,7 @@
                     <div class="col s12 m6 l4">
                         <div class="card">
                             <div class="card-image">
-                                <a href="{{ route('itemCardapio.product', $item->id) }}">
+                                <a href="{{ route('admin.itemCardapio.product', $item->id) }}">
                                     @if($item->foto)
                                         <img src="{{ url("storage/{$item->foto}") }}" alt="{{ $item->nome }}">
                                     @else
@@ -31,7 +31,7 @@
                 <hr>
             </div>
         @endforeach
-        
+
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

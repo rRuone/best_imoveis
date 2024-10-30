@@ -8,26 +8,37 @@ use App\Models\Categoria;
 use App\Models\ItemCardapio;
 use Illuminate\Http\Request;
 
+
 class ItemCardapioController extends Controller
 {
-    public function index(){
-      
-        $itemCardapio = ItemCardapio::orderBy('nome')->get();
-       
-        return view('itemCardapio.index',['itemCardapio' => $itemCardapio]);
+    // public function index(){
+
+    //     $itemCardapio = ItemCardapio::orderBy('nome')->get();
+
+    //     return view('itemCardapio.index',['itemCardapio' => $itemCardapio]);
+    // }
+    public function index(Request $request)
+{
+    // Default order by name
+    $sort = $request->get('sort', 'nome');
+    $direction = $request->get('direction', 'asc');
+
+    // Validate the sort parameters
+    $validSorts = ['nome', 'categoria_id', 'preco'];
+    if (!in_array($sort, $validSorts) || !in_array($direction, ['asc', 'desc'])) {
+        $sort = 'nome'; // fallback to default if invalid
+        $direction = 'asc';
     }
 
+    // Fetch items with sorting
+    $itemCardapio = ItemCardapio::with('categoria')
+        ->orderBy($sort, $direction)
+        ->get();
 
-    
-    public function show(ItemCardapio $itemCardapio)
-    {
-        // Carregar adicionais associados ao itemCardapio
-        $itemCardapio->load('adicionais');
-    
-        return view('itemCardapio.show', ['itemCardapio' => $itemCardapio]);
-        dd($itemCardapio->adicionais);
-    }
-    
+    $categorias = Categoria::all();
+    return view('admin.itemCardapio.index', ['itemCardapio' => $itemCardapio, 'sort' => $sort, 'direction' => $direction, 'categorias' => $categorias]);
+}
+
 
     public function create()
     {
@@ -35,48 +46,60 @@ class ItemCardapioController extends Controller
         $categorias = Categoria::all();
 
         // Retornar a visualização com as categorias
-        return view('itemCardapio.create', compact('categorias'));
+        return view('admin.itemCardapio.create', compact('categorias'));
     }
 
     public function store(ItemCardapioRequest $request)
-    {
-        $request->validated();
-        // Formatar o preço e tratar a imagem
-        $preco = str_replace(',', '.', preg_replace('/[^\d.,]/', '', $request->preco));
-        if (!is_numeric($preco)) {
-            return redirect()->back()->withErrors(['preco' => 'O preço deve ser um valor numérico.']);
-        }
+{
+    // Validação dos dados recebidos
+    $request->validated();
 
-        // Armazenar imagem se existir
-        $path = $request->hasFile('foto') 
-                ? $request->file('foto')->storeAs('public/fotos', time() . '.' . $request->file('foto')->getClientOriginalExtension())
-                : null;
+    // Verificar se o item já existe
+    $existingItem = ItemCardapio::where('nome', $request->nome)
+        ->where('categoria_id', $request->categoria_id)
+        ->first();
 
-        // Criar item no banco
-        ItemCardapio::create([
-            'nome' => $request->nome,
-            'categoria_id' => $request->categoria_id,
-            'preco' => number_format($preco, 2, '.', ''),
-            'foto' => $path,
-        ]);
-
-        return redirect()->route('itemCardapio.index')->with('success', 'Item criado com sucesso.');
+    if ($existingItem) {
+        return redirect()->back()->withErrors(['nome' => 'Esse item já foi cadastrado nesta categoria.'])->withInput();
     }
-    
-    
+
+    // Formatar o preço e tratar a imagem
+    $preco = str_replace(',', '.', preg_replace('/[^\d.,]/', '', $request->preco));
+    if (!is_numeric($preco)) {
+        return redirect()->back()->withErrors(['preco' => 'O preço deve ser um valor numérico.']);
+    }
+
+    // Armazenar imagem se existir
+    $path = $request->hasFile('foto')
+            ? $request->file('foto')->storeAs('public/fotos', time() . '.' . $request->file('foto')->getClientOriginalExtension())
+            : null;
+
+    // Criar item no banco
+    ItemCardapio::create([
+        'nome' => $request->nome,
+        'categoria_id' => $request->categoria_id,
+        'preco' => number_format($preco, 2, '.', ''),
+        'foto' => $path,
+    ]);
+
+    return redirect()->route('admin.itemCardapio.index')->with('success', 'Item criado com sucesso.');
+}
+
+
+
     public function product(ItemCardapio $itemCardapio)
     {
         // Inicializa a variável $adicionais como um array vazio
         $adicionais = [];
-    
+
         // Verifica se a categoria do item é carregada
         if ($itemCardapio->categoria && $itemCardapio->categoria->nome === 'Lanche') {
             // Se for um "Lanche", carrega os adicionais
             $adicionais = Adicionais::all();
         }
-    
+
         // Retorna a view ou realiza outras ações necessárias
-        return view('itemCardapio.product', [
+        return view('admin.itemCardapio.product', [
             'itemCardapio' => $itemCardapio,
             'adicionais' => $adicionais
         ]);
@@ -117,4 +140,78 @@ class ItemCardapioController extends Controller
 }
 
 
+public function delete(ItemCardapio $itemCardapio)
+{
+    // Show a delete confirmation view
+    return view('admin.itemCardapio.delete', ['itemCardapio' => $itemCardapio]);
 }
+
+public function destroy(ItemCardapio $itemCardapio)
+{
+    // Delete the item from storage
+    $itemCardapio->delete();
+
+    // Redirect back to the index page with a success message
+    return redirect()->route('admin.itemCardapio.index')->with('success', 'Item deletado com sucesso.');
+}
+
+public function update(Request $request, ItemCardapio $itemCardapio)
+{
+    $request->validate([
+        'nome' => 'required|string|max:255|regex:/^[^\d]+$/', // Adicionando a verificação de número
+        'categoria_id' => 'required|exists:categorias,id',
+        'preco' => ['required', 'regex:/^\d{1,3}(\.\d{3})*(,\d{2})?$/'],
+        'foto' => 'nullable|image|max:2048',
+    ]);
+
+    // Verifica se outro item com o mesmo nome e categoria já existe
+    $existingItem = ItemCardapio::where('nome', $request->nome)
+        ->where('categoria_id', $request->categoria_id)
+        ->where('id', '!=', $itemCardapio->id) // Ignora o item atual
+        ->first();
+
+    if ($existingItem) {
+        return redirect()->back()->withErrors(['nome' => 'Esse item já foi cadastrado nesta categoria.'])->withInput();
+    }
+
+    // Atualizar as propriedades do item
+    $itemCardapio->nome = $request->nome;
+    $itemCardapio->categoria_id = $request->categoria_id;
+
+    // Converter o preço para o formato numérico com ponto
+    $preco = str_replace(',', '.', str_replace('.', '', $request->preco));
+    if (!is_numeric($preco)) {
+        return redirect()->back()->withErrors(['preco' => 'O preço deve ser um valor numérico.']);
+    }
+    $itemCardapio->preco = number_format($preco, 2, '.', '');
+
+    // Tratamento do upload de arquivo para a foto
+    if ($request->hasFile('foto')) {
+        // Armazenar a nova foto
+        $path = $request->file('foto')->storeAs('public/fotos', time() . '.' . $request->file('foto')->getClientOriginalExtension());
+        $itemCardapio->foto = $path; // Atualizar o caminho da foto
+    }
+
+    // Salvar o item atualizado
+    $itemCardapio->save();
+
+    return redirect()->route('admin.itemCardapio.index')->with('success', 'Item atualizado com sucesso.');
+}
+
+
+
+
+public function edit(ItemCardapio $itemCardapio)
+{
+    $categorias = Categoria::all(); // Get all categories
+    return view('admin.itemCardapio.edit', compact('itemCardapio', 'categorias')); // Pass item and categories to the view
+}
+
+public function show(ItemCardapio $itemCardapio)
+{
+    return view('admin.itemCardapio.show', compact('itemCardapio'));
+}
+
+}
+
+
