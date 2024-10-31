@@ -6,18 +6,31 @@ use Livewire\Component;
 use App\Models\Pedido;
 use App\Models\PedidoItem;
 use App\Models\PedidoItemAdicional;
-use Illuminate\Support\Facades\Session;
 
 class FinalizarPedido extends Component
 {
+    protected $listeners = ['enderecoAtualizado' => 'atualizarEndereco'];
+
+    public $enderecoId; // Adicione uma propriedade para armazenar o ID do endereço
+
+    public function mount()
+    {
+        $this->enderecoId = session('endereco_id', null); // Inicializa com o ID do endereço da sessão
+    }
+
+    public function atualizarEndereco($enderecoId)
+    {
+        $this->enderecoId = $enderecoId; // Atualiza a propriedade
+    }
+
     public function finalizarPedido()
     {
         // Obtém os dados da sessão
         $pedido = session()->get('pedido', []);
         $clienteId = session()->get('cliente_id');
-        $enderecoId = session()->get('endereco_id');
+        $enderecoId = session()->get('endereco_id'); // Use o ID da sessão
         $metodoPagamento = session()->get('metodo_pagamento');
-        $retirar = session()->get('retirar'); // Ajuste conforme necessário para obter o valor correto
+        $retirar = session()->get('retirar');
 
         // Validação das informações necessárias
         if (!$clienteId || (!$retirar && !$enderecoId) || !$metodoPagamento) {
@@ -35,14 +48,15 @@ class FinalizarPedido extends Component
         // Cria o pedido
         $novoPedido = Pedido::create([
             'cliente_id' => $clienteId,
-            'data_Pedido' => now(),
+            'endereco_id' => $enderecoId, // Use o ID do endereço
+            'data_pedido' => now(),
             'metdPag' => $metodoPagamento,
             'status' => 'pendente',
             'total' => $subtotal,
             'retirar' => $retirar,
         ]);
 
-        // Itera sobre os itens do pedido para criar registros em `pedido_item`
+        // Criação de itens do pedido
         foreach ($pedido as $item) {
             $pedidoItem = PedidoItem::create([
                 'pedido_id' => $novoPedido->id,
@@ -50,7 +64,7 @@ class FinalizarPedido extends Component
                 'quantidade' => $item['quantidade'] ?? 1,
             ]);
 
-            // Adiciona os adicionais para cada item do pedido
+            // Adicionais de itens do pedido
             foreach ($item['adicionais'] as $adicional) {
                 PedidoItemAdicional::create([
                     'pedido_item_id' => $pedidoItem->id,
@@ -63,7 +77,7 @@ class FinalizarPedido extends Component
         // Limpa a sessão
         session()->forget(['pedido', 'cliente_id', 'endereco_id', 'metodo_pagamento', 'retirar']);
 
-        // Exibe a mensagem de sucesso e redireciona
+        // Mensagem de sucesso e redirecionamento
         session()->flash('success', 'Pedido finalizado com sucesso!');
         return redirect()->route('pedido.detalhes', ['id' => $novoPedido->id]);
     }

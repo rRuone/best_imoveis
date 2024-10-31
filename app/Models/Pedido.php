@@ -9,7 +9,7 @@ class Pedido extends Model
     use HasFactory;
 
     protected $table = 'pedido'; // Definindo a tabela correta
-    protected $fillable = ['cliente_id', 'data_Pedido', 'metdPag', 'status', 'total'];
+    protected $fillable = ['cliente_id','endereco_id', 'data_Pedido', 'metdPag', 'status', 'total'];
 
     /**
      * Relacionamento com o ItemCardapio através da tabela pivô pedido_item.
@@ -24,6 +24,12 @@ class Pedido extends Model
     {
         return $this->belongsTo(Cliente::class);
     }
+
+    public function endereco()
+    {
+        return $this->belongsTo(Endereco::class);
+    }
+
 
     /**
      * Relacionamento com Adicionais através da tabela pivô pedido_item.

@@ -125,68 +125,69 @@ class CheckoutController extends Controller
 
 
 
-public function finalizarPedido(Request $request)
-{
-    if ($request->isMethod('post')) {
-        $pedido = session()->get('pedido', []);
-        $clienteId = session()->get('cliente_id');
-        $enderecoId = session()->get('endereco_id');
-        $metodoPagamento = $request->input('metodo_pagamento');
-        $retirar = $request->input('retirar'); // Nova variável para verificar se é retirada
+// public function finalizarPedido(Request $request)
+// {
+//     if ($request->isMethod('post')) {
+//         $pedido = session()->get('pedido', []);
+//         $clienteId = session()->get('cliente_id');
+//         $enderecoId = session()->get('endereco_id');
+//         $metodoPagamento = $request->input('metodo_pagamento');
+//         $retirar = $request->input('retirar'); // Nova variável para verificar se é retirada
         
-        // Se "retirar" for diferente de 1, o endereço é obrigatório
-        if (!$clienteId || (!$retirar == 1 && !$enderecoId) || !$metodoPagamento) {
-            return redirect()->route('checkout.index')->with('error', 'Preencha todas as informações para finalizar o pedido.');
-        }
+//         // Se "retirar" for diferente de 1, o endereço é obrigatório
+//         if (!$clienteId || (!$retirar == 1 && !$enderecoId) || !$metodoPagamento) {
+//             return redirect()->route('checkout.index')->with('error', 'Preencha todas as informações para finalizar o pedido.');
+//         }
 
-        // Calcula o subtotal
-        $subtotal = array_sum(array_map(function ($item) {
-            $precoItem = $item['item_cardapio']->preco;
-            $quantidade = $item['quantidade'] ?? 1;
-            return $precoItem * $quantidade;
-        }, $pedido));
+//         // Calcula o subtotal
+//         $subtotal = array_sum(array_map(function ($item) {
+//             $precoItem = $item['item_cardapio']->preco;
+//             $quantidade = $item['quantidade'] ?? 1;
+//             return $precoItem * $quantidade;
+//         }, $pedido));
 
-        // Cria o pedido
-        $novoPedido = Pedido::create([
-            'cliente_id' => $clienteId,
-            'data_Pedido' => now(),
-            'metdPag' => $metodoPagamento,
-            'status' => 'pendente',
-            'total' => $subtotal,
-            'retirar' => $retirar, // Salvar a informação de retirada
-        ]);
+//         // Cria o pedido
+//         $novoPedido = Pedido::create([
+//             'cliente_id' => $clienteId,
+//             'data_Pedido' => now(),
+//             'endereço_id' => $enderecoId,
+//             'metdPag' => $metodoPagamento,
+//             'status' => 'pendente',
+//             'total' => $subtotal,
+//             'retirar' => $retirar, // Salvar a informação de retirada
+//         ]);
 
-        foreach ($pedido as $item) {
-            // Cria o registro na tabela pedido_item
-            $pedidoItemData = [
-                'pedido_id' => $novoPedido->id,
-                'item_cardapio_id' => $item['item_cardapio']->id,
-                'quantidade' => $item['quantidade'] ?? 1,
-            ];
+//         foreach ($pedido as $item) {
+//             // Cria o registro na tabela pedido_item
+//             $pedidoItemData = [
+//                 'pedido_id' => $novoPedido->id,
+//                 'item_cardapio_id' => $item['item_cardapio']->id,
+//                 'quantidade' => $item['quantidade'] ?? 1,
+//             ];
 
-            $pedidoItem = PedidoItem::create($pedidoItemData);
-        }
+//             $pedidoItem = PedidoItem::create($pedidoItemData);
+//         }
 
-        // Salva adicionais para o pedido_item
-        foreach ($item['adicionais'] as $adicional) {
-            $pedidoItemAdicionalData = [
-                'pedido_item_id' => $pedidoItem->id,
-                'adicional_id' => $adicional['id'],
-                'quantidade' => $adicional['quantidade'] ?? 1,
-            ];
+//         // Salva adicionais para o pedido_item
+//         foreach ($item['adicionais'] as $adicional) {
+//             $pedidoItemAdicionalData = [
+//                 'pedido_item_id' => $pedidoItem->id,
+//                 'adicional_id' => $adicional['id'],
+//                 'quantidade' => $adicional['quantidade'] ?? 1,
+//             ];
 
-            PedidoItemAdicional::create($pedidoItemAdicionalData);
-        }
+//             PedidoItemAdicional::create($pedidoItemAdicionalData);
+//         }
 
-        // Limpar sessão
-        session()->forget('pedido');
-        session()->forget('endereco_id');
-        session()->forget('metodo_pagamento');
-        session()->forget('cliente_id');
+//         // Limpar sessão
+//         session()->forget('pedido');
+//         session()->forget('endereco_id');
+//         session()->forget('metodo_pagamento');
+//         session()->forget('cliente_id');
 
-        return redirect()->route('pedido.detalhes', ['id' => $novoPedido->id])->with('success', 'Pedido finalizado com sucesso!');
-    }
-}
+//         return redirect()->route('pedido.detalhes', ['id' => $novoPedido->id])->with('success', 'Pedido finalizado com sucesso!');
+//     }
+// }
 
 
 }

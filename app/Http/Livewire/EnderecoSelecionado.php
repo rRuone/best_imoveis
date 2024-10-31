@@ -18,7 +18,7 @@ class EnderecoSelecionado extends Component
     {
         $this->enderecoSelecionado = $enderecoId;
         session()->put('endereco_id', $enderecoId);
-        $this->emit('enderecoAtualizado'); // Emite um evento que pode ser ouvido por outros componentes
+        $this->emit('enderecoAtualizado', $enderecoId); // Emite o ID do endereço atualizado
     }
 
     public function render()
