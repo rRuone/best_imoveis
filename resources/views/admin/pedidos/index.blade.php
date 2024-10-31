@@ -50,10 +50,20 @@
                                     }
                                 @endphp
                                 {{$telefoneFormatado}}
+                                <span style="margin-left:100px">
+                                    <strong>{{ ucfirst($pedido->metdPag) }}</strong>
+                                </span>
                             </p>
+                            
                         </p>
                         <hr>
-                        {{-- <p><strong>Endereço:</strong> {{ $pedido->cliente->endereco->logradouro }}</p> --}}
+                        <p><strong>Endereço:</strong> 
+                            @if($pedido->endereco)
+                                {{ $pedido->endereco->logradouro }}
+                            @else
+                                <span>Endereço não disponível</span>
+                            @endif
+                        </p>
                         <!-- Botão para avançar o pedido para a próxima etapa -->
                         <form action="{{ route('admin.pedidos.avancar', $pedido->id) }}" method="POST" style="display:inline;">
                             @csrf 
