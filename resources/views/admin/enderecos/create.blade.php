@@ -3,7 +3,7 @@
 @section('conteudo-principal')
     <div class="section container">
         <div class="header-container">
-            <h4>Criar Novo Endereço</h4>
+            <h4>Adicione Seu Endereço</h4>
             <hr>
         </div>
         <form action="{{ route('admin.enderecos.store') }}" method="POST">
@@ -28,8 +28,16 @@
             <!-- Campo de texto para logradouro -->
             <div class="input-field">
                 <input type="text" name="logradouro" id="logradouro" value="{{ old('logradouro') }}" />
-                <label for="logradouro">Logradouro</label>
+                <label for="logradouro">Rua</label>
                 @error('logradouro')
+                    <span class="helper-text red-text">{{ $message }}</span>
+                @enderror
+            </div>
+            
+            <div class="input-field">
+                <input type="text" name="numero" id="numero" value="{{ old('numero') }}" />
+                <label for="numero">Número</label>    
+                @error('numero')
                     <span class="helper-text red-text">{{ $message }}</span>
                 @enderror
             </div>
