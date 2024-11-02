@@ -59,7 +59,7 @@
                         <hr>
                         <p><strong>Endereço:</strong> 
                             @if($pedido->endereco)
-                                {{ $pedido->endereco->logradouro }}
+                                {{ $pedido->endereco->logradouro }}, {{$pedido->endereco->numero}}
                             @else
                                 <span>Endereço não disponível</span>
                             @endif
@@ -121,9 +121,19 @@
                                     }
                                     @endphp
                                     {{$telefoneFormatado}}
+                                    <span style="margin-left:100px">
+                                        <strong>{{ ucfirst($pedido->metdPag) }}</strong>
+                                    </span>
                                 </p>
                             </p>
                             <hr>
+                            <p><strong>Endereço:</strong> 
+                                @if($pedido->endereco)
+                                    {{ $pedido->endereco->logradouro }}, {{$pedido->endereco->numero}}
+                                @else
+                                    <span>Endereço não disponível</span>
+                                @endif
+                            </p>
                             {{-- <p><strong>Endereço:</strong></p> --}}
                             <form action="{{route('admin.pedidos.avancarPr', $pedido->id)}}" method="POST">
                                 @csrf
@@ -162,7 +172,7 @@
                         <div class="pedido-info" style="border: 1px solid #ccc; padding: 15px; border-radius: 15px; background-color: #fff; margin-bottom: 20px;">
                             <div>
                                 <p class="flow-text"><strong>Pedido:</strong> {{ $pedido->id }} 
-                                    <span style="margin-left: 120px;">
+                                    <span style="margin-left: 100px;">
                                         <i class="material-icons" style="vertical-align: middle;"> <strong>access_time</strong></i>
                                         {{ \Carbon\Carbon::parse($pedido->created_at)->format('H:i') }}
                                     </span>
@@ -185,10 +195,20 @@
                                         }
                                     @endphp
                                     {{$telefoneFormatado}}
+                                    <span style="margin-left:100px">
+                                        <strong>{{ ucfirst($pedido->metdPag) }}</strong>
+                                    </span>
                                 </p>
 
                             </p>
                             <hr>
+                            <p><strong>Endereço:</strong> 
+                                @if($pedido->endereco)
+                                    {{ $pedido->endereco->logradouro }}, {{$pedido->endereco->numero}}
+                                @else
+                                    <span>Endereço não disponível</span>
+                                @endif
+                            </p>
                             {{-- <p><strong>Endereço:</strong></p> --}}
                             <form action="{{route('admin.pedidos.finalizado', $pedido->id)}}" method="POST">
                                 @csrf

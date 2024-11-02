@@ -16,6 +16,7 @@ class Endereco extends Model
         'cliente_id',   // Adiciona cliente_id aqui
         'cidades_id',
         'logradouro',
+        'numero',
         'bairro',
         'complemento'
     ];

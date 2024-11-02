@@ -27,6 +27,7 @@ class EnderecoRequest extends FormRequest
             'cliente_id' => 'required|exists:clientes,id',
             'cidades_id' => 'required|exists:cidades,id',
             'logradouro' => 'required|string|max:80',
+            'numero' => 'nullable|string|max:255',
             'bairro' => 'required|string|max:80',
             'complemento' => 'nullable|string|max:20',
         ];
