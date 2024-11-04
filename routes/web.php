@@ -38,13 +38,15 @@ Route::get('/admin/index-cidade',[CidadesController::class,'cidades'])->name('ci
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
 
     //Administrador
-    Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.pedidos.index');
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('pedidos.index');
+    Route::get('/dashboard/historico', [AdminController::class, 'historico'])->name('pedidos.historico');
 
     //Route::get('/pedidos', [PedidoController::class, 'index'])->name('admin.pedidos');
     Route::get('/pedidos/{id}', [PedidoController::class, 'show'])->name('admin.pedidos.show');
     Route::post('/pedidos/avancar/{id}', [PedidoController::class, 'avancar'])->name('pedidos.avancar');
     Route::post('/pedidos/avancarPr/{id}', [PedidoController::class, 'avancarPr'])->name('pedidos.avancarPr');
     Route::post('/pedidos/finalizado/{id}', [PedidoController::class, 'finalizado'])->name('pedidos.finalizado');
+
 
 
     Route::get('/cidades',[CidadesController::class, 'cidades'] )->name('cidades.listar');
@@ -113,6 +115,8 @@ Route::post('/carrinho/decrementar/{index}', [CarrinhoController::class, 'decrem
 // Pedidos
 Route::post('/pedidos', [PedidoController::class, 'store'])->name('pedidos.store');
 Route::get('/pedido/{id}', [CheckoutController::class, 'detalhesPedido'])->name('pedido.detalhes');
+Route::get('/historico-pedidos', [PedidoController::class, 'historico'])->name('pedidos.historico');
+
 
 //Checkout
 Route::get('/index-checkout', [CheckoutController::class, 'index'])->name('checkout.index');
