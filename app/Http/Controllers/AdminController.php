@@ -49,5 +49,34 @@ class AdminController extends Controller
                     'pedidosConcluidos','numeroPedidosPendentes', 'numeroPedidosEmProcesso', 'numeroPedidosConcluidos'));
      }
 
+     public function historico(Request $request)
+    {
+        // Inicia a query para pedidos finalizados
+        $query = Pedido::where('status', 'finalizado');
+
+        // Filtro por nome do cliente
+        if ($request->filled('cliente')) {
+            $query->whereHas('cliente', function ($q) use ($request) {
+                $q->where('nome', 'like', '%' . $request->cliente . '%');
+            });
+        }
+
+        // Filtro por número do pedido
+        if ($request->filled('pedido_id')) {
+            $query->where('id', $request->pedido_id);
+        }
+
+        // Filtro por data de finalização
+        if ($request->filled('data_finalizacao')) {
+            $query->whereDate('updated_at', $request->data_finalizacao);
+        }
+
+        // Ordenação dos pedidos finalizados
+        $pedidosFinalizados = $query->orderBy('updated_at', 'desc')->get();
+
+        return view('admin.pedidos.historico', compact('pedidosFinalizados'));
+    }
+
+
 
 }

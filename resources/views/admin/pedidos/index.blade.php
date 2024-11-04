@@ -2,6 +2,9 @@
 
 @section('content')
 <div class="container">
+
+
+
     <div class="row">
         <div class="col s12 m6 l4">
             <div class="card-panel orange lighten-1 center-left">
@@ -13,7 +16,7 @@
                             <strong style="margin-right:190px;">Pendentes</strong>
                             <span >{{ $numeroPedidosPendentes }} </span>
                          </h5>
-                    </span>  
+                    </span>
                 </div>
                 @if($produtosPendentes->isNotEmpty())
                     @foreach($produtosPendentes as $pedido)
@@ -24,10 +27,12 @@
                             align-items: center; /* Alinha os itens verticalmente no centro */
                         }
                     </style>
-                    
+
+
+
                     <div class="pedido-info" style="border: 1px solid #ccc; padding: 15px; border-radius: 15px; background-color: #fff; margin-bottom: 20px;">
                         <div class="pedido-info-header">
-                            <p class="flow-text"><strong>Pedido:</strong> {{ $pedido->id }} 
+                            <p class="flow-text"><strong>Pedido:</strong> {{ $pedido->id }}
                                 <span style="margin-left: 100px;">
                                     <i class="material-icons" style="vertical-align: middle;"> <strong>access_time</strong></i>
                                     {{ \Carbon\Carbon::parse($pedido->created_at)->format('H:i') }}</span>
@@ -54,10 +59,10 @@
                                     <strong>{{ ucfirst($pedido->metdPag) }}</strong>
                                 </span>
                             </p>
-                            
+
                         </p>
                         <hr>
-                        <p><strong>Endereço:</strong> 
+                        <p><strong>Endereço:</strong>
                             @if($pedido->endereco)
                                 {{ $pedido->endereco->logradouro }}
                             @else
@@ -66,7 +71,7 @@
                         </p>
                         <!-- Botão para avançar o pedido para a próxima etapa -->
                         <form action="{{ route('admin.pedidos.avancar', $pedido->id) }}" method="POST" style="display:inline;">
-                            @csrf 
+                            @csrf
                             <button type="submit" style="margin-left:110px" class="waves-effect waves-light btn btn-custom">
                                 <strong>Avançar</strong>
                                 <span style="margin-left: 20px;">
@@ -75,7 +80,7 @@
                             </button>
                         </form>
                     </div>
-                        
+
                     @endforeach
                 @else
                     <p>Nenhum pedido no momento</p>
@@ -141,13 +146,13 @@
                 @endif
             </div>
         </div>
-        
+
         <div class="col s12 m6 l4">
             <div class="card-panel green lighten-1 center-left">
                 <div>
-                   
+
                     <span>
-                        
+
                         <h5 class="white-text flow-text" style="display:flex; align-items:left;">
                             <i class="material-icons black-text"><strong style="margin-right:10px;">
                             check_circle</strong>
@@ -161,7 +166,7 @@
                     @foreach($pedidosConcluidos as $pedido)
                         <div class="pedido-info" style="border: 1px solid #ccc; padding: 15px; border-radius: 15px; background-color: #fff; margin-bottom: 20px;">
                             <div>
-                                <p class="flow-text"><strong>Pedido:</strong> {{ $pedido->id }} 
+                                <p class="flow-text"><strong>Pedido:</strong> {{ $pedido->id }}
                                     <span style="margin-left: 120px;">
                                         <i class="material-icons" style="vertical-align: middle;"> <strong>access_time</strong></i>
                                         {{ \Carbon\Carbon::parse($pedido->created_at)->format('H:i') }}
@@ -202,15 +207,48 @@
                 <p>Receba pedidos e visualize os prontos para entrega.</p>
                 @endif
             </div>
+
         </div>
     </div>
     <div class="row">
-        {{-- <div class="col s6">
-            <p>Balcão: Não informado</p>
+        <div class="col s12" style="display: flex; justify-content: flex-end; margin-top: 20px;">
+            <a href="{{ route('admin.pedidos.historico') }}" class="waves-effect waves-light btn btn-custom green darken-1">
+                <i class="material-icons left">history</i> Histórico
+            </a>
         </div>
-        <div class="col s6">
-            <a class="waves-effect waves-light btn">Editar Delivery</a>
-        </div> --}}
+    </div>
+
+</div>
+
+      <!-- Floating Help Button -->
+      <div class="fixed-action-btn">
+        <a class="btn-floating btn-large blue modal-trigger" href="#helpModal">
+            <i class="large material-icons">help_outline</i>
+        </a>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <h4>Ajuda</h4>
+            <p>Esta é a página de gerenciamento de pedidos. Você pode visualizar os pedidos pendentes, em produção e prontos para entrega.</p>
+            <p>Para avançar um pedido, clique no botão "Avançar" ao lado do pedido correspondente.</p>
+            <p>Para ver o histórico de pedidos, clicar no botão "Histórico"</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close btn grey">Fechar</a>
+        </div>
     </div>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Inicializa os modais
+        M.Modal.init(document.querySelectorAll('.modal'));
+    });
+</script>
+
+
 @endsection
+

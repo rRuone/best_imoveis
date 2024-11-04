@@ -6,7 +6,7 @@ use App\Models\ItemCardapio;
 use Illuminate\Http\Request;
 
 class PedidoController extends Controller
-{   
+{
     public function index()
     {
         // Obtém todos os pedidos
@@ -114,5 +114,7 @@ class PedidoController extends Controller
         return redirect()->back()->with('success', 'Pedido finalizado.');
 
     }
-    
+
+
 }
+
