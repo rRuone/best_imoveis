@@ -22,6 +22,8 @@
             <br>
         @endif
 
+
+
         <div class="section container">
             <form action="{{ route('admin.adicionais.update', $adicionais->id) }}" method="POST" enctype="multipart/form-data" class="form-container">
                 @csrf

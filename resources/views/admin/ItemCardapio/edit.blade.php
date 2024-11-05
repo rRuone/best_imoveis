@@ -76,6 +76,14 @@
         </div>
 
         <!-- Help Modal -->
+       
+        <div class="fixed-action-btn">
+            <a class="btn-floating btn-large blue modal-trigger" href="#helpModal">
+                <i class="large material-icons">help_outline</i>
+            </a>
+        </div>
+
+        <!-- Help Modal -->
         <div id="helpModal" class="modal">
             <div class="modal-content">
                 <h4>Ajuda - Editar Item do Cardápio</h4>
@@ -93,7 +101,6 @@
             </div>
         </div>
     </div>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
 

@@ -129,4 +129,100 @@
         @csrf
     </form>
 </body>
+
+<style>
+
+.modal {
+    width: 90%;
+
+    max-width: 500px;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.modal-content {
+    padding: 15px 24px;
+    line-height: 1.6;
+    font-size: 16px; /* Tamanho de fonte aumentado */
+}
+
+.help-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.help-list li {
+    margin-bottom: 8px;
+}
+
+.help-list strong {
+    color: #1565c0; /* Azul mais suave */
+}
+
+.modal-footer {
+    padding: 10px;
+    display: flex;
+    justify-content: flex-end; /* Alinha o botão Fechar à direita */
+}
+
+.modal-footer .btn {
+    background-color: #757575;
+    color: white;
+    font-weight: bold;
+    padding: 5px 15px;
+    text-transform: uppercase; /* Mantém o texto em letras maiúsculas */
+}
+
+@media (max-width: 600px) {
+    .modal {
+        max-width: 100%;
+        padding: 10px;
+    }
+}.modal {
+    width: 90%;
+    max-width: 600px;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.modal-content {
+    padding: 15px 24px;
+    line-height: 1.6;
+    font-size: 16px;
+}
+
+.help-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.help-list li {
+    margin-bottom: 8px;
+}
+
+.help-list strong {
+    color: #1565c0;
+}
+
+.modal-footer {
+    padding: 0; /* Remove o padding para diminuir o espaço */
+    margin-top: 10px; /* Reduz a distância entre o conteúdo e o botão Fechar */
+    display: flex;
+    justify-content: flex-end;
+}
+
+.modal-footer .btn {
+    background-color: #757575;
+    color: white;
+    font-weight: bold;
+    padding: 5px 15px;
+    text-transform: uppercase;
+    margin: 0; /* Remove margem extra no botão */
+}
+
+
+</style>
+
 </html>

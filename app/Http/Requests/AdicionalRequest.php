@@ -3,16 +3,26 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class AdicionalRequest extends FormRequest
 {
     public function rules()
     {
+        $adicionalId = $this->adicional->id ?? $this->route('adicional');
         return [
-            'nome' => 'required|string|max:255|regex:/^[^\d]+$/|unique:adicionais,nome', // Impede que o nome seja um número
+            'nome' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[^\d]+$/',
+                Rule::unique('adicionais', 'nome')->ignore($adicionalId),
+                        ],
             'preco' => 'required|numeric',
         ];
     }
+
+
 
     public function messages()
     {

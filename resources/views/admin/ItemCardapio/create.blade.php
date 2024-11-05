@@ -34,14 +34,13 @@
                 </div>
 
                 <div class="input-field">
-                    <label for="categoria_id">Categoria</label>
+                    <label for="categoria_id"></label>
                     <select id="categoria_id" name="categoria_id">
                         @foreach($categorias as $categoria)
-                            <option value="{{ $categoria->id }}" {{ $categoria->id == $itemCardapio->categoria_id ? 'selected' : '' }}>
-                                {{ $categoria->nome }}
-                            </option>
+                            <option value="{{ $categoria->id }}">{{ $categoria->nome }}</option>
                         @endforeach
                     </select>
+                    <label>Categoria</label>
                 </div>
 
 
