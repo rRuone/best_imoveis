@@ -1,11 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="section container">
     <div class="header-container">
         <br>
-        <h4 class="header-title">Itens do Cardápio</h4>
+        <h4 class="inline">Itens do Cardápio</h4>
+        <div class="class button-group">
+            <a href="javascript:history.back()" class="btn-small waves-effect waves-light grey inline">Voltar</a>
         <a href="{{ route('admin.itemCardapio.create') }}" class="btn-small waves-effect waves-light green inline">Adicionar</a>
+        </div>
+
 
     </div>
     <hr>
@@ -147,7 +151,7 @@
         display: flex;
         align-items: center; /* Alinha verticalmente ao centro */
         justify-content: space-between; /* Espaça igualmente entre os itens */
-        margin-bottom: 2px; /* Espaço abaixo do cabeçalho */
+        margin-bottom: 1px; /* Espaço abaixo do cabeçalho */
     }
 
     hr {

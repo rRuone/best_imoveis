@@ -132,7 +132,7 @@
                                 </p>
                             </p>
                             <hr>
-                            <p><strong>Endereço:</strong> 
+                            <p><strong>Endereço:</strong>
                                 @if($pedido->endereco)
                                     {{ $pedido->endereco->logradouro }}, {{$pedido->endereco->numero}}
                                 @else
@@ -176,7 +176,7 @@
                     @foreach($pedidosConcluidos as $pedido)
                         <div class="pedido-info" style="border: 1px solid #ccc; padding: 15px; border-radius: 15px; background-color: #fff; margin-bottom: 20px;">
                             <div>
-                                <p class="flow-text"><strong>Pedido:</strong> {{ $pedido->id }} 
+                                <p class="flow-text"><strong>Pedido:</strong> {{ $pedido->id }}
                                     <span style="margin-left: 100px;">
                                         <i class="material-icons" style="vertical-align: middle;"> <strong>access_time</strong></i>
                                         {{ \Carbon\Carbon::parse($pedido->created_at)->format('H:i') }}
@@ -207,7 +207,7 @@
 
                             </p>
                             <hr>
-                            <p><strong>Endereço:</strong> 
+                            <p><strong>Endereço:</strong>
                                 @if($pedido->endereco)
                                     {{ $pedido->endereco->logradouro }}, {{$pedido->endereco->numero}}
                                 @else
@@ -232,7 +232,7 @@
     </div>
     <div class="row">
         <div class="col s12" style="display: flex; justify-content: flex-end; margin-top: 20px;">
-            <a href="{{ route('admin.pedidos.historico') }}" class="waves-effect waves-light btn btn-custom green darken-1">
+            <a href="{{ route('admin.pedidos.historico') }}" class="btn-small waves-effect waves-light green inline">
                 <i class="material-icons left">history</i> Histórico
             </a>
         </div>

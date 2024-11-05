@@ -1,10 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="section container">
+
         <div class="header-container">
-            <h4 class="header-title">Categorias</h4>
-            <a href="{{ route('admin.categorias.create') }}" class="btn-small waves-effect waves-light green inline">Adicionar</a>
+            <br>
+            <h4 class="inline">Categorias</h4>
+
+            <div class="class button-group">
+                <a href="javascript:history.back()" class="btn-small waves-effect waves-light grey inline">Voltar</a>
+
+                <a href="{{ route('admin.categorias.create') }}" class="btn-small waves-effect waves-light green inline">Adicionar</a>
+            </div>
+
         </div>
         <hr>
 

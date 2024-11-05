@@ -30,7 +30,7 @@
         <nav class="orange darken-4">
             <div class="nav-wrapper container">
                 <a href="{{ url('/admin/dashboard') }}" class="brand-logo">{{ config('app.name', 'Master Dog') }}</a>
-                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">Menu</i></a>
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
                     <!-- Left Side Of Navbar -->
                     @auth

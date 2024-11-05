@@ -3,8 +3,10 @@
 @section('content')
 <div class="section container">
     <div class="header-container">
+        <br>
         <h4 class="inline">Adicionar Adicional</h4>
-        <a href="{{ route('admin.adicionais.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a>
+        <div class="class button-group"><a href="{{ route('admin.adicionais.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a>
+        </div>
     </div>
     <hr>
 
@@ -99,7 +101,7 @@
     }
 
     hr {
-        margin-top: 1px;
+        margin-top: 5px;
         margin-bottom: 20px;
     }
 

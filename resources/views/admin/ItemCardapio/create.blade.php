@@ -4,7 +4,8 @@
         <div class="header-container">
             <br>
             <h4 class="inline">Adicionar Item ao Cardápio</h4>
-            <a href="{{ route('admin.itemCardapio.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a>
+            <div class="class button-group"><a href="{{ route('admin.itemCardapio.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a>
+            </div>
         </div>
         <hr>
 
@@ -33,14 +34,16 @@
                 </div>
 
                 <div class="input-field">
-                    <label for="categoria_id"></label>
+                    <label for="categoria_id">Categoria</label>
                     <select id="categoria_id" name="categoria_id">
                         @foreach($categorias as $categoria)
-                            <option value="{{ $categoria->id }}">{{ $categoria->nome }}</option>
+                            <option value="{{ $categoria->id }}" {{ $categoria->id == $itemCardapio->categoria_id ? 'selected' : '' }}>
+                                {{ $categoria->nome }}
+                            </option>
                         @endforeach
                     </select>
-                    <label>Categoria</label>
                 </div>
+
 
                 <div class="input-field">
                     <label for="foto"></label>
