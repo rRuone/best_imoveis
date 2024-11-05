@@ -17,7 +17,7 @@
                 <div class="row card-panel mb-0">
                     <h5 class="h5-header">Endereço de entrega:</h5>
                     @if($enderecos->isEmpty())
-                        <a href="{{ route('admin.enderecos.create') }}" class="btn waves-effect waves-light">Adicionar Novo Endereço</a>
+                        <a href="{{ route('enderecos.create') }}" class="btn waves-effect waves-light">Adicionar Novo Endereço</a>
                     @else
                     @livewire('endereco-selecionado', ['enderecos' => $enderecos])
                     @endif
