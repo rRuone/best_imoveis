@@ -69,7 +69,7 @@
             </div>
         </div>
 
-        <form action="{{ route('admin.itemCardapio.salvarAdicionais', $itemCardapio) }}" method="POST" class="form-container">
+        <form action="{{ route('itemCardapio.salvarAdicionais', $itemCardapio) }}" method="POST" class="form-container">
             @csrf
 
             {{-- <h5>Escolha Adicionais</h5>  --}}
