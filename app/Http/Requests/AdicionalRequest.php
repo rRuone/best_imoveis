@@ -8,19 +8,21 @@ use Illuminate\Validation\Rule;
 class AdicionalRequest extends FormRequest
 {
     public function rules()
-    {
-        $adicionalId = $this->adicional->id ?? $this->route('adicional');
-        return [
-            'nome' => [
-                'required',
-                'string',
-                'max:255',
-                'regex:/^[^\d]+$/',
-                Rule::unique('adicionais', 'nome')->ignore($adicionalId),
-                        ],
-            'preco' => 'required|numeric',
-        ];
-    }
+{
+    // Usa o nome correto do parâmetro da rota 'adicionais'
+    $adicionalId = $this->route('adicionais');
+
+    return [
+        'nome' => [
+            'required',
+            'string',
+            'max:255',
+            'regex:/^[^\d]+$/',
+            Rule::unique('adicionais', 'nome')->ignore($adicionalId), // Ignora o ID do adicional atual na validação
+        ],
+        'preco' => 'nullable|numeric',
+    ];
+}
 
 
 

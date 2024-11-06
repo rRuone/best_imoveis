@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CategoriaRequest extends FormRequest
 {
@@ -14,10 +15,20 @@ class CategoriaRequest extends FormRequest
 
     public function rules()
     {
+        // Captura o ID da categoria atual a partir da rota
+        $categoriaId = $this->route('categorias');
+
         return [
-            'nome' => 'required|string|max:255|regex:/^[^\d]+$/|unique:categorias,nome,' . ($this->categoria ? $this->categoria->id : ''),
+            'nome' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[^\d]+$/',
+                Rule::unique('categorias', 'nome')->ignore($categoriaId), // Permite que o nome atual seja mantido
+            ],
         ];
     }
+
 
     public function messages()
     {
