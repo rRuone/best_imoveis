@@ -41,11 +41,21 @@
                     <div class="pedido-info" style="border: 1px solid #ccc; padding: 15px; border-radius: 15px; background-color: #fff; margin-bottom: 20px;">
                         <div class="pedido-info-header">
                             <p class="flow-text"><strong>Pedido:</strong> {{ $pedido->id }}
-                                <span style="margin-left: 100px;">
+                                <span style="margin-left: 60px;">
                                     <i class="material-icons" style="vertical-align: middle;"> <strong>access_time</strong></i>
-                                    {{ \Carbon\Carbon::parse($pedido->created_at)->format('H:i') }}</span>
-                            </p>
+                                    {{ \Carbon\Carbon::parse($pedido->created_at)->format('H:i') }}
+                                </span>
+                                
+                                <form action="{{ route('admin.pedidos.cancelar', $pedido->id) }}" method="POST" style="display:block; margin-top: -10px;">
+                                    @csrf
+                                    <button type="submit" style="background: none; border: none; cursor: pointer; margin-left: 10px;">
+                                        <i class="material-icons" style="color: black;">cancel</i>
+                                    </button>
+            
+                                </form>
+                            </p> 
                         </div>
+
                         <hr style="margin-top: 0.2px; margin-bottom: 1px;">
                         <p>
                             <strong>Cliente:</strong> {{ explode(' ', trim($pedido->cliente->nome))[0] }}

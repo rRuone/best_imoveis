@@ -117,6 +117,16 @@ class PedidoController extends Controller
 
     }
 
+    public function cancelar($id)
+{
+    $pedido = Pedido::find($id);
+    
+        $pedido->status = 'cancelado'; // Se desejar mudar o status também
+        $pedido->save();
+
+        return redirect()->back()->with('success', 'Pedido cancelado com sucesso.');
+    
+}
 
 }
 
