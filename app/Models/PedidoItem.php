@@ -25,8 +25,13 @@ class PedidoItem extends Model
     }
 
     public function adicionais()
-    {
-        return $this->belongsToMany(Adicionais::class, 'pedido_item_adicional', 'pedido_item_id', 'adicional_id')
-                    ->withPivot('quantidade', 'preco'); // se você precisar dos campos adicionais da tabela pivô
-    }
+{
+    return $this->hasMany(PedidoItemAdicional::class, 'pedido_item_id');
+}
+
+    // public function adicionais()
+    // {
+    //     return $this->belongsToMany(Adicionais::class, 'pedido_item_adicional', 'pedido_item_id', 'adicional_id')
+    //                 ->withPivot('quantidade', 'preco'); // se você precisar dos campos adicionais da tabela pivô
+    // }
 }

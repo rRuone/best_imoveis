@@ -6,7 +6,7 @@
             <h4>Adicione Seu Endereço</h4>
             <hr>
         </div>
-        <form action="{{ route('admin.enderecos.store') }}" method="POST">
+        <form action="{{ route('enderecos.store') }}" method="POST">
             @csrf
 
             <!-- Campo oculto para cliente_id -->

@@ -19,6 +19,12 @@ class Pedido extends Model
         return $this->belongsToMany(ItemCardapio::class, 'pedido_item')
                     ->withPivot('quantidade', 'preco');
     }
+    // Modelo Pedido
+    public function pedidoItems()
+{
+    return $this->hasMany(PedidoItem::class, 'pedido_id');
+}
+
 
     public function cliente()
     {
@@ -28,6 +34,18 @@ class Pedido extends Model
     public function endereco()
     {
         return $this->belongsTo(Endereco::class);
+    }
+
+    public function adicionais()
+    {
+        return $this->hasManyThrough(
+            Adicionais::class,
+            PedidoItemAdicional::class,
+            'pedido_item_id', // Chave estrangeira da tabela pivô
+            'id', // Chave estrangeira da tabela adicionais
+            'id', // Chave primária da tabela pedido
+            'adicional_id' // Chave que conecta a tabela pivô com a tabela adicionais
+        );
     }
 
 

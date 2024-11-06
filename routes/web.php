@@ -77,9 +77,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
     //Enderecos
     Route::get('/index-enderecos',[EnderecosController::class, 'index'])->name('enderecos.index');
-    Route::get('/create-enderecos',[EnderecosController::class, 'create'])->name('enderecos.create');
-    Route::post('/store-enderecos',[EnderecosController::class, 'store'])->name('enderecos.store');
-    Route::get('/show-enderecos/{enderecos}',[EnderecosController::class,'show'])->name('enderecos.show');
+    
 
     //ItemCardapio
     Route::get('/index-itemCardapio',[ItemCardapioController::class,'index'])->name('itemCardapio.index');
@@ -92,6 +90,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
   
    
 });
+
+// Endereços 
+Route::get('/create-enderecos',[EnderecosController::class, 'create'])->name('enderecos.create');
+Route::post('/store-enderecos',[EnderecosController::class, 'store'])->name('enderecos.store');
+Route::get('/show-enderecos/{enderecos}',[EnderecosController::class,'show'])->name('enderecos.show');
+
 
     Route::get('itemCardapio/{itemCardapio}/product', [ItemCardapioController::class, 'product'])->name('itemCardapio.product');
      Route::post('itemCardapio/{itemCardapio}/salvar-adicionais', [ItemCardapioController::class, 'salvarAdicionais'])->name('itemCardapio.salvarAdicionais');
