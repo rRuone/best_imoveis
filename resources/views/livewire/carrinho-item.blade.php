@@ -7,7 +7,7 @@
             <p>Item do cardápio não encontrado.</p>
         @endif
 
-        @if(!empty($adicionais)) 
+        @if(!empty($adicionais))
             <h5>Adicionais:</h5>
             <ul>
                 @foreach($adicionais as $adicional)
@@ -26,19 +26,19 @@
                     <i class="material-icons">delete</i>
                 </button>
             @endif
-        
+
             <span>{{ $quantidade }}</span>
-        
+
             <button wire:click="incrementar" style="background: none; border: none; cursor: pointer;">
                 <i class="material-icons">add</i>
             </button>
         </div>
-        
+
         <!-- Formulário para remover o item -->
         <div style="position: absolute; top: 10px; right: 10px;">
             <button wire:click="deletar" class="btn-floating waves-effect waves-light red"><i class="material-icons">clear</i></button>
         </div>
     </div>
-   
+
 </div>
-    
+
