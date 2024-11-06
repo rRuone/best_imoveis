@@ -1,10 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
+
+<script>
+    function toggleDetails(id) {
+        const details = document.getElementById(id);
+        if (details.style.display === "none") {
+            details.style.display = "block";
+        } else {
+            details.style.display = "none";
+        }
+    }
+</script>
 <div class="container">
-
-
-
     <div class="row">
         <div class="col s12 m6 l4">
             <div class="card-panel orange lighten-1 center-left">
@@ -68,7 +76,14 @@
                             @else
                                 <span>Endereço não disponível</span>
                             @endif
+                        
+                           
                         </p>
+
+                        <livewire:exibir-detalhes :pedido="$pedido" />
+
+                    
+
                         <!-- Botão para avançar o pedido para a próxima etapa -->
                         <form action="{{ route('admin.pedidos.avancar', $pedido->id) }}" method="POST" style="display:inline;">
                             @csrf
@@ -139,6 +154,9 @@
                                     <span>Endereço não disponível</span>
                                 @endif
                             </p>
+
+                            <livewire:exibir-detalhes :pedido="$pedido" />
+
                             {{-- <p><strong>Endereço:</strong></p> --}}
                             <form action="{{route('admin.pedidos.avancarPr', $pedido->id)}}" method="POST">
                                 @csrf
@@ -214,6 +232,9 @@
                                     <span>Endereço não disponível</span>
                                 @endif
                             </p>
+
+                            <livewire:exibir-detalhes :pedido="$pedido" />
+                            
                             {{-- <p><strong>Endereço:</strong></p> --}}
                             <form action="{{route('admin.pedidos.finalizado', $pedido->id)}}" method="POST">
                                 @csrf

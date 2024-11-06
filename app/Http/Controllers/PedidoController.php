@@ -17,7 +17,9 @@ class PedidoController extends Controller
     public function show($id)
     {
         // Obtém o pedido específico com suas relações (itens e adicionais)
-        $pedido = Pedido::with('itens.itemCardapio.adicionais')->findOrFail($id);
+        $pedido = Pedido::with('pedidoItems.adicionais.adicional')->findOrFail($id);
+
+      
         return view('admin.pedidos.show', compact('pedido'));
     }
 
