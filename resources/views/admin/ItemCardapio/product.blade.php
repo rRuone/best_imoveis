@@ -92,11 +92,22 @@
             <!-- Container para os adicionais -->
             <div class="adicionais-container">
                 @php
-                    $adicionaisCount = count($adicionais); // Contando o total de adicionais
-                @endphp
-
-                <!-- Exibindo primeiros 5 adicionais -->
-                @foreach($adicionais->slice(0, 5) as $adicional)
+                $adicionaisCount = count($adicionais); // Contando o total de adicionais
+            @endphp
+            
+            <!-- Exibindo primeiros 5 adicionais -->
+            @foreach(collect($adicionais)->slice(0, 5) as $adicional)
+                <div class="input-field">
+                    <label>
+                        <input type="checkbox" name="adicionais[]" value="{{ $adicional->id }}" />
+                        <span>{{ $adicional->nome }}</span>
+                    </label>
+                </div>
+            @endforeach
+            
+            @if($adicionaisCount > 5)
+                <!-- Exibindo adicionais restantes a partir do 6º item -->
+                @foreach(collect($adicionais)->slice(5) as $adicional)
                     <div class="input-field">
                         <label>
                             <input type="checkbox" name="adicionais[]" value="{{ $adicional->id }}" />
@@ -104,18 +115,7 @@
                         </label>
                     </div>
                 @endforeach
-
-                @if($adicionaisCount > 5)
-                    <!-- Exibindo adicionais restantes a partir do 6º item -->
-                    @foreach($adicionais->slice(5) as $adicional)
-                        <div class="input-field">
-                            <label>
-                                <input type="checkbox" name="adicionais[]" value="{{ $adicional->id }}" />
-                                <span>{{ $adicional->nome }}</span>
-                            </label>
-                        </div>
-                    @endforeach
-                @endif
+            @endif
             </div>
 
             <!-- Rodapé fixo com o botão 'Avançar' -->
