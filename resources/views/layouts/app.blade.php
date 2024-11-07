@@ -63,6 +63,7 @@
             <li><a href="{{ url('/admin/index-itemCardapio') }}">Cardápio</a></li>
             <li><a href="{{ url('/admin/index-adicionais') }}">Adicionais</a></li>
             <li><a href="{{ url('/admin/index-categorias') }}">Categorias</a></li>
+            <li><a href="{{ url('/admin/dashboard/historico') }}">Histórico</a></li>
 
         </ul>
 
@@ -85,6 +86,7 @@
             <li><a href="{{ url('/admin/index-itemCardapio') }}">Cardápio</a></li>
             <li><a href="{{ url('/admin/index-adicionais') }}">Adicionais</a></li>
             <li><a href="{{ url('/admin/index-categorias') }}">Categorias</a></li>
+            <li><a href="{{ url('/admin/dashboard/historico') }}">Histórico</a></li>
             @endauth
 
             @guest
