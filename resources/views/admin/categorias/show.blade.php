@@ -4,8 +4,11 @@
 <div class="section container">
     <div class="header-container">
         <br>
-        <h4>Categorias</h4>
-        <a href="{{ route('admin.categorias.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a>
+        <h4 class="inline">Categorias</h4>
+        <div class="class button-group">
+            <a href="{{ route('admin.categorias.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a>
+        </div>
+
     </div>
     <hr>
 

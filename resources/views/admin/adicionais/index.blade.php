@@ -1,11 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="section container">
         <div class="header-container">
             <br>
-            <h4 class="header-title">Adicionais</h4>
-            <a href="{{ route('admin.adicionais.create') }}" class="btn-small waves-effect waves-light green inline">Adicionar</a>
+            <h4 class="inline">Adicionais</h4>
+            <div class="class button-group">
+                <a href="javascript:history.back()" class="btn-small waves-effect waves-light grey inline">Voltar</a>
+                <a href="{{ route('admin.adicionais.create') }}" class="btn-small waves-effect waves-light green inline">Adicionar</a>
+            </div>
+
         </div>
         <hr>
 

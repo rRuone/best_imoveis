@@ -1,11 +1,13 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="section container">
         <div class="header-container">
             <br>
             <h4 class="inline">Editar Item do Cardápio</h4>
-            <a href="{{ route('admin.itemCardapio.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a>
+            <div class="class button-group">
+                <a href="{{ route('admin.itemCardapio.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a>
+            </div>
+
         </div>
         <hr>
 
@@ -34,16 +36,19 @@
                     <input type="text" id="preco" name="preco" value="{{ old('preco', number_format($itemCardapio->preco, 2, ',', '.')) }}">
                 </div>
 
-                <div class="input-field">
+                <div class="input-field ">
                     <label for="categoria_id"></label>
                     <select id="categoria_id" name="categoria_id">
                         @foreach($categorias as $categoria)
-                            <option value="{{ $categoria->id }}" {{ $categoria->id == $itemCardapio->categoria_id ? 'selected' : '' }}>
+                            <option value="{{ $categoria->id }}" {{ $categoria->id == $itemCardapio->categoria_id ? 'selected':''}}>
                                 {{ $categoria->nome }}
                             </option>
                         @endforeach
                     </select>
                     <label>Categoria</label>
+
+
+
                 </div>
 
                 <div class="input-field">
@@ -71,6 +76,14 @@
         </div>
 
         <!-- Help Modal -->
+       
+        <div class="fixed-action-btn">
+            <a class="btn-floating btn-large blue modal-trigger" href="#helpModal">
+                <i class="large material-icons">help_outline</i>
+            </a>
+        </div>
+
+        <!-- Help Modal -->
         <div id="helpModal" class="modal">
             <div class="modal-content">
                 <h4>Ajuda - Editar Item do Cardápio</h4>
@@ -88,10 +101,12 @@
             </div>
         </div>
     </div>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
+
+
         M.AutoInit(); // Inicializar o Materialize JS
+
 
         // Máscara para formatação do preço na interface
         $(document).ready(function() {
@@ -132,7 +147,7 @@
         }
 
         hr {
-            margin-top: 1px;
+            margin-top: 5px;
             margin-bottom: 20px;
         }
 
@@ -146,6 +161,7 @@
 
         .input-field {
             margin-bottom: 20px;
+            margin-left: auto;
         }
 
         .btn-small {
@@ -158,5 +174,7 @@
             bottom: 30px;
             right: 30px;
         }
+
+
     </style>
 @endsection

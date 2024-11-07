@@ -5,7 +5,10 @@
         <div class="header-container">
             <br>
             <h4 class="inline">Editar Categoria</h4>
-            <a href="{{ route('admin.categorias.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a>
+            <div class="class button-group">
+                <a href="{{ route('admin.categorias.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a>
+            </div>
+
         </div>
         <hr>
 
