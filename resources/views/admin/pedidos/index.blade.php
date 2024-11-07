@@ -17,7 +17,7 @@
         <!-- Painel Pendentes -->
         <div class="col s12 m6 l4">
             <ul class="collapsible">
-                <li>
+                <li class="active">
                     <div class="collapsible-header orange lighten-1 valign-wrapper">
                         <i class="material-icons white-text">search</i>
                         <h5 class="white-text flow-text" style="display:flex; align-items:center;">
@@ -99,7 +99,7 @@
         <!-- Painel Em Produção -->
         <div class="col s12 m6 l4">
             <ul class="collapsible">
-                <li>
+                <li class="active">
                     <div class="collapsible-header yellow lighten-1 valign-wrapper" style="display: flex; justify-content: space-between;">
                         <h5 class="black-text flow-text">
                             <strong>Em produção</strong>
@@ -175,7 +175,7 @@
         <!-- Painel Prontos para Entrega -->
         <div class="col s12 m6 l4">
             <ul class="collapsible">
-                <li>
+                <li class="active">
                     <div class="collapsible-header green lighten-1 valign-wrapper">
                         <i class="material-icons white-text">check_circle</i>
                         <h5 class="white-text flow-text">
