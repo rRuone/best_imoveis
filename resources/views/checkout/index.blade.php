@@ -8,12 +8,12 @@
         @else
         
         @foreach ($pedido as $item)
-            <h3>{{ $item['item_cardapio']->nome }} - R$ {{ number_format($item['item_cardapio']->preco, 2, ',', '.') }}</h3>
+            {{-- <h3>{{ $item['item_cardapio']->nome }} - R$ {{ number_format($item['item_cardapio']->preco, 2, ',', '.') }}</h3> --}}
         
             @endforeach
 
             {{-- Exibe os endereços do cliente com checkboxes --}}
-            <div class="row">
+            <div class="row" style="margin-top: 10px">
                 <div class="row card-panel mb-0">
                     <h5 class="h5-header">Endereço de entrega:</h5>
                     @if($enderecos->isEmpty())

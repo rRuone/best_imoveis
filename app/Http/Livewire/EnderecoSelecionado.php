@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Livewire;
 
 use Livewire\Component;
@@ -7,18 +8,34 @@ class EnderecoSelecionado extends Component
 {
     public $enderecos;
     public $enderecoSelecionado;
+    public $retirar = false;
 
     public function mount($enderecos)
     {
         $this->enderecos = $enderecos;
         $this->enderecoSelecionado = session('endereco_id', null);
+        $this->retirar = session('retirar', false); // Recupera a opção de "retirar" da sessão
     }
 
     public function atualizarEndereco($enderecoId)
     {
         $this->enderecoSelecionado = $enderecoId;
         session()->put('endereco_id', $enderecoId);
-        $this->emit('enderecoAtualizado', $enderecoId); // Emite o ID do endereço atualizado
+
+        // Se o endereço selecionado for null ou vazio, define "retirar" como true
+        if (is_null($enderecoId) || $enderecoId === '') {
+            $this->retirar = true;
+            session()->put('retirar', true); // Salva "retirar" na sessão
+        } else {
+            $this->retirar = false;
+            session()->forget('retirar'); // Remove "retirar" se o endereço for selecionado
+        }
+
+        // Emite para o componente FinalizarPedido que o endereço foi atualizado
+        $this->emit('enderecoAtualizado', $enderecoId);
+
+        // Emite também o estado da opção "retirar"
+        $this->emit('retirarAtualizado', $this->retirar);
     }
 
     public function render()

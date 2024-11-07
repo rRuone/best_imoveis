@@ -3,20 +3,19 @@
 @section('conteudo-principal')
 
     <style>
-          .header-container {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px; /* Ajuste o espaço inferior conforme necessário */
-    }
+        .header-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
 
+        .header-container a {
+            margin-right: 20px;
+        }
 
-    .header-container a {
-        margin-right: 20px; /* Espaço entre o ícone e o título */
-    }
-
-    .header-container h4 {
-        margin: 0; /* Remove a margem padrão do título */
-    }
+        .header-container h4 {
+            margin: 0;
+        }
 
         .card {
             width: 100%;
@@ -35,24 +34,42 @@
 
         .btn-container {
             margin-top: 20px;
-            text-align: right; /* Alinha o botão à direita */
+            text-align: right;
         }
 
         .input-field {
-        margin-bottom: 10px; /* Espaçamento entre os adicionais */
+            margin-bottom: 10px;
+        }
+
+        /* Layout da grade para os adicionais */
+        .adicionais-container {
+            display: flex;
+            flex-wrap: wrap; /* Permite quebra de linha entre colunas */
+            gap: 15px; /* Espaço entre os itens */
+        }
+
+        .input-field {
+            flex: 1 1 48%; /* Cada item ocupa 48% da largura */
+        }
+
+        /* Adicionando responsividade */
+        @media (max-width: 768px) {
+            .input-field {
+                flex: 1 1 100%; /* 1 item por linha em dispositivos menores */
+            }
         }
 
     </style>
 
     <div class="container">
 
-            <div class="header-container">
-                <a href="{{ route('home.index') }}" class=" waves-effect waves-light">
-                    <i class="material-icons black-text">arrow_back</i>
-                </a>
-                <h4 class="inline">Detalhes do Pedido</h4>
-            </div>
-            <hr>
+        <div class="header-container">
+            <a href="{{ route('home.index') }}" class="waves-effect waves-light">
+                <i class="material-icons black-text">arrow_back</i>
+            </a>
+            <h4 class="inline">Detalhes do Pedido</h4>
+        </div>
+        <hr>
 
         <div class="card">
             <div class="card-image">
@@ -72,22 +89,43 @@
         <form action="{{ route('itemCardapio.salvarAdicionais', $itemCardapio) }}" method="POST" class="form-container">
             @csrf
 
-            {{-- <h5>Escolha Adicionais</h5>  --}}
-            @foreach($adicionais as $adicional)
-                <div class="input-field">
-                    <label>
-                        <input type="checkbox" name="adicionais[]" value="{{ $adicional->id }}" />
-                        <span>{{ $adicional->nome }}</span>
-                    </label>
-                    <br>
-                </div>
-            @endforeach
+            <!-- Container para os adicionais -->
+            <div class="adicionais-container">
+                @php
+                    $adicionaisCount = count($adicionais); // Contando o total de adicionais
+                @endphp
 
-            <div class="btn-container">
-                <button class="btn waves-effect waves-light" type="submit">Avançar</button>
+                <!-- Exibindo primeiros 5 adicionais -->
+                @foreach($adicionais->slice(0, 5) as $adicional)
+                    <div class="input-field">
+                        <label>
+                            <input type="checkbox" name="adicionais[]" value="{{ $adicional->id }}" />
+                            <span>{{ $adicional->nome }}</span>
+                        </label>
+                    </div>
+                @endforeach
+
+                @if($adicionaisCount > 5)
+                    <!-- Exibindo adicionais restantes a partir do 6º item -->
+                    @foreach($adicionais->slice(5) as $adicional)
+                        <div class="input-field">
+                            <label>
+                                <input type="checkbox" name="adicionais[]" value="{{ $adicional->id }}" />
+                                <span>{{ $adicional->nome }}</span>
+                            </label>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
+
+            <!-- Rodapé fixo com o botão 'Avançar' -->
+            <div class="footer-container" style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: #F5F5F5; border-top: 1px solid #ddd; padding: 10px 0; text-align: center; display: flex; justify-content: center; align-items: center;">
+                <button type="submit" class="btn waves-effect waves-light green btn-responsive"
+                    style="font-size: 1.2em; margin:0; width: 50%; justify-content: center; align-items: center;">
+                    <span>Avançar</span>
+                </button>
             </div>
         </form>
     </div>
+
 @endsection
-
-
