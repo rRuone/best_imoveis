@@ -53,7 +53,7 @@ class FinalizarPedido extends Component
             'metdPag' => $metodoPagamento,
             'status' => 'pendente',
             'total' => $subtotal,
-            'retirar' => $retirar,
+            
         ]);
 
         // Criação de itens do pedido
