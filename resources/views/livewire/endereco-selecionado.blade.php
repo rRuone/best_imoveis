@@ -5,16 +5,17 @@
                 <label>
                     <input type="radio" name="endereco_id" wire:click="atualizarEndereco({{ $endereco->id }})"
                         @if($enderecoSelecionado == $endereco->id && !$retirar) checked @endif />
-                    <span>{{ $endereco->logradouro }} - {{$endereco->numero}}, {{ $endereco->bairro }}</span>
+                    <span style="font-size: 1.5em;">{{ $endereco->logradouro }} - {{$endereco->numero}}, {{ $endereco->bairro }}</span>
                 </label>
             </li>
         @endforeach
     </ul>
-
+    <hr style="opacity: 0.3">
     <div>
         <label>
             <input type="radio" name="retirar" wire:click="atualizarEndereco('')" @if($retirar) checked @endif />
-            <span>Retirada no Balcão</span>
+            <span style="font-size: 1.5em;">Retirar no estabelecimento</span> <br>
+            <span style="font-size: 1.3em;">Travessa Alda De Andrade Krelling, 317 - Morada Do Sol</span>
         </label>
     </div>
 </div>
