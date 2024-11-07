@@ -38,6 +38,23 @@ class EnderecoSelecionado extends Component
         $this->emit('retirarAtualizado', $this->retirar);
     }
 
+    public function excluirEndereco($enderecoId)
+{
+    $endereco = \App\Models\Endereco::find($enderecoId);
+
+    if ($endereco) {
+        $endereco->delete();
+        // Atualiza a lista de endereços após a exclusão
+        $this->enderecos = $this->enderecos->filter(function ($endereco) use ($enderecoId) {
+            return $endereco->id !== $enderecoId;
+        });
+
+        // Emite um evento para notificar sobre a exclusão
+        $this->emit('enderecoExcluido');
+    }
+}
+
+
     public function render()
     {
         return view('livewire.endereco-selecionado');

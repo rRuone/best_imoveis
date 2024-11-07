@@ -46,7 +46,7 @@ class EnderecosController extends Controller
        Endereco::create($validatedData);
 
        // Redireciona para a página de checkout após salvar o endereço
-       return redirect()->route('checkout.index')->with('success', 'Endereço criado com sucesso!');
+       return redirect()->route('checkout.index');
    }
     //   // Buscar endereços do cliente logado
     //   public function enderecosCliente(Request $request)
