@@ -10,6 +10,11 @@
             </li>
         @endforeach
     </ul>
+     <!-- Botão para cadastrar um segundo endereço -->
+     <a href="{{ route('enderecos.create') }}" class="btn-small waves-effect waves-light" style="margin-top: 10px; padding: 0 10px; font-size: 0.9em;">
+        Adicionar Novo Endereço
+    </a>
+    
     <hr style="opacity: 0.3">
     <div>
         <label>
