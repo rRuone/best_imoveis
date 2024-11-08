@@ -159,24 +159,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
     <!-- Formulário de Filtro (fixo) -->
     <form action="{{ route('admin.pedidos.historico') }}" method="GET" class="row sticky-filters">
+
+        <div class="input-field col 1 m4">
+            <input type="text" name="pedido_id" id="pedido_id" value="{{ request('pedido_id') }}">
+            <label for="pedido_id">Número do Pedido</label>
+        </div>
+
         <div class="input-field col s12 m4">
             <input type="text" name="cliente" id="cliente" value="{{ request('cliente') }}">
             <label for="cliente">Nome do Cliente</label>
         </div>
+
         <div class="input-field col s12 m4">
-            <input type="text" name="pedido_id" id="pedido_id" value="{{ request('pedido_id') }}">
-            <label for="pedido_id">Número do Pedido</label>
+            <input type="date" name="data_criacao" id="data_criacao" value="{{ request('data_criacao') }}">
+            <label for="data_criacao">Data de Criação</label>
         </div>
+
         <div class="input-field col s12 m4">
             <input type="date" name="data_finalizacao" id="data_finalizacao" value="{{ request('data_finalizacao') }}">
             <label for="data_finalizacao">Data de Finalização</label>
         </div>
-        <div class="input-field col s12">
+
+        <div class="input-field col s12 d-flex justify-content-end align-items-center gap-2">
             <button type="submit" class="waves-effect waves-light btn">Filtrar</button>
-            <a href="{{ route('admin.pedidos.historico') }}" class="btn-flat">
-                <i class="material-icons left">clear</i>Limpar Filtros
-            </a>
+            <a href="{{ route('admin.pedidos.historico') }}" class="btn-flat">Limpar Filtros</a>
         </div>
+
     </form>
 
     <!-- Tabela de Pedidos -->
@@ -187,6 +195,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <th>Número do Pedido</th>
                     <th>Cliente</th>
                     <th>Total</th>
+                    <th>Data de Criação</th>
                     <th>Data de Finalização</th>
                     <th>Telefone</th>
                 </tr>
@@ -197,6 +206,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <td>{{ $pedido->id }}</td>
                         <td>{{ $pedido->cliente->nome }}</td>
                         <td>R$ {{ number_format($pedido->total, 2, ',', '.') }}</td>
+                        <td>{{ \Carbon\Carbon::parse($pedido->created_at)->format('d/m/Y H:i') }}</td>
                         <td>{{ \Carbon\Carbon::parse($pedido->updated_at)->format('d/m/Y H:i') }}</td>
                         <td>
                             @php
@@ -324,5 +334,20 @@ document.addEventListener('DOMContentLoaded', function() {
     .center-align {
         text-align: center; /* Centraliza o conteúdo */
     }
+
+
+    .input-field.d-flex {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+@media (max-width: 768px) {
+    .input-field.d-flex {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
 </style>
 @endsection

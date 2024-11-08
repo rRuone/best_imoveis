@@ -66,6 +66,9 @@ class AdminController extends Controller
             $query->where('id', $request->pedido_id);
         }
 
+        if ($request->filled('data_criacao')) {
+            $query->whereDate('created_at', $request->data_criacao);
+        }
         // Filtro por data de finalização
         if ($request->filled('data_finalizacao')) {
             $query->whereDate('updated_at', $request->data_finalizacao);
