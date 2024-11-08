@@ -22,21 +22,16 @@
                     <div class="collapsible-body" id="details-pendentes" style="display: block;">
                         @if($produtosPendentes->isNotEmpty())
                             @foreach($produtosPendentes as $pedido)
-                                <div class="pedido-info" style="border: 1px solid #ccc; padding: 15px; border-radius: 15px; background-color: #fff; margin-bottom: 20px;">
-                                    <div class="pedido-info-header">
-                                        <p class="flow-text"><strong>Pedido:</strong> {{ $pedido->id }}
-                                            <span style="margin-left: 60px;">
-                                                <i class="material-icons" style="vertical-align: middle;"> <strong>access_time</strong></i>
-                                                {{ \Carbon\Carbon::parse($pedido->created_at)->format('H:i') }}
-                                            </span>
-                                            <form action="{{ route('admin.pedidos.cancelar', $pedido->id) }}" method="POST" style="display:block; margin-top: -10px;">
-                                                @csrf
-                                                <button type="submit" style="background: none; border: none; cursor: pointer; margin-left: 10px;">
-                                                    <i class="material-icons" style="color: black;">cancel</i>
-                                                </button>
-                                            </form>
-                                        </p>
-                                    </div>
+                            <div class="pedido-info" style="border: 1px solid #ccc; padding: 15px; border-radius: 15px; background-color: #fff; margin-bottom: 20px;">
+                                <div class="pedido-info-header" style="display: flex; align-items: center; justify-content: space-between;">
+                                    <p class="flow-text">
+                                        <strong>Pedido:</strong> {{ $pedido->id }}
+                                    </p>
+                                    <p class="flow-text">
+                                        <i class="material-icons">access_time</i>
+                                        {{ \Carbon\Carbon::parse($pedido->created_at)->format('H:i') }}
+                                    </p>
+                                </div>
 
                                     <hr style="margin-top: 0.2px; margin-bottom: 1px;">
                                     <p>
@@ -71,15 +66,28 @@
 
                                     <livewire:exibir-detalhes :pedido="$pedido" />
 
-                                    <form action="{{ route('admin.pedidos.avancar', $pedido->id) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        <button type="submit" style="margin-left:110px" class="waves-effect waves-light btn btn-custom">
-                                            <strong>Avançar</strong>
-                                            <span style="margin-left: 20px;">
-                                                <i class="material-icons">arrow_forward</i>
-                                            </span>
-                                        </button>
-                                    </form>
+                                    <!-- Botões de Cancelar e Avançar centralizados -->
+                                    <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
+                                        <!-- Botão Cancelar -->
+                                        <form action="{{ route('admin.pedidos.cancelar', $pedido->id) }}" method="POST" style="display:inline; margin-right: 10px;">
+                                            @csrf
+                                            <button type="submit" class="waves-effect waves-light btn red darken-1" style="color: white; display: flex; align-items: center; justify-content: center;">
+                                                <i class="material-icons left" style="margin-right: 8px;">cancel</i>
+                                                <strong>Cancelar</strong>
+                                            </button>
+                                        </form>
+
+                                        <!-- Botão Avançar -->
+                                        <form action="{{ route('admin.pedidos.avancar', $pedido->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            <button type="submit" class="waves-effect waves-light btn btn-custom" style="display: flex; align-items: center; justify-content: center;">
+                                                <strong>Avançar</strong>
+                                                <span style="margin-left: 20px;">
+                                                    <i class="material-icons">arrow_forward</i>
+                                                </span>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
                             @endforeach
                         @else
@@ -89,6 +97,7 @@
                 </li>
             </ul>
         </div>
+
 
         <!-- Painel Em Produção -->
         <div class="col s12 m6 l4">
@@ -107,58 +116,62 @@
                     <div class="collapsible-body" id="details-emProducao" style="display: block;">
                         @if($pedidosEmProcesso->isNotEmpty())
                             @foreach($pedidosEmProcesso as $pedido)
-                                <div class="pedido-info" style="border: 1px solid #ccc; padding: 15px; border-radius: 15px; background-color: #fff; margin-bottom: 20px;">
-                                    <div>
-                                        <p class="flow-text"><strong>Pedido:</strong> {{ $pedido->id }}
-                                            <span style="margin-left: 100px;">
-                                                <i class="material-icons">access_time</i>
-                                                {{ \Carbon\Carbon::parse($pedido->created_at)->format('H:i') }}
-                                            </span>
-                                        </p>
-                                    </div>
-                                    <hr>
+                            <div class="pedido-info" style="border: 1px solid #ccc; padding: 15px; border-radius: 15px; background-color: #fff; margin-bottom: 20px;">
+                                <div class="pedido-info-header" style="display: flex; align-items: center; justify-content: space-between;">
+                                    <p class="flow-text">
+                                        <strong>Pedido:</strong> {{ $pedido->id }}
+                                    </p>
+                                    <p class="flow-text">
+                                        <i class="material-icons">access_time</i>
+                                        {{ \Carbon\Carbon::parse($pedido->created_at)->format('H:i') }}
+                                    </p>
+                                </div>
+                                <hr>
+                                <p>
+                                    <strong>Cliente:</strong> {{ explode(' ', trim($pedido->cliente->nome))[0] }}
+                                    <span style="margin-left:100px">
+                                        <strong>Total:</strong> R$ {{ number_format($pedido->total, 2, ',', '.') }}
+                                    </span>
+                                    <br>
                                     <p>
-                                        <strong>Cliente:</strong> {{ explode(' ', trim($pedido->cliente->nome))[0] }}
+                                        @php
+                                        $telefone = $pedido->cliente->telefone;
+                                        if(strlen($telefone) == 11) { // Verifica se o número tem 11 dígitos (incluindo DDD)
+                                            $telefoneFormatado = '(' . substr($telefone, 0, 2) . ') ' . substr($telefone, 2, 5) . '-' . substr($telefone, 7);
+                                        } else {
+                                            $telefoneFormatado = $telefone; // Caso não tenha 11 dígitos, exibe o número como está
+                                        }
+                                        @endphp
+                                        {{$telefoneFormatado}}
                                         <span style="margin-left:100px">
-                                            <strong>Total:</strong> R$ {{ number_format($pedido->total, 2, ',', '.') }}
+                                            <strong>{{ ucfirst($pedido->metdPag) }}</strong>
                                         </span>
-                                        <br>
-                                        <p>
-                                            @php
-                                            $telefone = $pedido->cliente->telefone;
-                                            if(strlen($telefone) == 11) { // Verifica se o número tem 11 dígitos (incluindo DDD)
-                                                $telefoneFormatado = '(' . substr($telefone, 0, 2) . ') ' . substr($telefone, 2, 5) . '-' . substr($telefone, 7);
-                                            } else {
-                                                $telefoneFormatado = $telefone; // Caso não tenha 11 dígitos, exibe o número como está
-                                            }
-                                            @endphp
-                                            {{$telefoneFormatado}}
-                                            <span style="margin-left:100px">
-                                                <strong>{{ ucfirst($pedido->metdPag) }}</strong>
-                                            </span>
-                                        </p>
                                     </p>
-                                    <hr>
-                                    <p><strong>Endereço:</strong>
-                                        @if($pedido->endereco)
-                                            {{ $pedido->endereco->logradouro }}, {{$pedido->endereco->numero}}
-                                        @else
-                                            <span>Endereço não disponível</span>
-                                        @endif
-                                    </p>
+                                </p>
+                                <hr>
+                                <p><strong>Endereço:</strong>
+                                    @if($pedido->endereco)
+                                        {{ $pedido->endereco->logradouro }}, {{$pedido->endereco->numero}}
+                                    @else
+                                        <span>Endereço não disponível</span>
+                                    @endif
+                                </p>
 
-                                    <livewire:exibir-detalhes :pedido="$pedido" />
+                                <livewire:exibir-detalhes :pedido="$pedido" />
 
-                                    <form action="{{ route('admin.pedidos.avancarPr', $pedido->id) }}" method="POST">
+                                <!-- Div para centralizar o botão Avançar -->
+                                <div style="display: flex; justify-content: center; margin-top: 10px;">
+                                    <form action="{{ route('admin.pedidos.avancarPr', $pedido->id) }}" method="POST" style="display: inline;">
                                         @csrf
-                                        <button type="submit" style="margin-left:110px" class="waves-effect waves-light btn btn-custom">
+                                        <button type="submit" class="waves-effect waves-light btn btn-custom" style="display: flex; align-items: center; justify-content: center;">
                                             <strong>Avançar</strong>
-                                            <span>
+                                            <span style="margin-left: 20px;">
                                                 <i class="material-icons">arrow_forward</i>
                                             </span>
                                         </button>
                                     </form>
                                 </div>
+                            </div>
                             @endforeach
                         @else
                             <p>Nenhum Pedido em Produção</p>
@@ -167,6 +180,7 @@
                 </li>
             </ul>
         </div>
+
 
         <!-- Painel Prontos para Entrega -->
         <div class="col s12 m6 l4">
@@ -185,15 +199,18 @@
                     <div class="collapsible-body" id="details-prontosEntrega" style="display: block;">
                         @if($pedidosConcluidos->isNotEmpty())
                             @foreach($pedidosConcluidos as $pedido)
-                                <div class="pedido-info" style="border: 1px solid #ccc; padding: 15px; border-radius: 15px; background-color: #fff; margin-bottom: 20px;">
-                                    <div>
-                                        <p class="flow-text"><strong>Pedido:</strong> {{ $pedido->id }}
-                                            <span style="margin-left: 100px;">
-                                                <i class="material-icons" style="vertical-align: middle;"> <strong>access_time</strong></i>
-                                                {{ \Carbon\Carbon::parse($pedido->created_at)->format('H:i') }}
-                                            </span>
-                                        </p>
-                                    </div>
+                            <div class="pedido-info" style="border: 1px solid #ccc; padding: 15px; border-radius: 15px; background-color: #fff; margin-bottom: 20px;">
+                                <div class="pedido-info-header" style="display: flex; align-items: center; justify-content: space-between;">
+                                    <p class="flow-text">
+                                        <strong>Pedido:</strong> {{ $pedido->id }}
+                                    </p>
+                                    <p class="flow-text">
+                                        <i class="material-icons">access_time</i>
+                                        {{ \Carbon\Carbon::parse($pedido->created_at)->format('H:i') }}
+                                    </p>
+
+                                  
+                                </div>
                                     <hr>
                                     <p>
                                         <strong>Cliente:</strong> {{ explode(' ', trim($pedido->cliente->nome))[0] }}
@@ -236,7 +253,7 @@
                                 </div>
                             @endforeach
                         @else
-                            <p>Receba pedidos e visualize os prontos para entrega.</p>
+                            <p>Visualize os pedidos prontos para entrega.</p>
                         @endif
                     </div>
                 </li>
@@ -303,6 +320,7 @@
 
 
 </script>
+
 
 
 @endsection
