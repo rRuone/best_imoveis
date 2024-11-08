@@ -23,18 +23,20 @@
                         @if($produtosPendentes->isNotEmpty())
                             @foreach($produtosPendentes as $pedido)
                                 <div class="pedido-info" style="border: 1px solid #ccc; padding: 15px; border-radius: 15px; background-color: #fff; margin-bottom: 20px;">
-                                    <div class="pedido-info-header">
+                                    <div class="pedido-info-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+
                                         <p class="flow-text"><strong>Pedido:</strong> {{ $pedido->id }}
-                                            <span style="margin-left: 60px;">
+                                            <span style="margin-left: 30px;">
                                                 <i class="material-icons" style="vertical-align: middle;"> <strong>access_time</strong></i>
                                                 {{ \Carbon\Carbon::parse($pedido->created_at)->format('H:i') }}
+                                                <form action="{{ route('admin.pedidos.cancelar', $pedido->id) }}" method="POST" style="display:inline;">
+                                                    @csrf
+                                                    <button type="submit" style="background: none; border: none; cursor: pointer; ">
+                                                        <i class="material-icons" style="color: black;">cancel</i>
+                                                    </button>
+                                                </form>
                                             </span>
-                                            <form action="{{ route('admin.pedidos.cancelar', $pedido->id) }}" method="POST" style="display:block; margin-top: -10px;">
-                                                @csrf
-                                                <button type="submit" style="background: none; border: none; cursor: pointer; margin-left: 10px;">
-                                                    <i class="material-icons" style="color: black;">cancel</i>
-                                                </button>
-                                            </form>
+
                                         </p>
                                     </div>
 
