@@ -31,8 +31,8 @@
         <div>
             <label>
                 <input type="radio" name="retirar" wire:click="atualizarEndereco('')" @if($retirar) checked @endif />
-                <span style="font-size: 1.5em;">Retirar no estabelecimento</span> <br>
-                <span style="font-size: 1.3em;">Travessa Alda De Andrade Krelling, 317 - Morada Do Sol</span>
+                <span style="font-size: 1.5em; color:black">Retirar no estabelecimento</span> <br>
+                <span style="font-size: 1.3em; margin-left: 30px; color:black">Travessa Alda De Andrade Krelling, 317 - Morada Do Sol</span>
             </label>
         </div>
     </div>
