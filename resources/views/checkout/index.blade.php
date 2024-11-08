@@ -25,12 +25,6 @@
                 </div>
             </div>
 
-            {{-- Exibe o subtotal --}}
-           
-                <h5 class="h5-header">Subtotal:</h5>
-                <p>R$ {{ number_format($subtotal, 2, ',', '.') }}</p>
-         
-            <hr>
             {{-- Formulário para finalizar o pedido --}}
             @livewire('finalizar-pedido')
 
