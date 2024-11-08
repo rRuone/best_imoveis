@@ -21,7 +21,7 @@
                 <input type="radio" name="metodo_pagamento" value="pix" 
                        wire:click="selecionarMetodo('pix')"
                        @if($metodoPagamento == 'pix') checked @endif />
-                <span style="color: black">PIX - - 42998583551</span>
+                <span style="color: black">PIX - 42998583551</span>
             </label>
         </li>
     </ul>
