@@ -33,7 +33,7 @@
                     <span class="helper-text red-text">{{ $message }}</span>
                 @enderror
             </div>
-            
+
             <div class="input-field">
                 <input type="text" name="numero" id="numero" value="{{ old('numero') }}" />
                 <label for="numero">Número</label>    
@@ -42,9 +42,23 @@
                 @enderror
             </div>
 
-            <!-- Campo de texto para bairro -->
+            <!-- Campo de seleção para bairro -->
             <div class="input-field">
-                <input type="text" name="bairro" id="bairro" value="{{ old('bairro') }}" />
+                <select name="bairro" id="bairro">
+                    <option value="" disabled selected>Escolha um bairro</option>
+                    <option value="Alvorada">Alvorada</option>
+                    <option value="Castrolanda">Castrolanda</option>
+                    <option value="Bela Vista">Bela Vista</option>
+                    <option value="Almirante">Almirante</option>
+                    <option value="Centro">Centro</option>
+                    <option value="Santa Cruz">Santa Cruz</option>
+                    <option value="Primavera">Primavera</option>
+                    <option value="Canta Galo">Canta Galo</option>
+                    <option value="Arapongas">Arapongas</option>
+                    <option value="Araucária">Araucária</option>
+                    <option value="Morada do Sol">Morada do Sol</option>
+                    <option value="Rio Branco">Rio Branco</option>
+                </select>
                 <label for="bairro">Bairro</label>
                 @error('bairro')
                     <span class="helper-text red-text">{{ $message }}</span>
@@ -68,7 +82,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var elems = document.querySelectorAll('select');
-            var instances = M.FormSelect.init(elems, {});
+            M.FormSelect.init(elems);
         });
     </script>
 @endsection
