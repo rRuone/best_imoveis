@@ -22,7 +22,7 @@ class EnderecoSelecionado extends Component
         $this->enderecoSelecionado = $enderecoId;
         session()->put('endereco_id', $enderecoId);
 
-        // Se o endereço selecionado for null ou vazio, define "retirar" como true
+        // Se o endereço for nulo ou vazio, define "retirar" como true
         if (is_null($enderecoId) || $enderecoId === '') {
             $this->retirar = true;
             session()->put('retirar', true); // Salva "retirar" na sessão
@@ -31,12 +31,11 @@ class EnderecoSelecionado extends Component
             session()->forget('retirar'); // Remove "retirar" se o endereço for selecionado
         }
 
-        // Emite para o componente FinalizarPedido que o endereço foi atualizado
-        $this->emit('enderecoAtualizado', $enderecoId);
-
-        // Emite também o estado da opção "retirar"
+        // Emite para a view principal que o "retirar" foi atualizado
         $this->emit('retirarAtualizado', $this->retirar);
     }
+
+
 
     public function excluirEndereco($enderecoId)
 {

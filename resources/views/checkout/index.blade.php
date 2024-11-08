@@ -33,10 +33,10 @@
             </div>
 
             {{-- Exibe o subtotal --}}
-            <div class="card-panel">
+           
                 <h5 class="h5-header">Subtotal:</h5>
                 <p>R$ {{ number_format($subtotal, 2, ',', '.') }}</p>
-            </div>
+         
             <hr>
             {{-- Formulário para finalizar o pedido --}}
             @livewire('finalizar-pedido')
