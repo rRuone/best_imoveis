@@ -7,7 +7,7 @@ use Livewire\Component;
 class ExibirDetalhes extends Component
 {
     public $pedido;
-    public $mostrarDetalhes = false;
+    public $mostrarDetalhes = true;
 
     public function mount($pedido)
     {
