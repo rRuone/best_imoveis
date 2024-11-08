@@ -2,16 +2,7 @@
 
 @section('content')
 
-<script>
-    function toggleDetails(id) {
-        const details = document.getElementById(id);
-        if (details.style.display === "none") {
-            details.style.display = "block";
-        } else {
-            details.style.display = "none";
-        }
-    }
-</script>
+
 <div class="container">
     <div class="row">
         <!-- Painel Pendentes -->
@@ -20,12 +11,15 @@
                 <li class="active">
                     <div class="collapsible-header orange lighten-1 valign-wrapper">
                         <i class="material-icons white-text">search</i>
-                        <h5 class="white-text flow-text" style="display:flex; align-items:center;">
-                            <strong style="margin-right:190px;">Pendentes</strong>
-                            <span>{{ $numeroPedidosPendentes }} </span>
+                        <h5 class="white-text flow-text" style="flex: 1;">
+                            <strong>Pendentes</strong>
                         </h5>
+                        <div class="right-align" style="display: flex; align-items: center;">
+                            <span class="white-text" style="font-size: 1.5em; margin-right: 10px;">{{ $numeroPedidosPendentes }}</span>
+                            <i class="material-icons white-text" id="icon-pendentes" onclick="toggleDetails('pendentes')">arrow_drop_up</i>
+                        </div>
                     </div>
-                    <div class="collapsible-body">
+                    <div class="collapsible-body" id="details-pendentes" style="display: block;">
                         @if($produtosPendentes->isNotEmpty())
                             @foreach($produtosPendentes as $pedido)
                                 <div class="pedido-info" style="border: 1px solid #ccc; padding: 15px; border-radius: 15px; background-color: #fff; margin-bottom: 20px;">
@@ -100,15 +94,17 @@
         <div class="col s12 m6 l4">
             <ul class="collapsible">
                 <li class="active">
-                    <div class="collapsible-header yellow lighten-1 valign-wrapper" style="display: flex; justify-content: space-between;">
-                        <h5 class="black-text flow-text">
+                    <div class="collapsible-header yellow lighten-1 valign-wrapper">
+                        <h5 class="black-text flow-text" style="flex: 1;">
+                            <i class="material-icons black-text">build</i>
                             <strong>Em produção</strong>
                         </h5>
-                        <span class="black-text" style="font-size: 24px;">
-                            {{ $numeroPedidosEmProcesso }}
-                        </span>
+                        <div class="right-align" style="display: flex; align-items: center;">
+                            <span class="black-text" style="font-size: 1.5em; margin-right: 10px;">{{ $numeroPedidosEmProcesso }}</span>
+                            <i class="material-icons black-text" id="icon-emProducao" onclick="toggleDetails('emProducao')">arrow_drop_up</i>
+                        </div>
                     </div>
-                    <div class="collapsible-body">
+                    <div class="collapsible-body" id="details-emProducao" style="display: block;">
                         @if($pedidosEmProcesso->isNotEmpty())
                             @foreach($pedidosEmProcesso as $pedido)
                                 <div class="pedido-info" style="border: 1px solid #ccc; padding: 15px; border-radius: 15px; background-color: #fff; margin-bottom: 20px;">
@@ -178,12 +174,15 @@
                 <li class="active">
                     <div class="collapsible-header green lighten-1 valign-wrapper">
                         <i class="material-icons white-text">check_circle</i>
-                        <h5 class="white-text flow-text">
+                        <h5 class="white-text flow-text" style="flex: 1;">
                             <strong>Prontos para entrega</strong>
-                            <span>{{ $numeroPedidosConcluidos }}</span>
                         </h5>
+                        <div class="right-align" style="display: flex; align-items: center;">
+                            <span class="white-text" style="font-size: 1.5em; margin-right: 10px;">{{ $numeroPedidosConcluidos }}</span>
+                            <i class="material-icons white-text" id="icon-prontosEntrega" onclick="toggleDetails('prontosEntrega')">arrow_drop_up</i>
+                        </div>
                     </div>
-                    <div class="collapsible-body">
+                    <div class="collapsible-body" id="details-prontosEntrega" style="display: block;">
                         @if($pedidosConcluidos->isNotEmpty())
                             @foreach($pedidosConcluidos as $pedido)
                                 <div class="pedido-info" style="border: 1px solid #ccc; padding: 15px; border-radius: 15px; background-color: #fff; margin-bottom: 20px;">
@@ -287,6 +286,21 @@
         var elems = document.querySelectorAll('.collapsible');
         M.Collapsible.init(elems);
     });
+
+    function toggleDetails(id) {
+        const details = document.getElementById('details-' + id);
+        const icon = document.getElementById('icon-' + id);
+
+        if (details.style.display === "none" || details.style.display === "") {
+            details.style.display = "block";
+            icon.innerText = "arrow_drop_up";
+        } else {
+            details.style.display = "none";
+            icon.innerText = "arrow_drop_down";
+        }
+    }
+
+
 
 </script>
 
