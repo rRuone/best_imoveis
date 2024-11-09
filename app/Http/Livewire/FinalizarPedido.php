@@ -45,7 +45,12 @@ class FinalizarPedido extends Component
             $this->taxaEntrega = 0;
         } elseif ($endereco && in_array($endereco->bairro, ['Alvorada', 'Almirante'])) {
             $this->taxaEntrega = 10.00;
-        } else {
+        } elseif ($endereco && in_array($endereco->bairro,['Santa Cruz', 'Bela Vista'])){
+            $this->taxaEntrega = 8.00;
+        } elseif ($endereco && in_array($endereco->bairro,['Castrolanda'])){
+            $this->taxaEntrega = 20.00;
+        }
+        else {
             $this->taxaEntrega = 7.00;
         }
 
