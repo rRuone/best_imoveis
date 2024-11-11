@@ -33,6 +33,7 @@ class EnderecoSelecionado extends Component
 
         // Emite para a view principal que o "retirar" foi atualizado
         $this->emit('retirarAtualizado', $this->retirar);
+        $this->emit('enderecoAtualizado', $enderecoId);
     }
 
 
