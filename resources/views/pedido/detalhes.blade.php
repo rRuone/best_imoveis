@@ -23,7 +23,7 @@
         </p>
 
 
-        <p><strong>Método de Pagamento:</strong> {{ $pedido->metdPag }}</p>
+        <p><strong>Método de Pagamento:</strong> {{ ucfirst($pedido->metdPag )}}</p>
         <p><strong>Tempo estimado: </strong> 30 minutos </p>
 
     </div>
