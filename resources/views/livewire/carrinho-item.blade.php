@@ -8,12 +8,17 @@
         @endif
 
         @if(!empty($adicionais))
-            <h5>Adicionais:</h5>
-            <ul>
-                @foreach($adicionais as $adicional)
-                    <li>{{ $adicional->nome }}</li> <!-- Acesso ao nome do adicional -->
+
+            <!-- Divisão em colunas dinâmicas -->
+            <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+                @foreach($adicionais->chunk(5) as $chunk)
+                    <ul style="flex: 1;">
+                        @foreach($chunk as $adicional)
+                            <li>{{ $adicional->nome }}</li>
+                        @endforeach
+                    </ul>
                 @endforeach
-            </ul>
+            </div>
         @endif
 
         <div class="quantity-controls" style="display: flex; align-items: center; gap: 20px; margin-top: 10px; border: 1px solid #ccc; padding: 5px; border-radius: 5px; max-width: 150px; justify-content: center; position: absolute; bottom: 10px; right: 10px;">
@@ -39,6 +44,4 @@
             <button wire:click="deletar" class="btn-floating waves-effect waves-light red"><i class="material-icons">clear</i></button>
         </div>
     </div>
-
 </div>
-
