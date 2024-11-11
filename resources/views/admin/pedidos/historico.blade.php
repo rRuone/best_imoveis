@@ -197,6 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <th>Total</th>
                     <th>Data de Criação</th>
                     <th>Data de Finalização</th>
+                    <th>Tempo Decorrido</th>
                     <th>Telefone</th>
                 </tr>
             </thead>
@@ -208,6 +209,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         <td>R$ {{ number_format($pedido->total, 2, ',', '.') }}</td>
                         <td>{{ \Carbon\Carbon::parse($pedido->created_at)->format('d/m/Y H:i') }}</td>
                         <td>{{ \Carbon\Carbon::parse($pedido->updated_at)->format('d/m/Y H:i') }}</td>
+                        <td>
+                            @php
+                                $dataCriacao = \Carbon\Carbon::parse($pedido->created_at);
+                                $dataFinalizacao = \Carbon\Carbon::parse($pedido->updated_at);
+                                $tempoDecorrido = $dataCriacao->diffForHumans($dataFinalizacao, true);
+                            @endphp
+                            {{ $tempoDecorrido }}
+                        </td>
                         <td>
                             @php
                                 $telefone = $pedido->cliente->telefone;
