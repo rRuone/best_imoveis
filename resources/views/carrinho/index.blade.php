@@ -6,6 +6,7 @@
             display: flex;
             align-items: center;
             margin-bottom: 10px;
+            
         }
 
         .header-container a {
@@ -40,7 +41,7 @@
         }
     </style>
 
-    <div class="container" style="padding-bottom: 100px; ">
+    <div class="container" style="padding-bottom: 100px;  ">
         <div class="header-container">
             <a href="{{ route('home.index') }}" class="waves-effect waves-light">
                 <i class="material-icons black-text">arrow_back</i>

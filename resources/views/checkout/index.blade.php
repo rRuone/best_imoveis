@@ -1,6 +1,46 @@
 @extends('admin.layouts.principal')
 
 @section('conteudo-principal')
+
+<style>
+    .header-container {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        
+    }
+
+    .header-container a {
+        margin-right: 10px; /* Espaço menor para mobile */
+    }
+
+    .header-container h4 {
+        margin: 0;
+    }
+
+    .header-container i {
+        font-size: 24px;
+        vertical-align: middle;
+    }
+
+    /* Estilos adicionais para dispositivos móveis */
+    @media (max-width: 600px) {
+        .header-container {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .btn-full-width {
+            width: 100% !important;
+            margin-top: 10px;
+        }
+    }
+
+    @media (min-width: 601px) {
+        .btn-fixed-width {
+            width: 300px;
+        }
+    }
+</style>
     <div class="container">
 
         @if(empty($pedido))
@@ -11,6 +51,15 @@
             {{-- <h3>{{ $item['item_cardapio']->nome }} - R$ {{ number_format($item['item_cardapio']->preco, 2, ',', '.') }}</h3> --}}
         @endforeach
 
+        
+        <div class="header-container">
+            <a href="{{ route('carrinho.index') }}" class="waves-effect waves-light">
+                <i class="material-icons black-text">arrow_back</i>
+            </a>
+            <h4 class="inline">Finalizar Pedido</h4>
+            
+        </div>
+        <hr>
            
 
          @livewire('endereco-selecionado', ['enderecos' => $enderecos])
