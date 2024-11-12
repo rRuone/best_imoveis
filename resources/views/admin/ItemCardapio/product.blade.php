@@ -52,13 +52,7 @@
             flex: 1 1 48%; /* Cada item ocupa 48% da largura */
         }
 
-        /* Adicionando responsividade */
-        @media (max-width: 768px) {
-            .input-field {
-                flex: 1 1 100%; /* 1 item por linha em dispositivos menores */
-            }
-        }
-
+   
     </style>
 
     <div class="container">
