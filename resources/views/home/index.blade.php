@@ -1,6 +1,13 @@
 @extends('admin.layouts.principal')
 
 @section('conteudo-principal')
+<style>
+    .card-image img {
+        width: 70%; /* Define a largura para ocupar todo o espaço da div */
+        height: 230px; /* Define uma altura fixa para todas as imagens */
+        object-fit: cover; /* Recorta a imagem para preencher a área sem distorcer */
+    }
+</style>
     <div class="container">
         <h4>Bem-vindo à Master Dog</h4>
         <p>Explore nosso cardápio!</p>
