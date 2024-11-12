@@ -9,7 +9,7 @@ class Pedido extends Model
     use HasFactory;
 
     protected $table = 'pedido'; // Definindo a tabela correta
-    protected $fillable = ['cliente_id','endereco_id', 'data_Pedido', 'metdPag', 'status', 'total', 'retirar'];
+    protected $fillable = ['cliente_id','endereco_id', 'data_Pedido', 'metdPag', 'status', 'total', 'retirar', 'updated_at'];
 
     /**
      * Relacionamento com o ItemCardapio através da tabela pivô pedido_item.

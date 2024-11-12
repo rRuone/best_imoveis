@@ -66,28 +66,29 @@
 
                                     <livewire:exibir-detalhes :pedido="$pedido" />
 
-                                    <!-- Botões de Cancelar e Avançar centralizados -->
-                                    <div style="display: flex; justify-content: center; align-items: center; margin-top: 10px;">
-                                        <!-- Botão Cancelar -->
-                                        <form action="{{ route('admin.pedidos.cancelar', $pedido->id) }}" method="POST" style="display:inline; margin-right: 10px;">
-                                            @csrf
-                                            <button type="submit" class="waves-effect waves-light btn red darken-1" style="color: white; display: flex; align-items: center; justify-content: center;">
-                                                <i class="material-icons left" style="margin-right: 8px;">cancel</i>
-                                                <strong>Cancelar</strong>
-                                            </button>
-                                        </form>
 
-                                        <!-- Botão Avançar -->
-                                        <form action="{{ route('admin.pedidos.avancar', $pedido->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            <button type="submit" class="waves-effect waves-light btn btn-custom" style="display: flex; align-items: center; justify-content: center;">
-                                                <strong>Avançar</strong>
-                                                <span style="margin-left: 20px;">
-                                                    <i class="material-icons">arrow_forward</i>
-                                                </span>
-                                            </button>
-                                        </form>
-                                    </div>
+                                <!-- Botões de Cancelar e Avançar centralizados e responsivos -->
+                                <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
+                                    <!-- Botão Cancelar -->
+                                    <form action="{{ route('admin.pedidos.cancelar', $pedido->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        <button type="submit" class="waves-effect waves-light btn red darken-1" style="color: white; display: flex; align-items: center; justify-content: center;">
+                                            <i class="material-icons left" style="margin-right: 8px;">cancel</i>
+                                            <strong>Cancelar</strong>
+                                        </button>
+                                    </form>
+
+                                    <!-- Botão Avançar -->
+                                    <form action="{{ route('admin.pedidos.avancar', $pedido->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        <button type="submit" class="waves-effect waves-light btn btn-custom" style="display: flex; align-items: center; justify-content: center;">
+                                            <strong>Avançar</strong>
+                                            <span style="margin-left: 20px;">
+                                                <i class="material-icons">arrow_forward</i>
+                                            </span>
+                                        </button>
+                                    </form>
+                                </div>
                                 </div>
                             @endforeach
                         @else
@@ -209,7 +210,7 @@
                                         {{ \Carbon\Carbon::parse($pedido->created_at)->format('H:i') }}
                                     </p>
 
-                                  
+
                                 </div>
                                     <hr>
                                     <p>
