@@ -8,8 +8,27 @@
         <p><strong>Cliente:</strong> {{ $pedido->cliente->nome }}</p>
         <p><strong>Data de Criação:</strong> {{ \Carbon\Carbon::parse($pedido->data_Pedido)->format('d/m/Y') }} - <strong>Horário:</strong> {{ \Carbon\Carbon::parse($pedido->data_Pedido)->format('H:i') }}</p>
 
-        @if($pedido->status =='finalizado'  && $pedido->updated_at)
+        @if($pedido->status == 'finalizado' && $pedido->updated_at)
             <p><strong>Data de Finalização:</strong> {{ \Carbon\Carbon::parse($pedido->updated_at)->format('d/m/Y') }} - <strong>Horário:</strong> {{ \Carbon\Carbon::parse($pedido->updated_at)->format('H:i') }}</p>
+
+            <!-- Calculando o tempo decorrido -->
+            @php
+                $createdAt = \Carbon\Carbon::parse($pedido->data_Pedido);
+                $updatedAt = \Carbon\Carbon::parse($pedido->updated_at);
+
+                // Calcula a diferença entre as datas
+                $tempoDecorridoEmMinutos = $createdAt->diffInMinutes($updatedAt);
+                $tempoDecorridoEmHoras = $createdAt->diffInHours($updatedAt);
+
+                // Exibe o tempo decorrido no formato "X minutos" ou "X horas"
+                if ($tempoDecorridoEmHoras >= 1) {
+                    $tempoDecorrido = $tempoDecorridoEmHoras . ' hora(s)';
+                } else {
+                    $tempoDecorrido = $tempoDecorridoEmMinutos . ' minuto(s)';
+                }
+            @endphp
+
+            <p><strong>Tempo Decorrido:</strong> {{ $tempoDecorrido }}</p>
         @endif
 
         <p><strong>Status:</strong>
@@ -21,7 +40,6 @@
                 {{ ucfirst($pedido->status) }}
             @endif
         </p>
-
 
         <p><strong>Método de Pagamento:</strong> {{ ucfirst($pedido->metdPag )}}</p>
         <p><strong>Tempo estimado: </strong> 30 minutos </p>
