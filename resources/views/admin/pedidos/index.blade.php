@@ -56,13 +56,15 @@
                                         </p>
                                     </p>
                                     <hr>
-                                    <p><strong>Endereço:</strong>
-                                        @if($pedido->endereco)
-                                            {{ $pedido->endereco->logradouro }}, {{$pedido->endereco->numero}}
-                                        @else
-                                            <span>Endereço não disponível</span>
-                                        @endif
-                                    </p>
+                                    @if ($pedido->endereco)
+                                        <p><strong>Endereço:</strong>
+                                            {{ $pedido->endereco->logradouro }}, {{ $pedido->endereco->numero }}
+                                        </p>
+                                    @elseif($pedido->retirar)
+                                        <p><span><strong>Retirada no Balcão</strong></span></p>
+                                    @else
+                                        <p><span>Endereço não disponível</span></p>
+                                    @endif
 
                                     <livewire:exibir-detalhes :pedido="$pedido" />
 
@@ -150,13 +152,17 @@
                                     </p>
                                 </p>
                                 <hr>
-                                <p><strong>Endereço:</strong>
-                                    @if($pedido->endereco)
-                                        {{ $pedido->endereco->logradouro }}, {{$pedido->endereco->numero}}
-                                    @else
-                                        <span>Endereço não disponível</span>
-                                    @endif
-                                </p>
+                                
+                                @if ($pedido->endereco)
+                                    <p><strong>Endereço:</strong>
+                                        {{ $pedido->endereco->logradouro }}, {{ $pedido->endereco->numero }}
+                                    </p>
+                                @elseif($pedido->retirar)
+                                    <p><span><strong>Retirada no Balcão</strong></span></p>
+                                @else
+                                    <p><span>Endereço não disponível</span></p>
+                                @endif
+                            
 
                                 <livewire:exibir-detalhes :pedido="$pedido" />
 
@@ -235,13 +241,16 @@
                                         </p>
                                     </p>
                                     <hr>
-                                    <p><strong>Endereço:</strong>
-                                        @if($pedido->endereco)
-                                            {{ $pedido->endereco->logradouro }}, {{$pedido->endereco->numero}}
-                                        @else
-                                            <span>Endereço não disponível</span>
-                                        @endif
-                                    </p>
+                                    
+                                    @if ($pedido->endereco)
+                                        <p><strong>Endereço:</strong>
+                                            {{ $pedido->endereco->logradouro }}, {{ $pedido->endereco->numero }}
+                                        </p>
+                                    @elseif($pedido->retirar)
+                                        <p><span><strong>Retirada no Balcão</strong></span></p>
+                                    @else
+                                        <p><span>Endereço não disponível</span></p>
+                                    @endif
 
                                     <livewire:exibir-detalhes :pedido="$pedido" />
 
