@@ -20,9 +20,9 @@
 
     <p><strong>Endereço de entrega:</strong>
         @if($pedido->endereco)
-            {{ $pedido->endereco->logradouro }}, {{ $pedido->endereco->numero }}, {{ $pedido->endereco->bairro }},
-            {{ $pedido->endereco->cidade }}, {{ $pedido->endereco->cep }}
-            <br>{{ $pedido->endereco->complemento }}
+            {{ $pedido->endereco->logradouro }}, {{ $pedido->endereco->numero }}, {{ $pedido->endereco->bairro }}
+            <br>
+            {{ $pedido->endereco->complemento }}
         @else
             Retirar no estabelecimento.
         @endif
