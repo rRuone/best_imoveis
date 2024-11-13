@@ -1,4 +1,4 @@
-<div  wire:poll.15s class="col s12 m6 l4">
+<div  wire:poll.keep-alive.20s class="col s12 m6 l4">
     <ul class="collapsible">
         <li class="active">
             <div class="collapsible-header orange lighten-1 valign-wrapper">
