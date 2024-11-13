@@ -7,13 +7,13 @@
     <p><strong>Telefone:</strong>
         @php
         $telefone = $pedido->cliente->telefone;
-        if(strlen($telefone) == 11) { // Verifica se o número tem 11 dígitos (incluindo DDD)
+        if(strlen($telefone) == 11) { 
             $telefoneFormatado = '(' . substr($telefone, 0, 2) . ') ' . substr($telefone, 2, 5) . '-' . substr($telefone, 7);
         } else {
-            $telefoneFormatado = $telefone; // Caso não tenha 11 dígitos, exibe o número como está
+            $telefoneFormatado = $telefone;
         }
-    @endphp
-    {{$telefoneFormatado}}
+        @endphp
+        {{$telefoneFormatado}}
     </p>
 
     <p><strong>Tempo de espera:</strong> 40 minutos</p>
@@ -30,11 +30,29 @@
 
     <hr>
 
+    <!-- Calcular a taxa de entrega com base no endereço -->
+    @php
+        $taxaEntrega = 0;
+        if (!$pedido->retirar && $pedido->endereco) {
+            $bairro = $pedido->endereco->bairro;
+            if (in_array($bairro, ['Alvorada', 'Almirante'])) {
+                $taxaEntrega = 10.00;
+            } elseif (in_array($bairro, ['Santa Cruz', 'Bela Vista'])) {
+                $taxaEntrega = 8.00;
+            } elseif (in_array($bairro, ['Castrolanda'])) {
+                $taxaEntrega = 20.00;
+            } else {
+                $taxaEntrega = 7.00;
+            }
+        }
+        $totalComTaxa = $pedido->total - $taxaEntrega;
+    @endphp
+
     <!-- Tabela de itens do pedido -->
     <table style="width: 100%;">
         <thead>
             <tr>
-                <th>Qtd</th>
+                <th>Quantidade</th>
                 <th>Descrição</th>
                 <th>Valor</th>
             </tr>
@@ -42,7 +60,7 @@
         <tbody>
             @foreach($pedido->pedidoItems as $item)
                 <tr>
-                    <td>1</td>
+                    <td>{{ $item->quantidade }}</td>
                     <td>
                         {{ $item->itemCardapio->nome }}
                         @if($item->adicionais->isNotEmpty())
@@ -60,20 +78,22 @@
     </table>
 
     <hr>
-    
-    <p><strong>Total:</strong> R$ {{ number_format($pedido->total, 2, ',', '.') }}</p>
+    <p><strong>SubTotal:</strong> R$ {{ number_format($totalComTaxa, 2, ',', '.') }}</p>
+    <p><strong>Taxa de Entrega:</strong> R$ {{ number_format($taxaEntrega, 2, ',', '.') }}</p>
+    <p style="font-size: 1.5em; font-weight: bold;">
+        <strong>Total:</strong> R$ {{ number_format($pedido->total, 2, ',', '.') }}
+    </p>
 
     <hr>
 
-
-    <p><strong>Método de Pagamento:</strong> {{ ucfirst($pedido->metdPag )}}</p>
-    <p><strong>Data de Criação:</strong> {{ \Carbon\Carbon::parse($pedido->data_Pedido)->format('d/m/Y') }} - <strong>Horário:</strong> {{ \Carbon\Carbon::parse($pedido->data_Pedido)->format('H:i') }}</p>
+    <p><strong>Método de Pagamento:</strong> {{ ucfirst($pedido->metdPag) }}</p>
+    <p><strong>Data de Criação:</strong> {{ \Carbon\Carbon::parse($pedido->data_pedido)->format('d/m/Y') }} - <strong>Horário:</strong> {{ \Carbon\Carbon::parse($pedido->data_pedido)->format('H:i') }}</p>
     @if($pedido->status == 'finalizado' && $pedido->updated_at)
         <p><strong>Data de Finalização:</strong> {{ \Carbon\Carbon::parse($pedido->updated_at)->format('d/m/Y') }} - <strong>Horário:</strong> {{ \Carbon\Carbon::parse($pedido->updated_at)->format('H:i') }}</p>
 
         <!-- Cálculo do tempo decorrido -->
         @php
-            $createdAt = \Carbon\Carbon::parse($pedido->data_Pedido);
+            $createdAt = \Carbon\Carbon::parse($pedido->data_pedido);
             $updatedAt = \Carbon\Carbon::parse($pedido->updated_at);
             $tempoDecorridoEmMinutos = $createdAt->diffInMinutes($updatedAt);
             $tempoDecorridoEmHoras = $createdAt->diffInHours($updatedAt);
@@ -96,6 +116,6 @@
 <script>
     setInterval(function() {
         location.reload();
-    }, 10000); // Recarrega a página a cada 10 segundos
+    }, 10000);
 </script>
 @endsection
