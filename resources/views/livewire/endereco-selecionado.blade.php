@@ -10,10 +10,11 @@
                     <label>
                         <input type="radio" name="endereco_id" wire:click="atualizarEndereco({{ $endereco->id }})"
                             @if($enderecoSelecionado == $endereco->id && !$retirar) checked @endif />
-                        <span style="font-size: 1.5em;">{{ $endereco->logradouro }}, {{$endereco->numero}} - {{ $endereco->bairro }}</span>
+                        <span style="font-size: 1.5em;color:black">{{ $endereco->logradouro }}, {{$endereco->numero}} - {{ $endereco->bairro }}</span>
+
                         <br>
-                        
-                        <a href="#" wire:click.prevent="excluirEndereco({{ $endereco->id }})" 
+
+                        <a href="#" wire:click.prevent="excluirEndereco({{ $endereco->id }})"
                             style="margin-left: 10px; color: red; font-size: 1.5em;">
                              <span>Excluir</span>
                         </a>

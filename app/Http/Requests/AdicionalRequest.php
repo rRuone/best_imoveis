@@ -33,8 +33,8 @@ class AdicionalRequest extends FormRequest
         return [
             'nome.regex' => 'O nome do adicional não pode ser um número.',
             'nome.unique' => 'Esse adicional já foi cadastrado. Por favor, insira um nome diferente.',
-            'nome.required' => 'Campo nome é obrigatório',
-            'preco' => 'O preço é obrigatório'
+            'nome.required' => 'Campo nome é obrigatório.',
+            'preco' => 'O preço deve ser um número.'
             // Outras mensagens personalizadas, se necessário
         ];
     }

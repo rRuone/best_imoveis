@@ -59,12 +59,12 @@
         </nav>
 
         <ul id="dropdownCardapio" class="dropdown-content">
-            <li><a href="{{ url('/admin/dashboard') }}">Home</a></li>
-            <li><a href="{{ url('/admin/index-itemCardapio') }}">Cardápio</a></li>
             <li><a href="{{ url('/admin/index-adicionais') }}">Adicionais</a></li>
+            <li><a href="{{ url('/admin/index-itemCardapio') }}">Cardápio</a></li>
             <li><a href="{{ url('/admin/index-categorias') }}">Categorias</a></li>
+            <li><a href="{{ url('/admin/index-cliente') }}">Cliente</a></li>
             <li><a href="{{ url('/admin/dashboard/historico') }}">Histórico</a></li>
-
+            <li><a href="{{ url('/admin/dashboard') }}">Pedidos</a></li>
         </ul>
 
         <!-- Dropdown Structure for user-->
@@ -82,11 +82,12 @@
         <!-- Mobile Menu -->
         <ul class="sidenav" id="mobile-demo">
             @auth
-            <li><a href="{{ url('/admin/dashboard') }}">Home</a></li>
-            <li><a href="{{ url('/admin/index-itemCardapio') }}">Cardápio</a></li>
             <li><a href="{{ url('/admin/index-adicionais') }}">Adicionais</a></li>
+            <li><a href="{{ url('/admin/index-itemCardapio') }}">Cardápio</a></li>
             <li><a href="{{ url('/admin/index-categorias') }}">Categorias</a></li>
+            <li><a href="{{ url('/admin/index-cliente') }}">Clientes</a></li>
             <li><a href="{{ url('/admin/dashboard/historico') }}">Histórico</a></li>
+            <li><a href="{{ url('/admin/dashboard') }}">Pedidos</a></li>
             @endauth
 
             @guest

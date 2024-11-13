@@ -77,7 +77,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
     //Enderecos
     Route::get('/index-enderecos',[EnderecosController::class, 'index'])->name('enderecos.index');
-    
+
 
     //ItemCardapio
     Route::get('/index-itemCardapio',[ItemCardapioController::class,'index'])->name('itemCardapio.index');
@@ -87,11 +87,16 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('/edit-itemCardapio/{itemCardapio}',[ItemCardapioController::class,'edit'])->name('itemCardapio.edit');
     Route::put('/show-itemCardapio/{itemCardapio}',[ItemCardapioController::class,'update'])->name('itemCardapio.update');
     Route::delete('/destroy-itemCardapio/{itemCardapio}',[ItemCardapioController::class,'destroy'])->name('itemCardapio.destroy');
-  
-   
+
+    Route::post('/show-cliente/{cliente}',[ClientesController::class,'show'])->name('clientes.show');
+    Route::get('/index-cliente', [ClientesController::class, 'index'])->name('clientes.index');
+    Route::get('/edit-cliente', [ClientesController::class, 'index'])->name('clientes.edit');
+    Route::delete('/destroy-cliente/{id}', [ClientesController::class, 'destroy'])->name('clientes.destroy');
+
+
 });
 
-// Endereços 
+// Endereços
 Route::get('/create-enderecos',[EnderecosController::class, 'create'])->name('enderecos.create');
 Route::post('/store-enderecos',[EnderecosController::class, 'store'])->name('enderecos.store');
 Route::get('/show-enderecos/{enderecos}',[EnderecosController::class,'show'])->name('enderecos.show');
@@ -100,10 +105,10 @@ Route::get('/show-enderecos/{enderecos}',[EnderecosController::class,'show'])->n
     Route::get('itemCardapio/{itemCardapio}/product', [ItemCardapioController::class, 'product'])->name('itemCardapio.product');
      Route::post('itemCardapio/{itemCardapio}/salvar-adicionais', [ItemCardapioController::class, 'salvarAdicionais'])->name('itemCardapio.salvarAdicionais');
 //Clientes
-Route::get('/index-cliente', [ClientesController::class, 'index'])->name('cliente.index');
+// Route::get('/index-cliente', [ClientesController::class, 'index'])->name('cliente.index');
 Route::get('/create-cliente',[ClientesController::class,'create'])->name('cliente.create');
 Route::post('/store-cliente',[ClientesController::class,'store'])->name('cliente.store');
-Route::post('/show-cliente/{cliente}',[ClientesController::class,'show'])->name('cliente.show');
+
 
 
 
