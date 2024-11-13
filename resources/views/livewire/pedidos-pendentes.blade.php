@@ -50,7 +50,7 @@
                             <hr>
                             @if ($pedido->endereco)
                                 <p><strong>Endereço:</strong>
-                                    {{ $pedido->endereco->logradouro }}, {{ $pedido->endereco->numero }}
+                                    {{ $pedido->endereco->logradouro }}, {{ $pedido->endereco->numero }}, {{$pedido->endereco->bairro}}
                                 </p>
                             @elseif($pedido->retirar)
                                 <p><span><strong>Retirada no Balcão</strong></span></p>
