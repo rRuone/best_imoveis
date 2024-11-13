@@ -18,13 +18,12 @@ class PedidosPendentes extends Component
         $this->atualizaPendente();
     }
 
-    public function atualizaPendente($pedido = null)
+    public function atualizaPendente()
     {
         $this->pendentes = Pedido::where('status', 'pendente')->get();
 
        
     }
-
 
     public function render()
     {
