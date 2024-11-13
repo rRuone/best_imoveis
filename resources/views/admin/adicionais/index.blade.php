@@ -48,14 +48,7 @@
                                 @endif
                             </a>
                         </th>
-                        <th>
-                            <a href="{{ route('admin.adicionais.index', ['sort' => 'preco', 'direction' => $direction === 'asc' ? 'desc' : 'asc']) }}" class="header-link">
-                                Preço
-                                @if ($sort === 'preco')
-                                    <i class="material-icons">{{ $direction === 'asc' ? 'arrow_drop_up' : 'arrow_drop_down' }}</i>
-                                @endif
-                            </a>
-                        </th>
+                      
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -63,7 +56,6 @@
                     @foreach($adicionais as $adicional)
                         <tr>
                             <td>{{ $adicional->nome }}</td>
-                            <td>R$ {{ number_format($adicional->preco, 2, ',', '.') }}</td>
                             <td>
                                 <a href="{{ route('admin.adicionais.show', $adicional->id) }}" class="btn blue btn-small">
                                     <i class="material-icons">remove_red_eye</i>
