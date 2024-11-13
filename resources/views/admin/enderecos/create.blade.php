@@ -46,18 +46,34 @@
             <div class="input-field">
                 <select name="bairro" id="bairro">
                     <option value="" disabled selected>Escolha um bairro</option>
-                    <option value="Alvorada">Alvorada</option>
-                    <option value="Castrolanda">Castrolanda</option>
-                    <option value="Bela Vista">Bela Vista</option>
                     <option value="Almirante">Almirante</option>
-                    <option value="Centro">Centro</option>
-                    <option value="Santa Cruz">Santa Cruz</option>
-                    <option value="Primavera">Primavera</option>
-                    <option value="Canta Galo">Canta Galo</option>
+                    <option value="Alvorada">Alvorada</option>
                     <option value="Arapongas">Arapongas</option>
                     <option value="Araucária">Araucária</option>
+                    <option value="Centro">Centro</option>
+                    <option value="Bailly">Bailly</option>
+                    <option value="Bancarios">Bancários</option>
+                    <option value="Bela Vista">Bela Vista</option>
+                    <option value="Bom Sucesso">Bom Sucesso</option>
+                    <option value="Canta Galo">Canta Galo</option>
+                    <option value="Castrolanda">Castrolanda</option>
+                    <option value="Castroville">Castroville</option>
+                    <option value="Dona Helena">Dona Helena</option>
+                    <option value="Invernada do Matadouro">Invernada do Matadouro</option>
+                    <option value="Nacoes">Nações</option>      
+                    <option value="Nossa Senhora das Gracas">Nossa Senhora das Graças</option> 
                     <option value="Morada do Sol">Morada do Sol</option>
+                    <option value="Padre Piva">Padre Piva</option>
+                    <option value="Pandorf">Pandorf</option>
+                    <option value="Primavera">Primavera</option>
                     <option value="Rio Branco">Rio Branco</option>
+                    <option value="Santa Cruz">Samambaia</option>     
+                    <option value="Santa Cruz">Santa Cruz</option>
+                    <option value="Rio Branco">Termas Riveira</option>
+                    <option value="Vila do Rosário">Vila do Rosário</option>
+                    <option value="Vila Farias">Vila Farias</option>
+                    <option value="Vila Frei Mathias">Vila Frei Mathias</option>
+
                 </select>
                 <label for="bairro">Bairro</label>
                 @error('bairro')
