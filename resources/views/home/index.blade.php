@@ -1,6 +1,27 @@
 @extends('admin.layouts.principal')
 
 @section('conteudo-principal')
+<style>
+    .card-image img {
+    width: 70%; /* Largura total da div pai */
+    height: 230px; /* Altura fixa para todas as imagens */
+    object-fit: cover; /* Recorta a imagem para preencher o espaço definido */
+    border-radius: 8px; /* Canto arredondado para um visual mais suave */
+}
+
+@media (max-width: 768px) {
+    .card-image img {
+        height: 200px; /* tablets */
+    }
+}
+
+@media (max-width: 480px) {
+    .card-image img {
+        height: 150px; /*smartphones */
+    }
+}
+
+</style>
     <div class="container">
         <h4>Bem-vindo à Master Dog</h4>
         <p>Explore nosso cardápio!</p>

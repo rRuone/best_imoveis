@@ -1,5 +1,6 @@
 <div>
-    <footer style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: #F5F5F5; border-top: 1px solid #ddd; padding: 10px 0; text-align: center; display: flex; justify-content: center; align-items: center;">
+    <footer class="footer-container" style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: #F5F5F5; border-top: 1px solid #ddd; padding: 10px 0;
+     text-align: center; display: flex; justify-content: center; align-items: center; z-index: 10;">
         <form action="{{ route('carrinho.avancar') }}" method="POST" style="width: 100%; max-width: 800px; padding: 0 10px;">
             @csrf
             <button type="submit" class="btn waves-effect waves-light green btn-responsive"

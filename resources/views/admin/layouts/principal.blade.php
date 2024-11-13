@@ -23,7 +23,6 @@
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
             <li><a href="{{ route('home.index') }}">Início</a></li>
-            <li><a href="">Pedidos</a></li>
             <li><a href="{{url('/carrinho')}}">Carrinho</a></li>
         </ul>
     </div>
@@ -32,7 +31,6 @@
 {{-- Menu Lateral (Mobile) --}}
 <ul class="sidenav" id="mobile-demo">
     <li><a href="{{ route('home.index') }}">Início</a></li>
-    <li><a href="">Pedidos</a></li>
     <li><a href="{{url('/carrinho')}}">Carrinho</a></li>
 </ul>
 

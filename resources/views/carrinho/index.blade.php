@@ -6,6 +6,7 @@
             display: flex;
             align-items: center;
             margin-bottom: 10px;
+            
         }
 
         .header-container a {
@@ -40,7 +41,7 @@
         }
     </style>
 
-    <div class="container" style="padding-bottom: 80px;">
+    <div class="container" style="padding-bottom: 100px;  ">
         <div class="header-container">
             <a href="{{ route('home.index') }}" class="waves-effect waves-light">
                 <i class="material-icons black-text">arrow_back</i>
@@ -62,15 +63,19 @@
             @endif
         </div>
 
-        @if(session()->get('pedido'))
+        <div style="margin-bottom: 80px;">
+             @if(session()->get('pedido'))
             <div style="text-align: center; margin-top: 25px;">
                 <a href="{{ route('home.index') }}"
                    class="btn btn-full-width waves-effect waves-dark orange darken-4">
                     Adicionar Mais Itens
                 </a>
             </div>
-        @endif
+             @endif
+        </div>
+       
     </div>
+   
 
     <livewire:carrinho-total />
 @endsection
