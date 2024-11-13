@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    </div>
+   
     <hr>
 
     <div class="row">
@@ -345,10 +345,7 @@
         }
     }
 
-    setInterval(function() {
-        location.reload();
-    }, 10000);
-
+   
 </script>
 
 
