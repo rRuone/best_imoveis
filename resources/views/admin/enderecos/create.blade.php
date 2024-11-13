@@ -60,14 +60,14 @@
                     <option value="Castroville">Castroville</option>
                     <option value="Dona Helena">Dona Helena</option>
                     <option value="Invernada do Matadouro">Invernada do Matadouro</option>
-                    <option value="Nacoes">Nações</option>      
+                    <option value="Nações">Nações</option>      
                     <option value="Nossa Senhora das Gracas">Nossa Senhora das Graças</option> 
                     <option value="Morada do Sol">Morada do Sol</option>
                     <option value="Padre Piva">Padre Piva</option>
                     <option value="Pandorf">Pandorf</option>
                     <option value="Primavera">Primavera</option>
                     <option value="Rio Branco">Rio Branco</option>
-                    <option value="Santa Cruz">Samambaia</option>     
+                    <option value="Samambaia">Samambaia</option>     
                     <option value="Santa Cruz">Santa Cruz</option>
                     <option value="Rio Branco">Termas Riveira</option>
                     <option value="Vila do Rosário">Vila do Rosário</option>
