@@ -8,7 +8,6 @@
         <div style="padding-top: 10px; border-top: 1px solid #ccc; margin-top: 5px;">
             @foreach($pedido->pedidoItems as $item)
                 <p><strong>Item: </strong> {{ $item->itemCardapio->nome }}</p>
-
                 <!-- Verifica se o item pertence à categoria "Lanche" -->
                 @if($item->itemCardapio->categoria && $item->itemCardapio->categoria->nome === 'Lanche')
                     @if($item->adicionais->isNotEmpty())

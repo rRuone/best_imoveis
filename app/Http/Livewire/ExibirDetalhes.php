@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use Carbon\Carbon;
 
 class ExibirDetalhes extends Component
 {

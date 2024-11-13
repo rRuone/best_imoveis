@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Pedido;
 use App\Models\ItemCardapio;
 use Illuminate\Http\Request;
+use Livewire\Livewire;
 
 class PedidoController extends Controller
 {
