@@ -24,8 +24,10 @@
         }
 
         .card-image img {
-            height: 150px;
-            object-fit: cover;
+            width: 70%; /* Largura total da div pai */
+            height: 230px; /* Altura fixa para todas as imagens */
+            object-fit: cover; /* Recorta a imagem para preencher o espaço definido */
+            border-radius: 8px; /* Canto arredondado para um visual mais suave */
         }
 
         .form-container {
