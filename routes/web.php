@@ -80,13 +80,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
 
     //ItemCardapio
-    Route::get('/index-itemCardapio',[ItemCardapioController::class,'index'])->name('itemCardapio.index');
-    Route::get('/create-itemCardapio',[ItemCardapioController::class,'create'])->name('itemCardapio.create');
-    Route::post('/store-itemCardapio',[ItemCardapioController::class,'store'])->name('itemCardapio.store');
-    Route::get('/show-itemCardapio/{itemCardapio}',[ItemCardapioController::class,'show'])->name('itemCardapio.show');
-    Route::get('/edit-itemCardapio/{itemCardapio}',[ItemCardapioController::class,'edit'])->name('itemCardapio.edit');
-    Route::put('/show-itemCardapio/{itemCardapio}',[ItemCardapioController::class,'update'])->name('itemCardapio.update');
-    Route::delete('/destroy-itemCardapio/{itemCardapio}',[ItemCardapioController::class,'destroy'])->name('itemCardapio.destroy');
+    Route::get('/index-item',[ItemCardapioController::class,'index'])->name('item.index');
+    Route::get('/create-item',[ItemCardapioController::class,'create'])->name('item.create');
+    Route::post('/store-item',[ItemCardapioController::class,'store'])->name('item.store');
+    Route::get('/show-item/{itemCardapio}',[ItemCardapioController::class,'show'])->name('item.show');
+    Route::get('/edit-item/{itemCardapio}',[ItemCardapioController::class,'edit'])->name('item.edit');
+    Route::put('/show-item/{itemCardapio}',[ItemCardapioController::class,'update'])->name('item.update');
+    Route::delete('/destroy-item/{itemCardapio}',[ItemCardapioController::class,'destroy'])->name('item.destroy');
 
     Route::post('/show-cliente/{cliente}',[ClientesController::class,'show'])->name('clientes.show');
     Route::get('/index-cliente', [ClientesController::class, 'index'])->name('clientes.index');
@@ -102,8 +102,8 @@ Route::post('/store-enderecos',[EnderecosController::class, 'store'])->name('end
 Route::get('/show-enderecos/{enderecos}',[EnderecosController::class,'show'])->name('enderecos.show');
 
 
-    Route::get('itemCardapio/{itemCardapio}/product', [ItemCardapioController::class, 'product'])->name('itemCardapio.product');
-     Route::post('itemCardapio/{itemCardapio}/salvar-adicionais', [ItemCardapioController::class, 'salvarAdicionais'])->name('itemCardapio.salvarAdicionais');
+    Route::get('item/{itemCardapio}/product', [ItemCardapioController::class, 'product'])->name('item.product');
+     Route::post('item/{itemCardapio}/salvar-adicionais', [ItemCardapioController::class, 'salvarAdicionais'])->name('item.salvarAdicionais');
 //Clientes
 // Route::get('/index-cliente', [ClientesController::class, 'index'])->name('cliente.index');
 Route::get('/create-cliente',[ClientesController::class,'create'])->name('cliente.create');

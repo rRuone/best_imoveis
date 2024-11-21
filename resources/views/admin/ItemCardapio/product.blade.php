@@ -82,7 +82,7 @@
             </div>
         </div>
 
-        <form action="{{ route('itemCardapio.salvarAdicionais', $itemCardapio) }}" method="POST" class="form-container">
+        <form action="{{ route('item.salvarAdicionais', $itemCardapio) }}" method="POST" class="form-container">
             @csrf
 
             <!-- Container para os adicionais -->

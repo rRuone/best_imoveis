@@ -11,7 +11,7 @@
             @csrf
             @method('DELETE')
             <button type="submit" class="btn red">Yes, Delete</button>
-            <a href="{{ route('itemCardapio.index') }}" class="btn grey">Cancel</a>
+            <a href="{{ route('admin.item.index') }}" class="btn grey">Cancel</a>
         </form>
     </div>
 </div>

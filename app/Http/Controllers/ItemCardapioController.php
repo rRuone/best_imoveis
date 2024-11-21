@@ -36,7 +36,7 @@ class ItemCardapioController extends Controller
         ->get();
 
     $categorias = Categoria::all();
-    return view('admin.itemCardapio.index', ['itemCardapio' => $itemCardapio, 'sort' => $sort, 'direction' => $direction, 'categorias' => $categorias]);
+    return view('admin.item.index', ['itemCardapio' => $itemCardapio, 'sort' => $sort, 'direction' => $direction, 'categorias' => $categorias]);
 }
 
 
@@ -46,7 +46,7 @@ class ItemCardapioController extends Controller
         $categorias = Categoria::all();
 
         // Retornar a visualização com as categorias
-        return view('admin.itemCardapio.create', compact('categorias'));
+        return view('admin.item.create', compact('categorias'));
     }
 
     public function store(ItemCardapioRequest $request)
@@ -82,7 +82,7 @@ class ItemCardapioController extends Controller
         'foto' => $path,
     ]);
 
-    return redirect()->route('admin.itemCardapio.index')->with('success', 'Item criado com sucesso.');
+    return redirect()->route('admin.item.index')->with('success', 'Item criado com sucesso.');
 }
 
 

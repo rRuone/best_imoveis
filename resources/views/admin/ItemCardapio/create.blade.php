@@ -4,7 +4,7 @@
         <div class="header-container">
             <br>
             <h4 class="inline">Adicionar Item ao Cardápio</h4>
-            <div class="class button-group"><a href="{{ route('admin.itemCardapio.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a>
+            <div class="class button-group"><a href="{{ route('admin.item.index') }}" class="btn-small waves-effect waves-light grey inline">Voltar</a>
             </div>
         </div>
         <hr>
@@ -20,7 +20,7 @@
         @endif
 
         <div class="section container">
-            <form action="{{ route('admin.itemCardapio.store') }}" method="POST" enctype="multipart/form-data" class="form-container">
+            <form action="{{ route('admin.item.store') }}" method="POST" enctype="multipart/form-data" class="form-container">
                 @csrf
 
                 <div class="input-field">
